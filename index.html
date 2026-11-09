@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Styl Techniczny & Minimal</title>
+  
+  <!-- Fonty: techniczny Archivo oraz odręczny/matematyczny Caveat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;900&family=Caveat:wght@400;600&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b0c0e;
+      --bg-card: #121418;
+      --bg-card-hover: #171a20;
+      --text: #eaeaea;
+      --text-muted: #8c909a;
+      --accent: #e5b95f;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --font-main: 'Archivo', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-script: 'Caveat', cursive;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+    }
+
+    body {
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    /* --- Top Header Navigation --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(11, 12, 14, 0.75);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    nav.sections-nav {
+      display: flex;
+      gap: 1.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+    }
+
+    nav.sections-nav a {
+      color: var(--text-muted);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    nav.sections-nav a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-contact {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .btn-contact:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    /* --- Layout Container --- */
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 120px 1.5rem 80px;
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+      min-height: 75vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 5rem;
+      position: relative;
+    }
+
+    .hero-meta {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(3.2rem, 9vw, 6.5rem);
+      line-height: 0.95;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .hero-desc {
+      font-size: 1.25rem;
+      max-width: 620px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .hero-desc span {
+      color: #fff;
+      border-bottom: 1px dashed var(--accent);
+    }
+
+    .hero-badge {
+      font-family: var(--font-script);
+      font-size: 1.6rem;
+      color: var(--accent);
+      transform: rotate(-4deg);
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+
+    /* --- Formula / Identity Breakdown Ribbon --- */
+    .identity-ribbon {
+      margin: 4rem 0;
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .ribbon-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ribbon-symbol {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .ribbon-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 0.2rem;
+    }
+
+    .ribbon-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* --- Content Block / Cards --- */
+    .section-block {
+      padding: 5rem 0;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 2.5rem;
+    }
+
+    .section-symbol {
+      font-family: var(--font-mono);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--border-strong);
+      line-height: 1;
+      position: sticky;
+      top: 100px;
+    }
+
+    .section-content h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    .features-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .features-list li {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s;
+    }
+
+    .features-list li:hover {
+      border-color: var(--border-strong);
+      background: var(--bg-card-hover);
+    }
+
+    .features-list li span {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .features-list li small {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-top: 0.2rem;
+    }
+
+    .section-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px;
+    }
+
+    .section-cta:hover {
+      color: var(--accent);
+    }
+
+    /* --- Contact & Socials Section --- */
+    .contact-section {
+      padding: 6rem 0 3rem;
+      text-align: center;
+    }
+
+    .contact-section h2 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+      margin-top: 3rem;
+      text-align: left;
+    }
+
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .contact-card small {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .contact-card strong {
+      margin-top: 0.4rem;
+      font-size: 1rem;
+    }
+
+    /* --- Footer --- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .section-block {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .section-symbol {
+        position: static;
+        font-size: 2rem;
+      }
+      nav.sections-nav {
+        display: none;
+      }
+      header {
+        padding: 0 1.2rem;
+      }
+      footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body id="top">
+
+  <!-- Pasek nawigacyjny -->
+  <header>
+    <a href="#top" class="brand">
+      <span class="brand-dot"></span>
+      <span>Twoje Imię</span>
+    </a>
+    <nav class="sections-nav">
+      <a href="#wzrost">e</a>
+      <a href="#projekty">i</a>
+      <a href="#edukacja">π</a>
+      <a href="#kontakt">1</a>
+      <a href="#zakres">0</a>
+    </nav>
+    <a href="mailto:twoj@email.com" class="btn-contact">Napisz</a>
+  </header>
+
+  <main>
+    <!-- Sekcja Hero -->
+    <section class="hero">
+      <div class="hero-meta">e^(iπ) + 1 = 0 · Portfolio</div>
+      <h1>Twoje<br>Nazwisko</h1>
+      <span class="hero-badge">to ja ↗</span>
+      <p class="hero-desc">
+        Projektant, inżynier i pasjonat precyzji. Za dużo, żeby opisać w jednym zdaniu, więc <span>rozłóżmy to na czynniki pierwsze</span>.
+      </p>
+      <a href="#wzrost" class="section-cta">Przejdź w dół ↓</a>
+    </section>
+
+    <!-- Wstępny podział / Karty tożsamości -->
+    <section class="identity-ribbon">
+      <div class="ribbon-item">
+        <span class="ribbon-symbol">e</span>
+        <span class="ribbon-title">Wzrost</span>
+        <span class="ribbon-sub">Rozwój i fundament</span>
+      </div>
+      <div class="ribbon-item">
+        <span class="ribbon-symbol">i</span>
+        <span class="ribbon-title">Kreacja</span>
+        <span class="ribbon-sub">Aplikacje i kod</span>
+      </div>
+      <div class="ribbon-item">
+        <span class="ribbon-symbol">π</span>
+        <span class="ribbon-title">Wiedza</span>
+        <span class="ribbon-sub">Zrozumieć złożoność</span>
+      </div>
+      <div class="ribbon-item">
+        <span class="ribbon-symbol">1</span>
+        <span class="ribbon-title">Jeden punkt</span>
+        <span class="ribbon-sub">Bezpośredni kontakt</span>
+      </div>
+      <div class="ribbon-item">
+        <span class="ribbon-symbol">0</span>
+        <span class="ribbon-title">Filtr</span>
+        <span class="ribbon-sub">Zero zbędnych rzeczy</span>
+      </div>
+    </section>
+
+    <!-- Sekcja 1: e -->
+    <section id="wzrost" class="section-block">
+      <div class="section-symbol">e</div>
+      <div class="section-content">
+        <p class="section-tagline">Podstawa wzrostu i procentu składanego</p>
+        <h2>Wzrost & Rutyna</h2>
+        <p class="section-desc">
+          Zasada regularnego, konsekwentnego wysiłku. Każde działanie kumuluje się w czasie i daje zwielokrotniony rezultat.
+        </p>
+        <ul class="features-list">
+          <li>
+            <span>Strategia & Działanie</span>
+            <small>Uporządkowany plan krok po kroku</small>
+          </li>
+          <li>
+            <span>Optymalizacja</span>
+            <small>Eliminacja wąskich gardeł</small>
+          </li>
+        </ul>
+        <a href="mailto:twoj@email.com" class="section-cta">Dowiedz się więcej →</a>
+      </div>
+    </section>
+
+    <!-- Sekcja 2: i -->
+    <section id="projekty" class="section-block">
+      <div class="section-symbol">i</div>
+      <div class="section-content">
+        <p class="section-tagline">Liczba urojona · Od niemożliwego do realnego</p>
+        <h2>Cyfrowe Produkty</h2>
+        <p class="section-desc">
+          Tworzenie nowoczesnych narzędzi, stron internetowych i systemów, które działają niezawodnie pod dużym obciążeniem.
+        </p>
+        <ul class="features-list">
+          <li>
+            <span>Aplikacje webowe</span>
+            <small>Architektura, frontend i backend</small>
+          </li>
+          <li>
+            <span>Projektowanie UI/UX</span>
+            <small>Minimalizm, szybkość i precyzja</small>
+          </li>
+          <li>
+            <span>Utrzymanie & Audyt</span>
+            <small>Długofalowa stabilność systemów</small>
+          </li>
+        </ul>
+        <a href="mailto:twoj@email.com" class="section-cta">Zobacz projekty →</a>
+      </div>
+    </section>
+
+    <!-- Sekcja 3: π -->
+    <section id="edukacja" class="section-block">
+      <div class="section-symbol">π</div>
+      <div class="section-content">
+        <p class="section-tagline">Stała okręgu · Precyzja i nauka</p>
+        <h2>Analityka & Mentoring</h2>
+        <p class="section-desc">
+          Dla tych, którzy nie chcą iść na skróty, ale naprawdę pojąć zasady rządzące daną dziedziną.
+        </p>
+        <ul class="features-list">
+          <li>
+            <span>Konsultacje 1:1</span>
+            <small>Indywidualne podejście</small>
+          </li>
+          <li>
+            <span>Warsztaty zespołowe</span>
+            <small>Praca na realnych problemach</small>
+          </li>
+          <li>
+            <span>Materiały & Baza wiedzy</span>
+            <small>Skondensowane notatki i syntezy</small>
+          </li>
+        </ul>
+        <a href="mailto:twoj@email.com" class="section-cta">Umów konsultację →</a>
+      </div>
+    </section>
+
+    <!-- Sekcja 4: 0 -->
+    <section id="zakres" class="section-block">
+      <div class="section-symbol">∅</div>
+      <div class="section-content">
+        <p class="section-tagline">Zbiór pusty: { x : x ≠ x }</p>
+        <h2>Czym się nie zajmuję</h2>
+        <p class="section-desc">
+          Nie biorę projektów bez celu, szablonowych rozwiązań bez dopracowania detali ani zleceń robionych „na wczoraj” kosztem jakości.
+        </p>
+      </div>
+    </section>
+
+    <!-- Sekcja 5: Kontakt -->
+    <section id="kontakt" class="contact-section">
+      <p class="section-tagline">Nie odkładaj spraw na później</p>
+      <h2>Porozmawiajmy.</h2>
+      
+      <div class="contact-grid">
+        <a href="mailto:twoj@email.com" class="contact-card">
+          <small>E-mail</small>
+          <strong>twoj@email.com ↗</strong>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener" class="contact-card">
+          <small>LinkedIn</small>
+          <strong>Profil zawodowy ↗</strong>
+        </a>
+        <a href="https://github.com" target="_blank" rel="noopener" class="contact-card">
+          <small>GitHub</small>
+          <strong>Repozytoria kodu ↗</strong>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Twoje Nazwisko. Wszystkie prawa zastrzeżone.</p>
+    <p><a href="#top">Na górę ↑</a></p>
+  </footer>
+
+</body>
+</html>
