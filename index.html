@@ -5,27 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aleksander Dobrowolski — S = kB ln Ω</title>
 
-  <!-- Google Fonts: Archivo, JetBrains Mono, Caveat -->
+  <!-- Google Fonts: Archivo (techniczny bezszeryf), JetBrains Mono (wzory i kod), Caveat (odręczne notatki) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Caveat:wght@500;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Caveat:wght@600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #07080a;
-      --bg-surface: #0d0f13;
-      --bg-panel: #13161d;
-      --bg-panel-hover: #181c25;
-      --text: #f0f2f5;
-      --text-muted: #a0a7b5;
-      --text-dim: #5a6272;
-      --red: #ff3333;
-      --red-glow: rgba(255, 51, 51, 0.45);
-      --red-dim: rgba(255, 51, 51, 0.12);
-      --border: rgba(255, 255, 255, 0.09);
-      --border-strong: rgba(255, 255, 255, 0.22);
+      --bg: #fbfbfb;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f3f4f6;
+      --bg-contrast: #111317;
       
-      --font-main: 'Archivo', -apple-system, sans-serif;
+      --text: #111317;
+      --text-muted: #4b5260;
+      --text-dim: #8b92a0;
+      
+      --red: #d92323;
+      --red-dim: rgba(217, 35, 35, 0.08);
+      --red-border: rgba(217, 35, 35, 0.25);
+      
+      --border: rgba(17, 19, 23, 0.1);
+      --border-strong: rgba(17, 19, 23, 0.25);
+      
+      --font-main: 'Archivo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
       --font-hand: 'Caveat', cursive;
     }
@@ -49,31 +52,31 @@
       overflow-x: hidden;
       line-height: 1.7;
       background-image: 
-        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 80px 80px;
+        linear-gradient(to right, rgba(17, 19, 23, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(17, 19, 23, 0.03) 1px, transparent 1px);
+      background-size: 70px 70px;
       -webkit-font-smoothing: antialiased;
     }
 
     a {
       color: inherit;
       text-decoration: none;
-      transition: color 0.2s, border-color 0.2s;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
     }
 
-    /* --- Stały górny HUD --- */
+    /* --- Górna belka nawigacji --- */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 64px;
-      padding: 0 2rem;
+      padding: 0 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(7, 8, 10, 0.92);
-      backdrop-filter: blur(14px);
+      background: rgba(251, 251, 251, 0.92);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       z-index: 1000;
     }
@@ -84,8 +87,9 @@
       gap: 0.8rem;
       font-family: var(--font-mono);
       font-size: 0.88rem;
-      letter-spacing: 0.04em;
-      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text);
     }
 
     .status-pulse {
@@ -93,13 +97,7 @@
       height: 8px;
       border-radius: 50%;
       background: var(--red);
-      box-shadow: 0 0 10px var(--red);
-      animation: pulse-glow 2s infinite ease-in-out;
-    }
-
-    @keyframes pulse-glow {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+      box-shadow: 0 0 8px rgba(217, 35, 35, 0.5);
     }
 
     nav.hud-nav {
@@ -111,13 +109,12 @@
 
     nav.hud-nav a {
       color: var(--text-muted);
-      padding: 0.2rem 0.5rem;
-      transition: all 0.2s;
+      padding: 0.25rem 0.5rem;
     }
 
     nav.hud-nav a:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.05);
+      color: var(--red);
+      background: var(--red-dim);
     }
 
     .hud-cta {
@@ -125,22 +122,20 @@
       font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 0.45rem 1.2rem;
-      border: 1px solid var(--red);
+      letter-spacing: 0.06em;
+      padding: 0.45rem 1.25rem;
+      border: 1.5px solid var(--red);
       color: #fff;
-      background: var(--red-dim);
+      background: var(--red);
       border-radius: 999px;
-      transition: all 0.25s;
     }
 
     .hud-cta:hover {
-      background: var(--red);
-      color: #000;
-      box-shadow: 0 0 16px var(--red-glow);
+      background: var(--text);
+      border-color: var(--text);
     }
 
-    /* --- Główny kontener --- */
+    /* --- Główny kontener o pełnej szerokości --- */
     main {
       width: 100vw;
       padding-top: 64px;
@@ -148,14 +143,14 @@
       flex-direction: column;
     }
 
-    /* --- Hero Banner o pełnej szerokości --- */
+    /* --- Hero Section --- */
     .hero-strip {
       width: 100%;
-      padding: 5rem 2rem 5rem;
+      padding: 5rem 2.5rem 5rem;
       border-bottom: 1px solid var(--border);
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 3rem;
+      gap: 3.5rem;
       align-items: center;
     }
 
@@ -169,29 +164,29 @@
       display: flex;
       align-items: center;
       gap: 0.8rem;
+      font-weight: 600;
     }
 
     .hero-meta::before {
       content: "";
-      width: 24px;
-      height: 1px;
+      width: 22px;
+      height: 2px;
       background: var(--red);
     }
 
     .hero-name {
-      font-size: clamp(3.5rem, 9.5vw, 8rem);
-      line-height: 0.92;
+      font-size: clamp(3.2rem, 8.5vw, 7.5rem);
+      line-height: 0.94;
       font-weight: 900;
       letter-spacing: -0.04em;
       text-transform: uppercase;
-      color: #fff;
+      color: var(--text);
       margin-bottom: 1.5rem;
     }
 
     .hero-name span.surname {
       display: block;
-      color: #fff;
-      text-shadow: 0 0 40px rgba(255, 255, 255, 0.12);
+      color: var(--red);
     }
 
     .hero-annotation {
@@ -199,57 +194,60 @@
       align-items: center;
       gap: 0.6rem;
       font-family: var(--font-hand);
-      font-size: 2rem;
+      font-size: 2.1rem;
       color: var(--red);
       transform: rotate(-3deg);
       margin-bottom: 2rem;
     }
 
     .hero-manifesto {
-      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      font-size: clamp(1.15rem, 1.8vw, 1.4rem);
       color: var(--text-muted);
       line-height: 1.65;
       max-width: 820px;
-      font-weight: 300;
+      font-weight: 400;
     }
 
     .hero-manifesto strong {
-      color: #fff;
-      font-weight: 600;
+      color: var(--text);
+      font-weight: 700;
     }
 
     .hero-manifesto em {
-      color: #fff;
+      color: var(--red);
       font-style: normal;
+      font-weight: 600;
       border-bottom: 1.5px solid var(--red);
     }
 
     .hero-side-card {
       background: var(--bg-surface);
-      border: 1px solid var(--border);
-      padding: 2rem;
-      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+      padding: 2.2rem;
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
       position: relative;
     }
 
     .hero-side-card::before {
-      content: "SYS // STATS";
+      content: "STATUS // ZAJĘCIA";
       position: absolute;
-      top: -9px;
-      left: 14px;
+      top: -10px;
+      left: 16px;
       background: var(--bg);
       padding: 0 8px;
       font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--red);
+      font-weight: 700;
       letter-spacing: 0.08em;
     }
 
     .side-stat-row {
       display: flex;
       justify-content: space-between;
-      padding: 0.7rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border);
       font-size: 0.88rem;
     }
 
@@ -261,14 +259,14 @@
     .side-stat-row .stat-val {
       font-family: var(--font-mono);
       font-weight: 700;
-      color: #fff;
+      color: var(--text);
     }
 
-    /* --- MONUMENTALNY WZÓR JAKO GŁÓWNY PUNKT STRONY --- */
+    /* --- Monumentalny Wzór jako Centrum Strony --- */
     .formula-monument {
       width: 100%;
-      padding: 6rem 2rem 7rem;
-      background: radial-gradient(circle at 50% 30%, rgba(255, 51, 51, 0.07) 0%, rgba(7, 8, 10, 0.98) 75%);
+      padding: 6rem 2.5rem 7rem;
+      background: #ffffff;
       border-bottom: 1px solid var(--border);
       text-align: center;
     }
@@ -278,43 +276,45 @@
       font-family: var(--font-mono);
       font-size: 0.85rem;
       color: var(--red);
-      letter-spacing: 0.15em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 0.4rem 1.4rem;
+      font-weight: 700;
+      padding: 0.35rem 1.4rem;
       background: var(--red-dim);
-      border: 1px solid rgba(255, 51, 51, 0.3);
+      border: 1px solid var(--red-border);
       border-radius: 999px;
       margin-bottom: 2rem;
     }
 
     .monument-title {
-      font-size: clamp(2rem, 4.5vw, 3.4rem);
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
       font-weight: 900;
       letter-spacing: -0.03em;
       margin-bottom: 3.5rem;
-      color: #fff;
+      color: var(--text);
     }
 
     .monument-formula-box {
-      background: #000;
-      border: 2px solid var(--border-strong);
+      background: var(--bg-surface);
+      border: 2px solid var(--text);
       padding: 3.5rem 2rem;
-      border-radius: 12px;
+      border-radius: 6px;
       max-width: 1200px;
       margin: 0 auto 4rem;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 51, 51, 0.12);
+      box-shadow: 8px 8px 0px rgba(217, 35, 35, 0.15);
       position: relative;
     }
 
     .monument-formula-box::before {
-      content: "BOLTZMANN_EQUATION // CORE_AXIOM";
+      content: "FORMUŁA_REDUKCJI_CHAOSU";
       position: absolute;
       top: -11px;
       left: 24px;
-      background: #000;
-      padding: 0 12px;
+      background: #ffffff;
+      padding: 0 10px;
       font-family: var(--font-mono);
       font-size: 0.75rem;
+      font-weight: 700;
       color: var(--red);
       letter-spacing: 0.1em;
     }
@@ -324,7 +324,7 @@
       font-size: clamp(3.2rem, 10vw, 7.5rem);
       font-weight: 800;
       letter-spacing: 0.08em;
-      color: #fff;
+      color: var(--text);
       display: inline-flex;
       align-items: baseline;
       gap: 0.5rem;
@@ -332,7 +332,6 @@
 
     .giant-equation span.accent {
       color: var(--red);
-      text-shadow: 0 0 35px var(--red-glow);
     }
 
     .giant-equation span.sub {
@@ -340,7 +339,7 @@
       transform: translateY(0.25em);
     }
 
-    /* Nowe, o wiele czytelniejsze karty rozbicia wzoru */
+    /* Karty Rozbicia Symboli */
     .clarity-cards-container {
       max-width: 1200px;
       margin: 0 auto;
@@ -351,21 +350,22 @@
     }
 
     .clarity-card {
-      background: var(--bg-panel);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
       padding: 1.6rem 2.2rem;
       display: grid;
-      grid-template-columns: 100px 240px 1fr;
+      grid-template-columns: 90px 240px 1fr;
       align-items: center;
       gap: 2rem;
       transition: all 0.25s ease;
     }
 
     .clarity-card:hover {
-      background: var(--bg-panel-hover);
+      background: #ffffff;
       border-color: var(--red);
-      transform: translateX(6px);
+      box-shadow: 4px 4px 0px var(--red);
+      transform: translateY(-2px);
     }
 
     .clarity-card .sym {
@@ -379,7 +379,7 @@
     .clarity-card .sci-block {
       display: flex;
       flex-direction: column;
-      border-left: 2px solid rgba(255, 255, 255, 0.1);
+      border-left: 2px solid var(--red);
       padding-left: 1.2rem;
     }
 
@@ -389,34 +389,35 @@
       color: var(--text-dim);
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      font-weight: 600;
     }
 
     .clarity-card .sci-block strong {
       font-family: var(--font-mono);
       font-size: 1.05rem;
-      color: #fff;
+      color: var(--text);
       margin-top: 0.2rem;
     }
 
     .clarity-card .meaning-block {
-      font-size: 1.1rem;
-      color: #d1d5db;
+      font-size: 1.05rem;
+      color: var(--text-muted);
       line-height: 1.6;
     }
 
     .clarity-card .meaning-block strong {
-      color: #fff;
-      font-weight: 600;
+      color: var(--text);
+      font-weight: 700;
     }
 
-    /* --- Rozdziały Przedmiotowe (3-Kolumnowy Layout) --- */
+    /* --- Rozdziały Przedmiotowe (3 Kolumny) --- */
     .subject-chapter {
       width: 100%;
-      padding: 6rem 2rem;
+      padding: 6rem 2.5rem;
       border-bottom: 1px solid var(--border);
       display: grid;
-      grid-template-columns: 140px 1.2fr 1fr;
-      gap: 3.5rem;
+      grid-template-columns: 140px 1.25fr 1fr;
+      gap: 4rem;
       align-items: start;
     }
 
@@ -430,12 +431,11 @@
       font-size: 4.5rem;
       font-weight: 900;
       line-height: 0.9;
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(17, 19, 23, 0.15);
     }
 
     .chapter-sym.red {
       color: var(--red);
-      text-shadow: 0 0 30px var(--red-glow);
     }
 
     .chapter-num {
@@ -443,21 +443,24 @@
       font-size: 0.75rem;
       color: var(--text-dim);
       letter-spacing: 0.1em;
+      font-weight: 700;
       margin-top: 0.8rem;
     }
 
     .chapter-narrative h2 {
-      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-size: clamp(2rem, 3.2vw, 2.9rem);
       font-weight: 900;
       letter-spacing: -0.03em;
       line-height: 1.1;
       margin-bottom: 0.5rem;
+      color: var(--text);
     }
 
     .chapter-tagline {
       font-family: var(--font-mono);
       font-size: 0.85rem;
       color: var(--red);
+      font-weight: 700;
       letter-spacing: 0.05em;
       margin-bottom: 2rem;
       display: block;
@@ -475,7 +478,8 @@
     }
 
     .prose-block strong {
-      color: #fff;
+      color: var(--text);
+      font-weight: 700;
     }
 
     .syllabus-stack {
@@ -490,12 +494,12 @@
     .syllabus-unit h4 {
       font-size: 1.05rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--text);
       margin-bottom: 0.2rem;
     }
 
     .syllabus-unit p {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
       margin: 0;
       line-height: 1.55;
@@ -508,23 +512,25 @@
       font-family: var(--font-mono);
       font-size: 0.9rem;
       font-weight: 700;
-      color: #fff;
-      border-bottom: 1.5px solid var(--red);
+      color: var(--red);
+      border-bottom: 2px solid var(--red);
       padding-bottom: 3px;
     }
 
     .chapter-action:hover {
-      color: var(--red);
+      color: var(--text);
+      border-color: var(--text);
     }
 
-    /* Rysunki techniczne SVG */
+    /* Rysunki Techniczne SVG */
     .technical-schematic {
       background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
       padding: 1.8rem;
       position: sticky;
       top: 100px;
+      box-shadow: 4px 4px 0px rgba(17, 19, 23, 0.05);
     }
 
     .schematic-header {
@@ -542,6 +548,7 @@
       color: var(--text-dim);
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      font-weight: 700;
     }
 
     .schematic-badge {
@@ -551,17 +558,18 @@
       border: 1px solid var(--red);
       padding: 0.15rem 0.5rem;
       border-radius: 3px;
+      font-weight: 700;
     }
 
     .schematic-svg-frame {
       width: 100%;
-      height: 260px;
+      height: 250px;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #000;
-      border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 4px;
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 3px;
     }
 
     .schematic-svg-frame svg {
@@ -572,25 +580,26 @@
     .schematic-caption {
       margin-top: 1.2rem;
       font-size: 0.85rem;
-      color: var(--text-dim);
+      color: var(--text-muted);
       line-height: 1.5;
       font-family: var(--font-mono);
     }
 
-    /* Przystępniejszy, prosty Rozdział 04 */
+    /* Rozdział 04: Zasady */
     .clean-zero-box {
-      background: #000;
-      border: 1px solid var(--border-strong);
+      background: #ffffff;
+      border: 2px solid var(--text);
       padding: 2.5rem;
-      border-radius: 8px;
+      border-radius: 4px;
       margin-top: 2rem;
+      box-shadow: 6px 6px 0px rgba(17, 19, 23, 0.08);
     }
 
     .simple-zero-equation {
       font-family: var(--font-mono);
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
       font-weight: 800;
-      color: #fff;
+      color: var(--text);
       margin-bottom: 1.8rem;
       padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
@@ -598,13 +607,12 @@
 
     .simple-zero-equation span.res {
       color: var(--red);
-      text-shadow: 0 0 20px var(--red-glow);
     }
 
     .zero-points-list {
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 1.5rem;
     }
 
     .zero-point {
@@ -616,21 +624,20 @@
     .zero-point-icon {
       font-family: var(--font-mono);
       font-weight: 700;
-      color: var(--red);
-      background: var(--red-dim);
-      border: 1px solid rgba(255,51,51,0.25);
+      color: #fff;
+      background: var(--red);
       width: 32px;
       height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 4px;
+      border-radius: 3px;
       flex-shrink: 0;
     }
 
     .zero-point-text strong {
       display: block;
-      color: #fff;
+      color: var(--text);
       font-size: 1.05rem;
       margin-bottom: 0.2rem;
     }
@@ -645,30 +652,31 @@
     /* --- Sekcja Końcowa: Kontakt --- */
     .contact-fullwidth {
       width: 100%;
-      padding: 8rem 2rem 5rem;
-      background: var(--bg-surface);
+      padding: 8rem 2.5rem 5rem;
+      background: #ffffff;
       border-bottom: 1px solid var(--border);
     }
 
     .contact-grid-hud {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
-      gap: 4rem;
+      gap: 4.5rem;
     }
 
     .contact-hero-title {
-      font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+      font-size: clamp(2.8rem, 6.5vw, 5.2rem);
       line-height: 0.95;
       font-weight: 900;
       letter-spacing: -0.04em;
       text-transform: uppercase;
       margin-bottom: 2rem;
+      color: var(--text);
     }
 
     .contact-channels {
       display: flex;
       flex-direction: column;
-      border-top: 1px solid var(--border);
+      border-top: 2px solid var(--text);
     }
 
     .channel-row {
@@ -678,7 +686,6 @@
       padding: 1.8rem 0;
       border-bottom: 1px solid var(--border);
       font-size: 1.15rem;
-      transition: all 0.2s;
     }
 
     .channel-row .c-key {
@@ -687,11 +694,12 @@
       color: var(--text-dim);
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      font-weight: 700;
     }
 
     .channel-row .c-val {
       font-weight: 700;
-      color: #fff;
+      color: var(--text);
     }
 
     .channel-row:hover .c-val {
@@ -701,7 +709,7 @@
     /* --- Stopka --- */
     footer {
       width: 100vw;
-      padding: 2.5rem 2rem;
+      padding: 2.5rem 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -739,7 +747,7 @@
 
     @media (max-width: 768px) {
       header {
-        padding: 0 1rem;
+        padding: 0 1.2rem;
       }
       nav.hud-nav {
         display: none;
@@ -784,7 +792,7 @@
   </header>
 
   <main>
-    <!-- HERO SECTION (Pełna szerokość) -->
+    <!-- HERO SECTION -->
     <section class="hero-strip">
       <div>
         <div class="hero-meta">Dydaktyka · Zrozumienie struktur · Zero chaosu</div>
@@ -827,12 +835,12 @@
       </div>
     </section>
 
-    <!-- MONUMENTALNY WZÓR JAKO GŁÓWNY CEL STRONY -->
+    <!-- MONUMENTALNY WZÓR JAKO GŁÓWNY PUNKT STRONY -->
     <section id="wzor" class="formula-monument">
       <span class="monument-badge">Główna oś metodyczna</span>
       <h2 class="monument-title">Rozwój wyprowadzony z chaosu</h2>
 
-      <!-- Wielki, potężny wzór Boltzmanna -->
+      <!-- Wielki wzór Boltzmanna -->
       <div class="monument-formula-box">
         <div class="giant-equation">
           <span>S</span>
@@ -843,16 +851,16 @@
         </div>
       </div>
 
-      <!-- Bardziej czytelne, horyzontalne karty rozbicia wzoru -->
+      <!-- Czytelne, horyzontalne karty rozbicia wzoru -->
       <div class="clarity-cards-container">
         <div class="clarity-card">
           <div class="sym">S</div>
           <div class="sci-block">
             <small>Fizyka statystyczna</small>
-            <strong>Entropia[cite: 1]</strong>
+            <strong>Entropia</strong>
           </div>
           <div class="meaning-block">
-            <strong>Spokój i równowaga.[cite: 1]</strong> Likwidujemy lęk przed tablicą, sprawdzianem i nieznanym zadaniem. Zamiast paniki — stabilna pewność siebie.
+            <strong>Spokój i równowaga.</strong> Likwidujemy lęk przed tablicą, sprawdzianem i nieznanym zadaniem. Zamiast paniki wprowadzamy stabilną pewność siebie.
           </div>
         </div>
 
@@ -860,10 +868,10 @@
           <div class="sym">k</div>
           <div class="sci-block">
             <small>Wartość stała</small>
-            <strong>Stała Boltzmanna[cite: 1]</strong>
+            <strong>Stała Boltzmanna</strong>
           </div>
           <div class="meaning-block">
-            <strong>Wiedza i konsekwencja.[cite: 1]</strong> Niezmienny fundament. Regularna, przewidywalna metoda pracy, która krok po kroku daje mierzalny wynik.
+            <strong>Wiedza i konsekwencja.</strong> Niezmienny fundament. Regularna, powtarzalna metoda pracy, która krok po kroku daje mierzalny wynik.
           </div>
         </div>
 
@@ -871,10 +879,10 @@
           <div class="sym">B</div>
           <div class="sci-block">
             <small>Identyfikator</small>
-            <strong>Oznaczenie Boltzmanna[cite: 1]</strong>
+            <strong>Oznaczenie Boltzmanna</strong>
           </div>
           <div class="meaning-block">
-            <strong>Budowanie własnej przyszłości.[cite: 1]</strong> Język hiszpański od totalnego zera do B1 otwiera realne perspektywy, podróże i swobodę komunikacji.
+            <strong>Budowanie własnej przyszłości.</strong> Język hiszpański od totalnego zera do poziomu B1, który otwiera realne perspektywy, podróże i swobodę komunikacji.
           </div>
         </div>
 
@@ -882,10 +890,10 @@
           <div class="sym">ln</div>
           <div class="sci-block">
             <small>Funkcja matematyczna</small>
-            <strong>Logarytm naturalny[cite: 1]</strong>
+            <strong>Logarytm naturalny</strong>
           </div>
           <div class="meaning-block">
-            <strong>Logiczne myślenie i matematyka.[cite: 1]</strong> Sprowadzanie złożonych, przerażających problemów do elementarnych kroków, które mają sens.
+            <strong>Logiczne myślenie i matematyka.</strong> Sprowadzanie złożonych, z pozoru przerażających problemów do elementarnych kroków, które po prostu mają sens.
           </div>
         </div>
 
@@ -893,10 +901,10 @@
           <div class="sym">Ω</div>
           <div class="sci-block">
             <small>Stan mikroskopowy</small>
-            <strong>Liczba mikrostanów[cite: 1]</strong>
+            <strong>Liczba mikrostanów</strong>
           </div>
           <div class="meaning-block">
-            <strong>Nieskończone możliwości rozwoju.[cite: 1]</strong> Fizyka jako zrozumiała mapa praw rządzących światem, a nie zbiór wzorów do wklepania na pamięć.
+            <strong>Nieskończone możliwości rozwoju.</strong> Fizyka jako zrozumiała mapa praw rządzących światem, a nie zbiór suchych wzorów do wklepania na pamięć.
           </div>
         </div>
       </div>
@@ -910,15 +918,15 @@
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Budowanie przyszłości · Komunikacja żywym językiem[cite: 1]</span>
+        <span class="chapter-tagline">Budowanie przyszłości · Komunikacja żywym językiem</span>
         <h2>Język Hiszpański: 0 → B1</h2>
 
         <div class="prose-block">
           <p>
-            Większość szkół traktuje języki obce jak zbiór martwych formułek wstawianych w puste miejsca w kserówkach. Efekt? Po latach nauki uczeń potrafi odmienić czasownik na kartce, ale w restauracji w Walencji nie potrafi zamówić wody bez lęku w oczach.
+            Większość szkół traktuje języki obce jak zbiór martwych regułek wstawianych w luki na kserówkach. Efekt? Po latach nauki uczeń potrafi odmienić czasownik na kartce, ale w kawiarni w Madrycie boi się odezwać do kelnera.
           </p>
           <p>
-            Prowadzę Cię <strong>od zupełnego zera</strong> (nawet jeśli nie znasz ani jednego słowa) do <strong>samodzielnego poziomu B1</strong>. To moment krytyczny: znasz czasy przeszłe, potrafisz wytłumaczyć swoje racje, wyrazić wątpliwość w trybie <em>Subjuntivo</em> i nie potrzebujesz tłumacza w kieszeni.
+            Prowadzę Cię <strong>od zupełnego zera</strong> (nawet jeśli nie znasz ani jednego słowa) do <strong>samodzielnego poziomu B1</strong>. To kluczowy etap: znasz czasy przeszłe, potrafisz wytłumaczyć swoje racje, wyrazić wątpliwość w trybie <em>Subjuntivo</em> i nie potrzebujesz tłumacza w telefonie.
           </p>
         </div>
 
@@ -940,6 +948,7 @@
         <a href="#kontakt" class="chapter-action">Zacznij naukę hiszpańskiego →</a>
       </div>
 
+      <!-- Schemat techniczny: Progresja Językowa -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">DIAGRAM // PROGRESJA LINGWISTYCZNA</span>
@@ -947,17 +956,17 @@
         </div>
         <div class="schematic-svg-frame">
           <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="30" y1="190" x2="300" y2="190" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-            <line x1="30" y1="190" x2="300" y2="20" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-            <path d="M30 180 C 100 170, 140 130, 190 90 C 230 60, 260 45, 290 40" stroke="#ff3333" stroke-width="2.5" fill="none"/>
-            <circle cx="30" cy="180" r="4" fill="#ff3333"/>
-            <circle cx="120" cy="150" r="4" fill="#fff"/>
-            <circle cx="190" cy="90" r="4" fill="#fff"/>
-            <circle cx="290" cy="40" r="5" fill="#ff3333"/>
-            <text x="35" y="175" fill="#a0a7b5" font-family="JetBrains Mono" font-size="10">0: ZEROWY START</text>
-            <text x="125" y="145" fill="#a0a7b5" font-family="JetBrains Mono" font-size="10">A1: ODPOWIEDZI</text>
-            <text x="170" y="80" fill="#a0a7b5" font-family="JetBrains Mono" font-size="10">A2: NARRACJA</text>
-            <text x="210" y="32" fill="#ff3333" font-family="JetBrains Mono" font-size="11" font-weight="bold">B1: SWOBODA (CEL)</text>
+            <line x1="30" y1="190" x2="300" y2="190" stroke="rgba(17,19,23,0.15)" stroke-width="1.5"/>
+            <line x1="30" y1="190" x2="30" y2="20" stroke="rgba(17,19,23,0.15)" stroke-width="1.5"/>
+            <path d="M30 180 C 100 170, 140 130, 190 90 C 230 60, 260 45, 290 40" stroke="#d92323" stroke-width="2.5" fill="none"/>
+            <circle cx="30" cy="180" r="4" fill="#d92323"/>
+            <circle cx="120" cy="150" r="4" fill="#111317"/>
+            <circle cx="190" cy="90" r="4" fill="#111317"/>
+            <circle cx="290" cy="40" r="5" fill="#d92323"/>
+            <text x="35" y="175" fill="#8b92a0" font-family="JetBrains Mono" font-size="10">0: START</text>
+            <text x="125" y="145" fill="#8b92a0" font-family="JetBrains Mono" font-size="10">A1: DIALOGI</text>
+            <text x="170" y="80" fill="#8b92a0" font-family="JetBrains Mono" font-size="10">A2: NARRACJA</text>
+            <text x="210" y="32" fill="#d92323" font-family="JetBrains Mono" font-size="11" font-weight="bold">B1: SWOBODA (CEL)</text>
           </svg>
         </div>
         <div class="schematic-caption">
@@ -974,15 +983,15 @@
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Logika i dedukcja · Szkoła Podstawowa & Egzamin E8[cite: 1]</span>
+        <span class="chapter-tagline">Logika i dedukcja · Szkoła Podstawowa & Egzamin E8</span>
         <h2>Matematyka: Likwidacja brakujących ogniw</h2>
 
         <div class="prose-block">
           <p>
-            Matematyka to najściślejszy łańcuch zależności w historii ludzkości. Nie ma w niej miejsca na lukę: jeśli uczeń w klasie 4 nie zrozumiał idei ułamka zwykłego, w klasie 7 nie rozwiąże równania z niewiadomą w mianowniku, a na Egzaminie Ósmoklasisty zatnie się na zadaniu tekstowym.
+            Matematyka to najściślejszy łańcuch zależności w historii nauki. Nie ma w niej miejsca na luki: jeśli uczeń w czwartej klasie nie zrozumiał idei ułamka zwykłego, w siódmej klasie polegnie na równaniach, a na egzaminie zablokuje się na pierwszym zadaniu tekstowym.
           </p>
           <p>
-            Moja praca polega na błyskawicznej diagnostyce. Zamiast męczyć ucznia setkami takich samych przykładów, cofamy się do punktu, w którym po raz pierwszy pomyślał: <em>„nie rozumiem”</em>. Odbudowujemy fundament, a potem wszystko zaczyna układać się samo.
+            Moja praca polega na diagnostyce. Zamiast męczyć ucznia setkami losowych przykładów, cofamy się do momentu, w którym po raz pierwszy pomyślał: <em>„nie rozumiem”</em>. Odbudowujemy fundament, a potem wszystko zaczyna układać się w logiczną całość.
           </p>
         </div>
 
@@ -1004,6 +1013,7 @@
         <a href="#kontakt" class="chapter-action">Umów lekcję matematyki →</a>
       </div>
 
+      <!-- Schemat techniczny: Geometria & Logarytm -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">DIAGRAM // UKŁAD LOGARYTMICZNY</span>
@@ -1011,14 +1021,14 @@
         </div>
         <div class="schematic-svg-frame">
           <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="20" y1="170" x2="300" y2="170" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-            <line x1="80" y1="20" x2="80" y2="200" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-            <path d="M85 200 C 88 150, 105 120, 140 100 C 180 80, 240 70, 300 65" stroke="#ff3333" stroke-width="2"/>
-            <polygon points="120,170 230,170 230,90" stroke="#fff" stroke-width="1.5" fill="rgba(255,255,255,0.03)"/>
-            <circle cx="230" cy="170" r="3" fill="#ff3333"/>
-            <rect x="218" y="158" width="12" height="12" stroke="rgba(255,255,255,0.4)" fill="none"/>
-            <text x="140" y="185" fill="#a0a7b5" font-family="JetBrains Mono" font-size="10">a² + b² = c²</text>
-            <text x="240" y="125" fill="#ff3333" font-family="JetBrains Mono" font-size="10">ln(x)</text>
+            <line x1="20" y1="170" x2="300" y2="170" stroke="rgba(17,19,23,0.15)" stroke-width="1"/>
+            <line x1="80" y1="20" x2="80" y2="200" stroke="rgba(17,19,23,0.15)" stroke-width="1"/>
+            <path d="M85 200 C 88 150, 105 120, 140 100 C 180 80, 240 70, 300 65" stroke="#d92323" stroke-width="2"/>
+            <polygon points="120,170 230,170 230,90" stroke="#111317" stroke-width="1.5" fill="rgba(17,19,23,0.03)"/>
+            <circle cx="230" cy="170" r="3" fill="#d92323"/>
+            <rect x="218" y="158" width="12" height="12" stroke="rgba(17,19,23,0.4)" fill="none"/>
+            <text x="140" y="185" fill="#8b92a0" font-family="JetBrains Mono" font-size="10">a² + b² = c²</text>
+            <text x="240" y="125" fill="#d92323" font-family="JetBrains Mono" font-size="10">ln(x)</text>
           </svg>
         </div>
         <div class="schematic-caption">
@@ -1035,15 +1045,15 @@
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Prawa przyrody · Doświadczenie zamiast pamięciówki[cite: 1]</span>
+        <span class="chapter-tagline">Prawa przyrody · Doświadczenie zamiast pamięciówki</span>
         <h2>Fizyka bez paniki przed wzorami</h2>
 
         <div class="prose-block">
           <p>
-            Fizyka w szkole podstawowej często zaczyna się koszmarem: uczeń zamiast zachwytu nad prawami rządzącymi kosmosem, widzi kartkę pełną liter $v$, $s$, $t$, $\rho$, $F$ i dostaje polecenie: „wyznacz niewiadomą”.
+            Fizyka w szkole podstawowej często zaczyna się niefortunnie: uczeń zamiast zachwytu nad prawami mechaniki widzi tablicę pełną liter i dostaje polecenie: „przekształć wzór na czas”.
           </p>
           <p>
-            Zmieniamy to podejście o 180 stopni. Najpierw wyobrażamy sobie realną sytuację: rzut piłką, jazdę rowerem, zsuwanie się sankami. Rysujemy wektory sił, a wzory traktujemy jak logiczny opis tego, co i tak widzimy za oknem. Uczę uniwersalnej metody przekształcania wzorów, która działa przy każdym równaniu fizycznym.
+            Zmieniamy to podejście o 180 stopni. Najpierw wyobrażamy sobie realną sytuację: rzut piłką, jazdę rowerem, zsuwanie się z górki. Rysujemy wektory sił, a wzory traktujemy jak logiczny opis tego, co i tak obserwujemy na co dzień. Uczę uniwersalnej metody przekształcania wzorów, która działa przy każdym szkolnym równaniu.
           </p>
         </div>
 
@@ -1058,13 +1068,14 @@
           </div>
           <div class="syllabus-unit">
             <h4>Przekształcanie wzorów i jednostki</h4>
-            <p>Eliminacja błędów przy zamianie jednostek ($km/h$ na $m/s$, gramów na kilogramy).</p>
+            <p>Eliminacja typowych błędów przy zamianie jednostek (km/h na m/s, gramów na kilogramy).</p>
           </div>
         </div>
 
         <a href="#kontakt" class="chapter-action">Umów lekcję fizyki →</a>
       </div>
 
+      <!-- Schemat techniczny: Równia pochyła -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">DIAGRAM // ROZKŁAD WEKTORÓW</span>
@@ -1072,18 +1083,18 @@
         </div>
         <div class="schematic-svg-frame">
           <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="30,180 270,180 270,80" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="rgba(255,255,255,0.02)"/>
+            <polygon points="30,180 270,180 270,80" stroke="rgba(17,19,23,0.3)" stroke-width="1.5" fill="rgba(17,19,23,0.02)"/>
             <g transform="translate(140, 134) rotate(-22.6)">
-              <rect x="-20" y="-20" width="40" height="40" stroke="#fff" stroke-width="1.5" fill="#12151b"/>
-              <line x1="0" y1="0" x2="0" y2="45" stroke="#ff3333" stroke-width="2"/>
-              <polygon points="0,48 -3,40 3,40" fill="#ff3333"/>
-              <line x1="0" y1="0" x2="-45" y2="0" stroke="#ff3333" stroke-width="2"/>
-              <polygon points="-48,0 -40,-3 -40,3" fill="#ff3333"/>
+              <rect x="-20" y="-20" width="40" height="40" stroke="#111317" stroke-width="1.5" fill="#ffffff"/>
+              <line x1="0" y1="0" x2="0" y2="45" stroke="#d92323" stroke-width="2"/>
+              <polygon points="0,48 -3,40 3,40" fill="#d92323"/>
+              <line x1="0" y1="0" x2="-45" y2="0" stroke="#d92323" stroke-width="2"/>
+              <polygon points="-48,0 -40,-3 -40,3" fill="#d92323"/>
             </g>
-            <line x1="140" y1="134" x2="140" y2="195" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 3"/>
-            <polygon points="140,198 137,190 143,190" fill="#fff"/>
-            <text x="145" y="195" fill="#a0a7b5" font-family="JetBrains Mono" font-size="10">Fg = m·g</text>
-            <text x="75" y="110" fill="#ff3333" font-family="JetBrains Mono" font-size="10">Fz</text>
+            <line x1="140" y1="134" x2="140" y2="195" stroke="#111317" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <polygon points="140,198 137,190 143,190" fill="#111317"/>
+            <text x="145" y="195" fill="#8b92a0" font-family="JetBrains Mono" font-size="10">Fg = m·g</text>
+            <text x="75" y="110" fill="#d92323" font-family="JetBrains Mono" font-size="10">Fz</text>
           </svg>
         </div>
         <div class="schematic-caption">
@@ -1092,7 +1103,7 @@
       </div>
     </section>
 
-    <!-- ROZDZIAŁ 4: CZEGO NIE ROBIĘ (0 / PROSTE RÓWNANIE) -->
+    <!-- ROZDZIAŁ 4: CZEGO NIE ROBIĘ (0) -->
     <section id="zero" class="subject-chapter">
       <div class="chapter-side">
         <div class="chapter-sym red">0</div>
@@ -1105,7 +1116,7 @@
 
         <div class="prose-block">
           <p>
-            Równie ważne jak to, czego uczę, jest to, co na moich lekcjach <strong>nigdy nie występuje</strong>. Sprowadźmy to do najprostszego wzoru na świecie:
+            Równie ważne jak to, czego uczę, jest to, co na moich lekcjach <strong>nigdy nie występuje</strong>. Sprowadźmy to do prostego wzoru:
           </p>
         </div>
 
@@ -1143,7 +1154,7 @@
       </div>
     </section>
 
-    <!-- KONTAKT: PEŁNA SZEROKOŚĆ -->
+    <!-- KONTAKT -->
     <section id="kontakt" class="contact-fullwidth">
       <div class="contact-grid-hud">
         <div>
@@ -1167,7 +1178,7 @@
           </a>
           <div class="channel-row">
             <span class="c-key">Format zajęć</span>
-            <span class="c-val">Online (Wspólny Canvas) / Z dojazdem</span>
+            <span class="c-val">Online (Wspólny ekran / tablica) lub stacjonarnie</span>
           </div>
           <div class="channel-row">
             <span class="c-key">Dostępność</span>
@@ -1180,9 +1191,9 @@
 
   <!-- STOPKA -->
   <footer>
-    <div>Aleksander Dobrowolski · S = kB ln Ω[cite: 1]</div>
+    <div>Aleksander Dobrowolski · S = kB ln Ω</div>
     <div>WSZYSTKIE PRAWA ZASTRZEŻONE © 2026</div>
-    <div><a href="#top" style="border-bottom: 1px dotted var(--red); color: #fff;">Wróć na górę ↑</a></div>
+    <div><a href="#top" style="border-bottom: 1px dotted var(--red); color: var(--text);">Wróć na górę ↑</a></div>
   </footer>
 
 </body>
