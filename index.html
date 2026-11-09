@@ -93,3 +93,612 @@
       font-size: 0.78rem;
       font-weight: 600;
       text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    .header-cta:hover {
+      border-color: #ff3333;
+      background: #ff3333;
+      color: #000000;
+    }
+
+    /* Główny kontener */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 120px 1.5rem 80px;
+      display: block;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 2rem 0 5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .meta-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #ff3333;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .meta-line::before {
+      content: "";
+      width: 16px;
+      height: 2px;
+      background: #ff3333;
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 8vw, 5.2rem);
+      line-height: 1;
+      font-weight: 900;
+      color: #ffffff;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-annotation {
+      display: inline-block;
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      color: #ff3333;
+      transform: rotate(-3deg);
+      margin-bottom: 1.5rem;
+    }
+
+    .lead-text {
+      font-size: 1.25rem;
+      line-height: 1.65;
+      color: #a0a6b2;
+      max-width: 720px;
+      margin-bottom: 2rem;
+    }
+
+    .lead-text strong {
+      color: #ffffff;
+    }
+
+    .lead-text span {
+      color: #ffffff;
+      border-bottom: 1px dashed #ff3333;
+    }
+
+    /* Wzór Boltzmanna */
+    .equation-section {
+      padding: 4.5rem 0 3.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .equation-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #ff3333;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .equation-section h2 {
+      font-size: 2.2rem;
+      color: #ffffff;
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .formula-display {
+      margin: 2.5rem 0;
+      padding: 2.5rem 1.5rem;
+      background: #0e1013;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .formula-frame {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.6rem 2rem;
+      background: #000000;
+      color: #ffffff;
+    }
+
+    .formula-frame .accent {
+      color: #ff3333;
+    }
+
+    .formula-frame .sub {
+      font-size: 0.6em;
+      transform: translateY(0.2em);
+    }
+
+    .formula-caption {
+      margin-top: 1.2rem;
+      font-size: 0.88rem;
+      color: #808691;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Tabela symboli */
+    .breakdown-list {
+      margin-top: 2.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .breakdown-row {
+      display: grid;
+      grid-template-columns: 70px 180px 1fr;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.95rem;
+      align-items: baseline;
+    }
+
+    .b-symbol {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ff3333;
+    }
+
+    .b-science {
+      font-family: 'JetBrains Mono', monospace;
+      color: #808691;
+      font-size: 0.85rem;
+    }
+
+    .b-meaning {
+      color: #ededed;
+    }
+
+    .b-meaning strong {
+      color: #ffffff;
+    }
+
+    /* Rozdziały */
+    .chapter {
+      padding: 5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 2.5rem;
+    }
+
+    .chapter-side {
+      position: sticky;
+      top: 90px;
+      align-self: start;
+    }
+
+    .chapter-glyph {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.2);
+      line-height: 1;
+    }
+
+    .chapter-glyph.red {
+      color: #ff3333;
+    }
+
+    .chapter-content h2 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.3rem;
+    }
+
+    .chapter-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #ff3333;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .prose p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #a0a6b2;
+      margin-bottom: 1.2rem;
+    }
+
+    .prose strong {
+      color: #ffffff;
+    }
+
+    .curriculum-box {
+      margin: 2rem 0;
+      border-left: 2px solid #ff3333;
+      padding-left: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .curr-item h4 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.2rem;
+    }
+
+    .curr-item p {
+      font-size: 0.9rem;
+      color: #808691;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .empty-set-box {
+      background: #000000;
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      padding: 1.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      border-radius: 6px;
+      margin-top: 1.5rem;
+    }
+
+    .empty-formula {
+      color: #ff3333;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .empty-set-box p {
+      color: #808691;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 0.6rem;
+    }
+
+    .link-action {
+      display: inline-block;
+      margin-top: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #ffffff;
+      border-bottom: 1.5px solid #ff3333;
+      padding-bottom: 2px;
+    }
+
+    .link-action:hover {
+      color: #ff3333;
+    }
+
+    /* Kontakt */
+    .contact-section {
+      padding: 6rem 0 3rem;
+    }
+
+    .contact-section h2 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      color: #ffffff;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .contact-section p.sub {
+      color: #808691;
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+      max-width: 600px;
+    }
+
+    .contact-list {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .contact-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 1rem;
+    }
+
+    .contact-row .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #808691;
+      text-transform: uppercase;
+    }
+
+    .contact-row .val {
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .contact-row:hover .val {
+      color: #ff3333;
+    }
+
+    /* Stopka */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2.5rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: #808691;
+      max-width: 860px;
+      margin: 0 auto;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 0 1rem;
+      }
+      nav.sections-index {
+        display: none;
+      }
+      .chapter {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+      .chapter-side {
+        position: static;
+      }
+      .chapter-glyph {
+        font-size: 2.2rem;
+      }
+      .breakdown-row {
+        grid-template-columns: 50px 1fr;
+        gap: 0.3rem;
+      }
+      .breakdown-row .b-meaning {
+        grid-column: 1 / -1;
+      }
+      .contact-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+      }
+    }
+  </style>
+</head>
+<body id="top">
+
+  <!-- Górna belka -->
+  <header>
+    <a href="#top" class="brand-id">
+      <span class="dot"></span>
+      <span>Twoje Imię i Nazwisko</span>
+    </a>
+    <nav class="sections-index">
+      <a href="#wzor">S</a>
+      <a href="#hiszpanski">B</a>
+      <a href="#matematyka">ln</a>
+      <a href="#fizyka">k</a>
+      <a href="#zero">∅</a>
+    </nav>
+    <a href="mailto:twoj@email.com" class="header-cta">Napisz</a>
+  </header>
+
+  <main>
+    <!-- Sekcja Hero -->
+    <section class="hero">
+      <div class="meta-line">Edukacja · Od zera · Do porządku</div>
+      <h1 class="hero-title">Twoje<br>Nazwisko</h1>
+      
+      <div class="hero-annotation">to ja ↗</div>
+
+      <p class="lead-text">
+        Większość problemów ze szkolnymi przedmiotami nie wynika z braku zdolności, ale z chaosu. Kiedy materiał pędzi za szybko, uczeń traci grunt pod nogami. Moje podejście jest odwrotne: <strong>zmniejszam entropię</strong>. <span>Uporządkujmy to od podstaw.</span>
+      </p>
+
+      <a href="#wzor" class="link-action">Zobacz rozkład równania ↓</a>
+    </section>
+
+    <!-- Sekcja Równania Boltzmanna -->
+    <section id="wzor" class="equation-section">
+      <div class="equation-header">01 · Oś konstrukcyjna</div>
+      <h2>Boltzmann — rozwój z chaosu</h2>
+      <div class="prose">
+        <p>
+          Ludwig Boltzmann zapisał matematyczną relację między mikroskopijnym nieporządkiem a tym, co widać na zewnątrz[cite: 1]. To nie tylko termodynamika — to idealna metafora tego, jak zamieniamy zagubienie w głowie w logiczny spokój[cite: 1].
+        </p>
+      </div>
+
+      <div class="formula-display">
+        <div class="formula-frame">
+          <span>S</span>
+          <span>=</span>
+          <span>k</span><span class="accent sub">B</span>
+          <span>ln</span>
+          <span>Ω</span>
+        </div>
+        <div class="formula-caption">Wzór Boltzmanna na entropię[cite: 1]</div>
+      </div>
+
+      <div class="breakdown-list">
+        <div class="breakdown-row">
+          <div class="b-symbol">S</div>
+          <div class="b-science">Entropia[cite: 1]</div>
+          <div class="b-meaning"><strong>Spokój i równowaga.</strong>[cite: 1] Cel naszych lekcji: wyjście z paniki przed tablicą i osiągnięcie pewności.[cite: 1]</div>
+        </div>
+        <div class="breakdown-row">
+          <div class="b-symbol">k</div>
+          <div class="b-science">Stała[cite: 1]</div>
+          <div class="b-meaning"><strong>Wiedza i konsekwencja.</strong>[cite: 1] Niezmienny fundament. Regularny wysiłek, który zawsze daje wymierny wynik.[cite: 1]</div>
+        </div>
+        <div class="breakdown-row">
+          <div class="b-symbol">B</div>
+          <div class="b-science">Boltzmann[cite: 1]</div>
+          <div class="b-meaning"><strong>Budowanie własnej przyszłości.</strong>[cite: 1] Hiszpański od zera do B1 otwiera realne perspektywy i swobodę komunikacji.[cite: 1]</div>
+        </div>
+        <div class="breakdown-row">
+          <div class="b-symbol">ln</div>
+          <div class="b-science">Logarytm[cite: 1]</div>
+          <div class="b-meaning"><strong>Logiczne myślenie i matematyka.</strong>[cite: 1] Sprowadzanie zagadnień do elementarnych kroków, które mają sens.[cite: 1]</div>
+        </div>
+        <div class="breakdown-row">
+          <div class="b-symbol">Ω</div>
+          <div class="b-science">Mikrostany[cite: 1]</div>
+          <div class="b-meaning"><strong>Nieskończone możliwości rozwoju.</strong>[cite: 1] Zrozumienie fizyki świata bez strachu przed wzorami.[cite: 1]</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rozdział 1: Hiszpański -->
+    <section id="hiszpanski" class="chapter">
+      <div class="chapter-side">
+        <div class="chapter-glyph red">B</div>
+      </div>
+      <div class="chapter-content">
+        <span class="chapter-tag">Budowanie przyszłości · Komunikacja[cite: 1]</span>
+        <h2>Język Hiszpański: 0 → B1</h2>
+        <div class="prose">
+          <p>
+            Nie uczę języka z kserówek do odhaczenia. Uczę tak, by od pierwszych spotkań przełamywać lęk przed mówieniem na głos. Prowadzę od zupełnego zera aż do poziomu B1, na którym bez stresu porozmawiasz w podróży czy wyrazisz swoje zdanie.
+          </p>
+        </div>
+        <div class="curriculum-box">
+          <div class="curr-item">
+            <h4>Start od zera (A1)</h4>
+            <p>Poprawna wymowa, codzienne zwroty, zwalczanie niepewności w pierwszych dialogach.</p>
+          </div>
+          <div class="curr-item">
+            <h4>Czasy przeszłe (A2)</h4>
+            <p>Pretérito Indefinido i Imperfecto wytłumaczone logicznie na przykładach z życia.</p>
+          </div>
+          <div class="curr-item">
+            <h4>Swoboda i płynność (B1)</h4>
+            <p>Tryb Subjuntivo, wyrażanie opinii, argumentowanie i swobodna konwersacja.</p>
+          </div>
+        </div>
+        <a href="mailto:twoj@email.com?subject=Hiszpanski" class="link-action">Napisz w sprawie hiszpańskiego →</a>
+      </div>
+    </section>
+
+    <!-- Rozdział 2: Matematyka -->
+    <section id="matematyka" class="chapter">
+      <div class="chapter-side">
+        <div class="chapter-glyph">ln</div>
+      </div>
+      <div class="chapter-content">
+        <span class="chapter-tag">Logiczne myślenie · Szkoła Podstawowa[cite: 1]</span>
+        <h2>Matematyka: Klasy 4–8 i E8</h2>
+        <div class="prose">
+          <p>
+            Matematyka nie wymaga wrodzonego geniuszu, tylko logicznej ciągłości. Gdy uczeń ma zaległość z ułamków, gubi się w równaniach. Znajdujemy brakujący element, naprawiamy go i nagle zadania stają się zrozumiałe.
+          </p>
+        </div>
+        <div class="curriculum-box">
+          <div class="curr-item">
+            <h4>Egzamin Ósmoklasisty (E8)</h4>
+            <p>Strategie rozwiązywania arkuszy CKE, pułapki w zadaniach otwartych, spokój pod presją czasu.</p>
+          </div>
+          <div class="curr-item">
+            <h4>Bieżący materiał i zaległości</h4>
+            <p>Ułamki, równania, geometria i zadania tekstowe tłumaczone krok po kroku.</p>
+          </div>
+        </div>
+        <a href="mailto:twoj@email.com?subject=Matematyka" class="link-action">Umów lekcję matematyki →</a>
+      </div>
+    </section>
+
+    <!-- Rozdział 3: Fizyka -->
+    <section id="fizyka" class="chapter">
+      <div class="chapter-side">
+        <div class="chapter-glyph">k</div>
+      </div>
+      <div class="chapter-content">
+        <span class="chapter-tag">Wiedza i konsekwencja · Prawa zjawisk[cite: 1]</span>
+        <h2>Fizyka bez strachu przed wzorami</h2>
+        <div class="prose">
+          <p>
+            Zamiast mechanicznego podstawiania liczb pod wzór — najpierw wyobrażamy sobie zjawisko. Uczę jednej, prostej metody przekształcania każdego wzoru, eliminując bezradność przy kartkówkach.
+          </p>
+        </div>
+        <div class="curriculum-box">
+          <div class="curr-item">
+            <h4>Ruch i Siły (Dynamika)</h4>
+            <p>Zrozumienie zasad dynamiki Newtona, prędkości i przyspieszenia na realnych przykładach.</p>
+          </div>
+          <div class="curr-item">
+            <h4>Praca, Moc, Energia i Ciepło</h4>
+            <p>Zasada zachowania energii oraz bilans ciepła bez pamięciowego zakuwania.</p>
+          </div>
+        </div>
+        <a href="mailto:twoj@email.com?subject=Fizyka" class="link-action">Umów lekcję fizyki →</a>
+      </div>
+    </section>
+
+    <!-- Rozdział 4: ∅ (Czego u mnie nie ma) -->
+    <section id="zero" class="chapter">
+      <div class="chapter-side">
+        <div class="chapter-glyph">∅</div>
+      </div>
+      <div class="chapter-content">
+        <span class="chapter-tag">Zbiór pusty · Zasady pracy</span>
+        <h2>Czego u mnie nie ma</h2>
+        <div class="prose">
+          <p>
+            Równie ważne jak to, co przekazuję, jest to, czego na moich zajęciach nigdy nie doświadczysz:
+          </p>
+        </div>
+        <div class="empty-set-box">
+          <div class="empty-formula">∅ = { x : x jest stresem, ocenianiem lub zniecierpliwieniem }</div>
+          <p>• <strong>Zero zniecierpliwienia:</strong> Jeśli czegoś nie rozumiesz, tłumaczę to inną drogą, dopóki wszystko nie kliknie.</p>
+          <p>• <strong>Zero pamięciówki:</strong> Wkuwanie wzorów bez zrozumienia ich sensu jest stratą czasu.</p>
+          <p>• <strong>Jeden kontakt:</strong> Język, liczby i fizyka u jednego mentora to spójny proces i mniej stresu dla rodzica.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section id="kontakt" class="contact-section">
+      <div class="meta-line">Kontakt</div>
+      <h2>Zacznijmy współpracę.</h2>
+      <p class="sub">
+        Napisz lub zadzwoń. Ustalimy poziom, cel oraz dogodny termin pierwszych zajęć.
+      </p>
+
+      <div class="contact-list">
+        <a href="mailto:twoj@email.com" class="contact-row">
+          <span class="label">E-mail</span>
+          <span class="val">twoj@email.com ↗</span>
+        </a>
+        <a href="tel:+48000000000" class="contact-row">
+          <span class="label">Telefon / WhatsApp</span>
+          <span class="val">+48 000 000 000 ↗</span>
+        </a>
+        <div class="contact-row">
+          <span class="label">Tryb</span>
+          <span class="val">Online (wirtualna tablica) / Stacjonarnie</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Stopka -->
+  <footer>
+    <p>S = kB ln Ω · Edukacja bez chaosu[cite: 1]</p>
+    <p><a href="#top" style="color: #ffffff; border-bottom: 1px dotted #ff3333;">Na górę ↑</a></p>
+  </footer>
+
+</body>
+</html>
