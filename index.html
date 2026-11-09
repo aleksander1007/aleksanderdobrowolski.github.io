@@ -3,29 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Korepetycje — Matematyka · Fizyka · Hiszpański</title>
+  <title>Korepetycje — S = kB ln Ω</title>
 
-  <!-- Typografia: elegancki Serif (Playfair Display) + techniczny Sans (Plus Jakarta Sans) + odręczny (Caveat) -->
+  <!-- Google Fonts: odręczna kreda, maszyna/wzory i elegancki nagłówek -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=JetBrains+Mono:ital,wght@0,300;0,500;0,700;1,400&family=Playfair+Display:ital,wght@0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #fbfbf9;
-      --bg-card: #ffffff;
-      --bg-subtle: #f4f3ee;
-      --text: #1a1b1e;
-      --text-muted: #6b6e77;
-      --border: rgba(26, 27, 30, 0.08);
-      --border-strong: rgba(26, 27, 30, 0.18);
-      --accent-terracotta: #c2593f;
-      --accent-olive: #3f5e4d;
+      --board-bg: #0f1214;
+      --board-surface: rgba(255, 255, 255, 0.03);
+      --chalk-white: #f5f5f3;
+      --chalk-dim: rgba(245, 245, 243, 0.65);
+      --chalk-yellow: #f3df95;
+      --chalk-cyan: #98d8d4;
+      --chalk-dust: rgba(255, 255, 255, 0.12);
       
       --font-body: 'Plus Jakarta Sans', sans-serif;
-      --font-serif: 'Playfair Display', Georgia, serif;
-      --font-mono: 'JetBrains Mono', monospace;
-      --font-hand: 'Caveat', cursive;
+      --font-chalk: 'Caveat', cursive;
+      --font-math: 'JetBrains Mono', monospace;
+      --font-title: 'Playfair Display', serif;
     }
 
     * {
@@ -36,85 +34,93 @@
 
     html {
       scroll-behavior: smooth;
-      background-color: var(--bg);
-      color: var(--text);
+      background-color: var(--board-bg);
+      color: var(--chalk-white);
       font-family: var(--font-body);
     }
 
+    /* Efekt tekstury tablicy kredowej i pyłu */
     body {
-      line-height: 1.65;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 0),
+        radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 0);
+      background-size: 24px 24px, 48px 48px;
+      background-position: 0 0, 12px 12px;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
     a {
       color: inherit;
       text-decoration: none;
-      transition: all 0.2s ease;
     }
 
-    /* --- Górna belka nawigacji --- */
+    /* --- Pływający górny pasek --- */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 70px;
-      padding: 0 2.5rem;
+      height: 68px;
+      padding: 0 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(251, 251, 249, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      z-index: 100;
+      background: rgba(15, 18, 20, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px dashed var(--chalk-dust);
+      z-index: 1000;
     }
 
-    .brand {
-      font-weight: 700;
-      font-size: 1.05rem;
-      letter-spacing: -0.01em;
+    .brand-logo {
+      font-family: var(--font-math);
+      font-size: 1rem;
       display: flex;
       align-items: center;
       gap: 0.6rem;
+      letter-spacing: 0.05em;
     }
 
-    .brand-symbol {
-      font-family: var(--font-mono);
-      color: var(--accent-terracotta);
-      font-size: 1.1rem;
+    .brand-logo span {
+      color: var(--chalk-yellow);
     }
 
-    nav.sections-nav {
+    nav.nav-links {
       display: flex;
       gap: 1.5rem;
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
+      font-family: var(--font-math);
+      font-size: 0.85rem;
     }
 
-    nav.sections-nav a {
-      color: var(--text-muted);
-      padding: 0.25rem 0.6rem;
+    nav.nav-links a {
+      color: var(--chalk-dim);
+      padding: 0.3rem 0.6rem;
       border-radius: 4px;
+      transition: all 0.25s ease;
     }
 
-    nav.sections-nav a:hover {
-      color: var(--text);
-      background: var(--bg-subtle);
+    nav.nav-links a:hover {
+      color: var(--chalk-white);
+      background: rgba(255, 255, 255, 0.06);
     }
 
-    .btn-nav {
-      font-size: 0.88rem;
-      font-weight: 600;
-      padding: 0.5rem 1.25rem;
-      border-radius: 999px;
-      border: 1px solid var(--border-strong);
-      background: var(--text);
-      color: #fff;
+    .chalk-btn {
+      font-family: var(--font-chalk);
+      font-size: 1.25rem;
+      padding: 0.25rem 1.2rem;
+      border: 1.5px solid var(--chalk-white);
+      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px; /* efekt odręcznej ramki */
+      background: transparent;
+      color: var(--chalk-white);
+      cursor: pointer;
+      transition: all 0.25s ease;
     }
 
-    .btn-nav:hover {
-      background: var(--accent-terracotta);
-      border-color: var(--accent-terracotta);
+    .chalk-btn:hover {
+      background: var(--chalk-white);
+      color: var(--board-bg);
+      transform: scale(1.03);
     }
 
     /* --- Główny kontener --- */
@@ -124,308 +130,303 @@
       padding: 130px 1.5rem 80px;
     }
 
-    /* --- Hero --- */
+    /* --- Hero Section --- */
     .hero {
-      padding: 3rem 0 5rem;
-      border-bottom: 1px solid var(--border);
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid var(--chalk-dust);
       position: relative;
     }
 
-    .hero-meta {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent-terracotta);
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .hero-meta::before {
-      content: "";
-      width: 14px;
-      height: 1px;
-      background: var(--accent-terracotta);
+    .hero-tag {
+      font-family: var(--font-chalk);
+      font-size: 1.8rem;
+      color: var(--chalk-yellow);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.03em;
     }
 
     .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(3rem, 7.5vw, 5.2rem);
-      line-height: 1.05;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+      font-family: var(--font-title);
+      font-size: clamp(2.8rem, 7vw, 4.8rem);
+      line-height: 1.1;
+      font-weight: 600;
       margin-bottom: 1.5rem;
-      color: var(--text);
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
     }
 
-    .hero h1 em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--accent-terracotta);
-    }
-
-    .hero-desc {
-      font-size: 1.25rem;
-      color: var(--text-muted);
-      max-width: 640px;
-      margin-bottom: 2.2rem;
-      font-weight: 400;
-    }
-
-    .hero-desc strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .hand-annotation {
-      font-family: var(--font-hand);
-      font-size: 1.7rem;
-      color: var(--accent-olive);
-      display: inline-block;
-      transform: rotate(-3deg);
-      margin-left: 0.5rem;
-    }
-
-    /* --- Karta Równania / Euler-style Formula Ribbon --- */
-    .formula-banner {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 2.2rem;
-      margin: 4rem 0 2rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-    }
-
-    .formula-equation {
-      font-family: var(--font-mono);
-      font-size: 1.5rem;
-      color: var(--text);
-      text-align: center;
+    .hero-sub {
+      font-size: 1.2rem;
+      color: var(--chalk-dim);
+      max-width: 650px;
+      line-height: 1.6;
       margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      letter-spacing: 0.05em;
     }
 
-    .formula-equation span {
-      color: var(--accent-terracotta);
+    .hero-sub strong {
+      color: var(--chalk-white);
       font-weight: 600;
+      border-bottom: 1px dashed var(--chalk-yellow);
     }
 
-    .formula-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1.5rem;
+    /* --- Sekcja ze wzorem Boltzmanna --- */
+    .boltzmann-hero-box {
+      margin: 4rem 0 3rem;
+      padding: 2.5rem 2rem;
+      background: var(--board-surface);
+      border: 1px solid var(--chalk-dust);
+      border-radius: 12px;
+      position: relative;
     }
 
-    .formula-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .formula-symbol {
-      font-family: var(--font-mono);
-      font-size: 1.7rem;
+    .chalk-box-equation {
+      display: inline-block;
+      border: 2px solid var(--chalk-white);
+      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+      padding: 0.8rem 2.2rem;
+      margin: 1.5rem auto;
+      font-family: var(--font-math);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
       font-weight: 600;
-      color: var(--accent-terracotta);
-      line-height: 1;
+      letter-spacing: 0.08em;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
+      animation: gentle-glow 4s infinite alternate;
     }
 
-    .formula-title {
-      font-weight: 600;
+    .chalk-box-equation span.sub {
+      font-size: 0.65em;
+      vertical-align: sub;
+    }
+
+    @keyframes gentle-glow {
+      0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.2); }
+      100% { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5), 0 0 30px rgba(243, 223, 149, 0.3); }
+    }
+
+    /* Tabela interpretacji symboli */
+    .symbols-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
       font-size: 0.95rem;
-      margin-top: 0.5rem;
     }
 
-    .formula-sub {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    /* --- Bloki Przedmiotów / Sekcje --- */
-    .subject-block {
-      padding: 5rem 0;
-      border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      gap: 3rem;
-    }
-
-    .subject-symbol {
-      font-family: var(--font-mono);
-      font-size: 3.5rem;
+    .symbols-table th {
+      text-align: left;
+      font-family: var(--font-math);
+      color: var(--chalk-dim);
       font-weight: 500;
-      color: var(--border-strong);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--chalk-dust);
+    }
+
+    .symbols-table td {
+      padding: 1.1rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: background 0.2s ease;
+    }
+
+    .symbols-table tr:hover td {
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .td-symbol {
+      font-family: var(--font-math);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--chalk-yellow);
+      width: 12%;
+    }
+
+    .td-science {
+      color: var(--chalk-dim);
+      width: 38%;
+      font-family: var(--font-math);
+      font-size: 0.9rem;
+    }
+
+    .td-meaning {
+      color: var(--chalk-white);
+      font-weight: 500;
+      width: 50%;
+    }
+
+    /* --- Sekcje przedmiotów --- */
+    .chalk-section {
+      padding: 5rem 0;
+      border-bottom: 1px solid var(--chalk-dust);
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 2.5rem;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .chalk-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-glyph {
+      font-family: var(--font-math);
+      font-size: 3.5rem;
+      color: var(--chalk-dust);
       position: sticky;
       top: 100px;
       line-height: 1;
     }
 
-    .subject-content h2 {
-      font-family: var(--font-serif);
-      font-size: 2.3rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      margin-bottom: 0.5rem;
+    .section-content h2 {
+      font-family: var(--font-title);
+      font-size: 2.2rem;
+      margin-bottom: 0.3rem;
     }
 
-    .subject-tag {
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--accent-terracotta);
-      margin-bottom: 1.2rem;
+    .section-label {
+      font-family: var(--font-chalk);
+      font-size: 1.5rem;
+      color: var(--chalk-yellow);
+      margin-bottom: 1rem;
     }
 
-    .subject-desc {
-      color: var(--text-muted);
+    .section-desc {
+      color: var(--chalk-dim);
       font-size: 1.05rem;
       margin-bottom: 2rem;
       max-width: 620px;
     }
 
-    .curriculum-list {
-      list-style: none;
+    .chalk-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1rem;
-      margin-bottom: 2.2rem;
+      margin-bottom: 2rem;
     }
 
-    .curriculum-list li {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+    .chalk-card {
+      background: var(--board-surface);
+      border: 1px dashed var(--chalk-dust);
       border-radius: 8px;
-      padding: 1.1rem 1.3rem;
-      transition: all 0.2s ease;
+      padding: 1.1rem 1.25rem;
+      transition: all 0.25s ease;
     }
 
-    .curriculum-list li:hover {
-      border-color: var(--border-strong);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    .chalk-card:hover {
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
     }
 
-    .curriculum-list li strong {
+    .chalk-card strong {
       display: block;
       font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text);
+      color: var(--chalk-white);
+      margin-bottom: 0.2rem;
     }
 
-    .curriculum-list li span {
-      display: block;
+    .chalk-card span {
       font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
+      color: var(--chalk-dim);
     }
 
-    .action-link {
+    .chalk-link {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      font-weight: 600;
-      font-size: 0.92rem;
-      color: var(--text);
-      border-bottom: 1.5px solid var(--accent-terracotta);
+      font-family: var(--font-chalk);
+      font-size: 1.4rem;
+      color: var(--chalk-yellow);
+      border-bottom: 1px dotted var(--chalk-yellow);
       padding-bottom: 2px;
+      transition: color 0.2s ease;
     }
 
-    .action-link:hover {
-      color: var(--accent-terracotta);
+    .chalk-link:hover {
+      color: #fff;
+      border-bottom-style: solid;
     }
 
-    /* --- Sekcja: Czego nie robię (Zero / Negacja) --- */
-    .empty-set-box {
-      background: var(--bg-subtle);
-      border: 1px dashed var(--border-strong);
-      padding: 2rem;
-      border-radius: 10px;
-      margin: 1.5rem 0;
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    /* --- Sekcja Kontaktowa --- */
-    .contact-area {
+    /* --- Formularz / Kontakt --- */
+    .contact-chalk {
       padding: 6rem 0 3rem;
       text-align: center;
     }
 
-    .contact-area h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 3.8rem);
+    .contact-chalk h2 {
+      font-family: var(--font-title);
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
       margin-bottom: 1rem;
-      font-weight: 700;
     }
 
-    .contact-cards {
+    .contact-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1.2rem;
-      margin-top: 3.5rem;
+      margin-top: 3rem;
       text-align: left;
     }
 
-    .contact-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+    .contact-box {
+      background: var(--board-surface);
+      border: 1px solid var(--chalk-dust);
+      border-radius: 8px;
       padding: 1.4rem;
-      transition: all 0.2s ease;
+      transition: all 0.25s;
     }
 
-    .contact-card:hover {
-      border-color: var(--accent-terracotta);
+    .contact-box:hover {
+      border-color: var(--chalk-yellow);
       transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
     }
 
-    .contact-card small {
-      font-family: var(--font-mono);
+    .contact-box small {
+      font-family: var(--font-math);
       font-size: 0.75rem;
+      color: var(--chalk-dim);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--text-muted);
-      display: block;
     }
 
-    .contact-card strong {
+    .contact-box strong {
       display: block;
-      margin-top: 0.35rem;
+      margin-top: 0.3rem;
       font-size: 1.05rem;
-      color: var(--text);
     }
 
-    /* --- Stopka --- */
+    /* --- Footer --- */
     footer {
-      border-top: 1px solid var(--border);
+      border-top: 1px dashed var(--chalk-dust);
       padding: 2.5rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 0.85rem;
-      color: var(--text-muted);
+      color: var(--chalk-dim);
       max-width: 960px;
       margin: 0 auto;
+      font-family: var(--font-math);
     }
 
     @media (max-width: 768px) {
       header {
         padding: 0 1.2rem;
       }
-      nav.sections-nav {
+      nav.nav-links {
         display: none;
       }
-      .subject-block {
+      .chalk-section {
         grid-template-columns: 1fr;
         gap: 1rem;
       }
-      .subject-symbol {
+      .section-glyph {
         position: static;
         font-size: 2.2rem;
       }
@@ -439,231 +440,112 @@
 </head>
 <body id="top">
 
-  <!-- Pasek nawigacyjny -->
+  <!-- Nawigacja -->
   <header>
-    <a href="#top" class="brand">
-      <span class="brand-symbol">Δ</span>
-      <span>Twoje Imię i Nazwisko</span>
+    <a href="#top" class="brand-logo">
+      <span>[S = kB ln Ω]</span> Korepetycje
     </a>
-    <nav class="sections-nav">
-      <a href="#hiszpanski">Ñ</a>
-      <a href="#matematyka">x</a>
-      <a href="#fizyka">F</a>
-      <a href="#jeden">1</a>
-      <a href="#zero">∅</a>
+    <nav class="nav-links">
+      <a href="#wzor">Wzór</a>
+      <a href="#hiszpanski">Hiszpański</a>
+      <a href="#matematyka">Matematyka</a>
+      <a href="#fizyka">Fizyka</a>
+      <a href="#kontakt">Kontakt</a>
     </nav>
-    <a href="mailto:kontakt@twojadomena.pl" class="btn-nav">Zarezerwuj termin</a>
+    <a href="#kontakt" class="chalk-btn">Napisz do mnie</a>
   </header>
 
   <main>
     <!-- Sekcja Hero -->
     <section class="hero">
-      <div class="hero-meta">Zrozumieć zamiast zakuwać</div>
-      <h1>
-        Język, liczby i zjawiska.<br>
-        <em>Wszystko w logicznym porządku.</em>
-      </h1>
-      <p class="hero-desc">
-        Prowadzę zajęcia z <strong>języka hiszpańskiego (od podstaw do B1)</strong> oraz <strong>matematyki i fizyki</strong> dla szkoły podstawowej. Bez stresu, prostym językiem i w tempie dopasowanym do Ciebie.
-        <span class="hand-annotation">tak po prostu ↗</span>
+      <p class="hero-tag">Rozwój z chaosu ✍</p>
+      <h1>Zrozumieć reguły.<br>Opanować wiedzę.</h1>
+      <p class="hero-sub">
+        Prowadzę zajęcia z <strong>języka hiszpańskiego (od 0 do poziomu B1)</strong> oraz <strong>matematyki i fizyki</strong> na poziomie szkoły podstawowej. Zamieniamy chaos i szkolny stres w logiczną pewność siebie.
       </p>
-      <a href="#hiszpanski" class="action-link">Sprawdź zakres zajęć ↓</a>
-    </section>
-
-    <!-- Wstęga Równania -->
-    <section class="formula-banner">
-      <div class="formula-equation">
-        <span>Ñ</span> + <span>x</span> + <span>F</span> + <span>1</span> = <span>0</span> stresu
-      </div>
-      <div class="formula-grid">
-        <div class="formula-item">
-          <span class="formula-symbol">Ñ</span>
-          <span class="formula-title">Hiszpański</span>
-          <span class="formula-sub">od zera do B1</span>
-        </div>
-        <div class="formula-item">
-          <span class="formula-symbol">x</span>
-          <span class="formula-title">Matematyka</span>
-          <span class="formula-sub">klasy 4–8 i E8</span>
-        </div>
-        <div class="formula-item">
-          <span class="formula-symbol">F</span>
-          <span class="formula-title">Fizyka</span>
-          <span class="formula-sub">zrozumienie zjawisk</span>
-        </div>
-        <div class="formula-item">
-          <span class="formula-symbol">1</span>
-          <span class="formula-title">Jeden mentor</span>
-          <span class="formula-sub">spójny plan nauki</span>
-        </div>
-        <div class="formula-item">
-          <span class="formula-symbol">∅</span>
-          <span class="formula-title">Czego unikam</span>
-          <span class="formula-sub">pustego wkuwania</span>
-        </div>
+      <div>
+        <a href="#wzor" class="chalk-link">Zobacz symbolikę wzoru Boltzmanna ↓</a>
       </div>
     </section>
 
-    <!-- 1. HISZPAŃSKI (Ñ) -->
-    <section id="hiszpanski" class="subject-block">
-      <div class="subject-symbol">Ñ</div>
-      <div class="subject-content">
-        <div class="subject-tag">Komunikacja i swoboda</div>
-        <h2>Język Hiszpański · 0 → B1</h2>
-        <p class="subject-desc">
-          Nauka od totalnego zera do etapu, w którym bez problemu dogadasz się w podróży, na wymianie czy w pracy. Skupiamy się na naturalnym mówieniu, zwalczaniu bariery językowej i praktycznej gramatyce bez nudnych regułek.
+    <!-- Sekcja Wzoru Boltzmanna -->
+    <section id="wzor" class="boltzmann-hero-box">
+      <div style="text-align: center;">
+        <span class="hero-tag">1. Boltzmann — rozwój z chaosu</span>
+        <div style="margin: 1rem 0;">
+          <div class="chalk-box-equation">
+            S = k<span class="sub">B</span> ln Ω
+          </div>
+        </div>
+        <p style="color: var(--chalk-dim); max-width: 600px; margin: 0 auto;">
+          Ten wzór ma kilka bardzo ciekawych elementów, które można symbolicznie wykorzystać w edukacji i rozwoju.
         </p>
-        <ul class="curriculum-list">
-          <li>
+      </div>
+
+      <!-- Tabela interpretacji ze zdjęcia -->
+      <table class="symbols-table">
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Znaczenie naukowe</th>
+            <th>Twoja interpretacja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-symbol">S</td>
+            <td class="td-science">Entropia</td>
+            <td class="td-meaning">Spokój i równowaga</td>
+          </tr>
+          <tr>
+            <td class="td-symbol">k</td>
+            <td class="td-science">Stała Boltzmanna</td>
+            <td class="td-meaning">Wiedza i konsekwencja</td>
+          </tr>
+          <tr>
+            <td class="td-symbol">B</td>
+            <td class="td-science">Oznaczenie Boltzmanna</td>
+            <td class="td-meaning">Budowanie własnej przyszłości</td>
+          </tr>
+          <tr>
+            <td class="td-symbol">ln</td>
+            <td class="td-science">Logarytm naturalny</td>
+            <td class="td-meaning">Logicze myślenie i matematyka</td>
+          </tr>
+          <tr>
+            <td class="td-symbol">Ω</td>
+            <td class="td-science">Liczba mikrostanów</td>
+            <td class="td-meaning">Nieskończone możliwości rozwoju</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Przedmiot 1: Hiszpański -->
+    <section id="hiszpanski" class="chalk-section">
+      <div class="section-glyph">Ñ</div>
+      <div class="section-content">
+        <p class="section-label">Komunikacja od pierwszych zajęć</p>
+        <h2>Język Hiszpański (0 → B1)</h2>
+        <p class="section-desc">
+          Zaczynamy od zupełnego zera, aż do swobodnego poziomu B1. Koniec ze żmudnym wkuwaniem słówek — stawiamy na natychmiastowe budowanie zdań, opanowanie czasów i swobodne mówienie bez strachu przed pomyłką.
+        </p>
+        <div class="chalk-grid">
+          <div class="chalk-card">
             <strong>Start od zera (A1)</strong>
-            <span>Wymowa, podstawowe zwroty, codzienne sytuacje</span>
-          </li>
-          <li>
-            <strong>Płynne dialogi (A2)</strong>
-            <span>Czasowniki przeszłe bez tajemnic, opisywanie świata</span>
-          </li>
-          <li>
-            <strong>Samodzielność (B1)</strong>
-            <span>Wyrażanie opinii, tryb Subjuntivo w przystępny sposób</span>
-          </li>
-          <li>
-            <strong>Konwersacje</strong>
-            <span>Akcent na swobodne mówienie od pierwszych lekcji</span>
-          </li>
-        </ul>
-        <a href="mailto:kontakt@twojadomena.pl?subject=Lekcje%20hiszpa%C5%84skiego" class="action-link">Zacznij mówić po hiszpańsku →</a>
-      </div>
-    </section>
-
-    <!-- 2. MATEMATYKA (x) -->
-    <section id="matematyka" class="subject-block">
-      <div class="subject-symbol">x</div>
-      <div class="subject-content">
-        <div class="subject-tag">Logiczne myślenie</div>
-        <h2>Matematyka · Szkoła Podstawowa</h2>
-        <p class="subject-desc">
-          Matematyka to nie pamięciówka, tylko zestaw prostych klocków. Pomagam nadrobić zaległości, przygotować się do sprawdzianów oraz skutecznie opanować materiał do Egzaminu Ósmoklasisty.
-        </p>
-        <ul class="curriculum-list">
-          <li>
-            <strong>Egzamin Ósmoklasisty (E8)</strong>
-            <span>Systematyczne rozwiązywanie arkuszy CKE i strategie</span>
-          </li>
-          <li>
-            <strong>Bieżący materiał (klasy 4–8)</strong>
-            <span>Ułamki, geometria, równania, zadania tekstowe</span>
-          </li>
-          <li>
-            <strong>Nadrabianie zaległości</strong>
-            <span>Tłumaczenie skomplikowanych tematów prostym językiem</span>
-          </li>
-          <li>
-            <strong>Pewność przy tablicy</strong>
-            <span>Budowanie wiary we własne możliwości bez presji</span>
-          </li>
-        </ul>
-        <a href="mailto:kontakt@twojadomena.pl?subject=Korepetycje%20z%20matematyki" class="action-link">Umów lekcję matematyki →</a>
-      </div>
-    </section>
-
-    <!-- 3. FIZYKA (F) -->
-    <section id="fizyka" class="subject-block">
-      <div class="subject-symbol">F</div>
-      <div class="subject-content">
-        <div class="subject-tag">Zrozumienie świata</div>
-        <h2>Fizyka · Poziom Podstawowy</h2>
-        <p class="subject-desc">
-          Zamiast suchych wzorów — intuicja i przykłady z życia codziennego. Pokazuję, skąd biorą się prawa fizyki, jak czytać wykresy i jak bezbłędnie przekształcać wzory w zadaniach obliczeniowych.
-        </p>
-        <ul class="curriculum-list">
-          <li>
-            <strong>Kinematyka i Dynamika</strong>
-            <span>Prędkość, siły, zasady dynamiki Newtona w praktyce</span>
-          </li>
-          <li>
-            <strong>Energia, Praca i Moc</strong>
-            <span>Logiczne powiązania między pojęciami</span>
-          </li>
-          <li>
-            <strong>Ciepło, Prąd i Optyka</strong>
-            <span>Zjawiska fizyczne, obwody elektryczne, soczewki</span>
-          </li>
-          <li>
-            <strong>Przekształcanie wzorów</strong>
-            <span>Praktyczna metoda eliminująca błędy obliczeniowe</span>
-          </li>
-        </ul>
-        <a href="mailto:kontakt@twojadomena.pl?subject=Korepetycje%20z%20fizyki" class="action-link">Umów lekcję fizyki →</a>
-      </div>
-    </section>
-
-    <!-- 4. JEDEN KONTAKT (1) -->
-    <section id="jeden" class="subject-block">
-      <div class="subject-symbol">1</div>
-      <div class="subject-content">
-        <div class="subject-tag">Komfort rodzica i ucznia</div>
-        <h2>Jeden Mentor</h2>
-        <p class="subject-desc">
-          Nie musisz umawiać trzech różnych korepetytorów. W jednym tygodniu możemy poćwiczyć hiszpańskie czasy, a przed klasówką skupić się wyłącznie na ułamkach czy prawach Newtona.
-        </p>
-        <ul class="curriculum-list">
-          <li>
-            <strong>Elastyczny grafik</strong>
-            <span>Dostosowanie priorytetu do bieżących sprawdzianów</span>
-          </li>
-          <li>
-            <strong>Format zajęć</strong>
-            <span>Wygodnie online (wspólna tablica) lub stacjonarnie</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 5. CZEGO NIE ROBIĘ (∅) -->
-    <section id="zero" class="subject-block">
-      <div class="subject-symbol">∅</div>
-      <div class="subject-content">
-        <div class="subject-tag">Zbiór pusty</div>
-        <h2>Czego u mnie nie znajdziesz</h2>
-        <div class="empty-set-box">
-          ∅ = { x : x jest stresem, ocenianiem lub zakuwaniem na pamięć bez zrozumienia }
+            <span>Wymowa, proste dialogi, podstawowe zwroty codzienne</span>
+          </div>
+          <div class="chalk-card">
+            <strong>Czasy przeszłe (A2)</strong>
+            <span>Indefinido vs Imperfecto wytłumaczone logicznie</span>
+          </div>
+          <div class="chalk-card">
+            <strong>Płynność i opinie (B1)</strong>
+            <span>Swobodne wypowiedzi, tryb Subjuntivo bez stresu</span>
+          </div>
+          <div class="chalk-card">
+            <strong>Przełamywanie bariery</strong>
+            <span>Rozmowy i akcent na komunikację w praktyce</span>
+          </div>
         </div>
-        <p class="subject-desc">
-          Nie ma u mnie krzyku, odpytywania pod presją ani mówienia „przecież to proste”. Jeśli czegoś nie rozumiesz, tłumaczę to na inny sposób, dopóki w głowie nie pojawi się „aha!”.
-        </p>
-      </div>
-    </section>
-
-    <!-- Sekcja Kontakt -->
-    <section id="kontakt" class="contact-area">
-      <div class="hero-meta" style="justify-content: center; margin-bottom: 0.5rem;">Zacznijmy naukę</div>
-      <h2>Porozmawiajmy o terminie.</h2>
-      <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">
-        Napisz lub zadzwoń. Ustalimy poziom, cel oraz dogodny dzień i godzinę pierwszych zajęć.
-      </p>
-
-      <div class="contact-cards">
-        <a href="mailto:kontakt@twojadomena.pl" class="contact-card">
-          <small>E-mail</small>
-          <strong>kontakt@twojadomena.pl ↗</strong>
-        </a>
-        <a href="tel:+48000000000" class="contact-card">
-          <small>Telefon / WhatsApp</small>
-          <strong>+48 000 000 000 ↗</strong>
-        </a>
-        <div class="contact-card">
-          <small>Lokalizacja / Tryb</small>
-          <strong>Online (cała Polska) / Stacjonarnie</strong>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Stopka -->
-  <footer>
-    <p>© 2026 Twoje Imię i Nazwisko. Edukacja bez stresu.</p>
-    <p><a href="#top" style="border-bottom: 1px solid var(--border-strong);">Wróć na górę ↑</a></p>
-  </footer>
-
-</body>
-</html>
+        <a href="mailto:twoj@email.com?subject=Hiszpanski" class="chalk-link">Umów lekcję hisz
