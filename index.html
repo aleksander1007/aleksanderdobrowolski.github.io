@@ -5,25 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Korepetycje — S = kB ln Ω</title>
 
-  <!-- Google Fonts: odręczna kreda, maszyna/wzory i elegancki nagłówek -->
+  <!-- Dokładny zestaw krojów jak na stronie: Archivo + Caveat + JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=JetBrains+Mono:ital,wght@0,300;0,500;0,700;1,400&family=Playfair+Display:ital,wght@0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Caveat:wght@400;600;700&family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --board-bg: #0f1214;
-      --board-surface: rgba(255, 255, 255, 0.03);
-      --chalk-white: #f5f5f3;
-      --chalk-dim: rgba(245, 245, 243, 0.65);
-      --chalk-yellow: #f3df95;
-      --chalk-cyan: #98d8d4;
-      --chalk-dust: rgba(255, 255, 255, 0.12);
+      --bg: #090a0c;
+      --bg-card: #111317;
+      --bg-card-hover: #171a20;
+      --text: #f0f1f3;
+      --text-muted: #7b808a;
       
-      --font-body: 'Plus Jakarta Sans', sans-serif;
-      --font-chalk: 'Caveat', cursive;
-      --font-math: 'JetBrains Mono', monospace;
-      --font-title: 'Playfair Display', serif;
+      /* Czerń, Biel i Czerwień */
+      --red: #ff3333;
+      --red-glow: rgba(255, 51, 51, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.2);
+
+      --font-main: 'Archivo', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-hand: 'Caveat', cursive;
     }
 
     * {
@@ -34,401 +37,440 @@
 
     html {
       scroll-behavior: smooth;
-      background-color: var(--board-bg);
-      color: var(--chalk-white);
-      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
     }
 
-    /* Efekt tekstury tablicy kredowej i pyłu */
     body {
       line-height: 1.6;
-      background-image: 
-        radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 0),
-        radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 0);
-      background-size: 24px 24px, 48px 48px;
-      background-position: 0 0, 12px 12px;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     a {
       color: inherit;
       text-decoration: none;
+      transition: all 0.2s ease;
     }
 
-    /* --- Pływający górny pasek --- */
+    /* --- Stały techniczny pasek nawigacji --- */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 68px;
+      height: 64px;
       padding: 0 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(15, 18, 20, 0.85);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px dashed var(--chalk-dust);
-      z-index: 1000;
+      background: rgba(9, 10, 12, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
     }
 
-    .brand-logo {
-      font-family: var(--font-math);
-      font-size: 1rem;
+    .brand {
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      letter-spacing: 0.05em;
     }
 
-    .brand-logo span {
-      color: var(--chalk-yellow);
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 10px var(--red);
     }
 
-    nav.nav-links {
+    nav.sections-nav {
       display: flex;
       gap: 1.5rem;
-      font-family: var(--font-math);
+      font-family: var(--font-mono);
       font-size: 0.85rem;
     }
 
-    nav.nav-links a {
-      color: var(--chalk-dim);
-      padding: 0.3rem 0.6rem;
+    nav.sections-nav a {
+      color: var(--text-muted);
+      padding: 0.2rem 0.5rem;
       border-radius: 4px;
-      transition: all 0.25s ease;
     }
 
-    nav.nav-links a:hover {
-      color: var(--chalk-white);
-      background: rgba(255, 255, 255, 0.06);
+    nav.sections-nav a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
     }
 
-    .chalk-btn {
-      font-family: var(--font-chalk);
-      font-size: 1.25rem;
-      padding: 0.25rem 1.2rem;
-      border: 1.5px solid var(--chalk-white);
-      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px; /* efekt odręcznej ramki */
-      background: transparent;
-      color: var(--chalk-white);
-      cursor: pointer;
-      transition: all 0.25s ease;
+    .btn-contact {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.45rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid var(--red);
+      color: #fff;
+      background: rgba(255, 51, 51, 0.08);
     }
 
-    .chalk-btn:hover {
-      background: var(--chalk-white);
-      color: var(--board-bg);
-      transform: scale(1.03);
+    .btn-contact:hover {
+      background: var(--red);
+      color: #000;
+      box-shadow: 0 0 16px var(--red-glow);
     }
 
-    /* --- Główny kontener --- */
+    /* --- Kontener Główny --- */
     main {
-      max-width: 960px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: 130px 1.5rem 80px;
+      padding: 120px 1.5rem 80px;
     }
 
     /* --- Hero Section --- */
     .hero {
-      min-height: 70vh;
+      min-height: 75vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding-bottom: 4rem;
-      border-bottom: 1px solid var(--chalk-dust);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 5rem;
       position: relative;
     }
 
-    .hero-tag {
-      font-family: var(--font-chalk);
-      font-size: 1.8rem;
-      color: var(--chalk-yellow);
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.03em;
+    .hero-meta {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--red);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-meta::before {
+      content: "";
+      width: 12px;
+      height: 1px;
+      background: var(--red);
     }
 
     .hero h1 {
-      font-family: var(--font-title);
-      font-size: clamp(2.8rem, 7vw, 4.8rem);
-      line-height: 1.1;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+      font-size: clamp(3.2rem, 9vw, 6.2rem);
+      line-height: 0.95;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.8rem;
+      text-transform: uppercase;
     }
 
-    .hero-sub {
-      font-size: 1.2rem;
-      color: var(--chalk-dim);
-      max-width: 650px;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-
-    .hero-sub strong {
-      color: var(--chalk-white);
-      font-weight: 600;
-      border-bottom: 1px dashed var(--chalk-yellow);
-    }
-
-    /* --- Sekcja ze wzorem Boltzmanna --- */
-    .boltzmann-hero-box {
-      margin: 4rem 0 3rem;
-      padding: 2.5rem 2rem;
-      background: var(--board-surface);
-      border: 1px solid var(--chalk-dust);
-      border-radius: 12px;
-      position: relative;
-    }
-
-    .chalk-box-equation {
+    .hero-badge {
+      font-family: var(--font-hand);
+      font-size: 1.7rem;
+      color: var(--red);
+      transform: rotate(-4deg);
       display: inline-block;
-      border: 2px solid var(--chalk-white);
-      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-      padding: 0.8rem 2.2rem;
-      margin: 1.5rem auto;
-      font-family: var(--font-math);
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-desc {
+      font-size: 1.25rem;
+      max-width: 640px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 2.2rem;
+    }
+
+    .hero-desc span {
+      color: #fff;
+      border-bottom: 1px dashed var(--red);
+    }
+
+    /* --- Pasek ze wzorem Boltzmanna --- */
+    .identity-ribbon {
+      margin: 4rem 0 3rem;
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .equation-display-box {
       text-align: center;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
-      animation: gentle-glow 4s infinite alternate;
+      padding-bottom: 2rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .chalk-box-equation span.sub {
-      font-size: 0.65em;
-      vertical-align: sub;
+    .equation-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      color: #fff;
     }
 
-    @keyframes gentle-glow {
-      0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.2); }
-      100% { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5), 0 0 30px rgba(243, 223, 149, 0.3); }
+    .equation-box {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      padding: 0.5rem 2rem;
+      border: 1px solid var(--border-strong);
+      background: rgba(0, 0, 0, 0.4);
+      letter-spacing: 0.05em;
     }
 
-    /* Tabela interpretacji symboli */
-    .symbols-table {
+    .equation-box span.accent {
+      color: var(--red);
+    }
+
+    .equation-subtext {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* Tabela symboli ze zdjęcia */
+    .boltzmann-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 2rem;
+      margin-top: 1rem;
       font-size: 0.95rem;
     }
 
-    .symbols-table th {
+    .boltzmann-table th {
       text-align: left;
-      font-family: var(--font-math);
-      color: var(--chalk-dim);
-      font-weight: 500;
-      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       padding: 0.8rem 1rem;
-      border-bottom: 1px solid var(--chalk-dust);
+      border-bottom: 1px solid var(--border);
     }
 
-    .symbols-table td {
+    .boltzmann-table td {
       padding: 1.1rem 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      transition: background 0.2s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     }
 
-    .symbols-table tr:hover td {
-      background: rgba(255, 255, 255, 0.025);
+    .boltzmann-table tr:hover td {
+      background: rgba(255, 51, 51, 0.03);
     }
 
-    .td-symbol {
-      font-family: var(--font-math);
+    .td-sym {
+      font-family: var(--font-mono);
       font-size: 1.3rem;
       font-weight: 700;
-      color: var(--chalk-yellow);
+      color: var(--red);
       width: 12%;
     }
 
-    .td-science {
-      color: var(--chalk-dim);
-      width: 38%;
-      font-family: var(--font-math);
+    .td-sci {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
       font-size: 0.9rem;
+      width: 38%;
     }
 
-    .td-meaning {
-      color: var(--chalk-white);
+    .td-my {
+      color: #fff;
       font-weight: 500;
       width: 50%;
     }
 
-    /* --- Sekcje przedmiotów --- */
-    .chalk-section {
+    /* --- Bloki Sekcji (Układ z ordakacper.com) --- */
+    .section-block {
       padding: 5rem 0;
-      border-bottom: 1px solid var(--chalk-dust);
+      border-bottom: 1px solid var(--border);
       display: grid;
-      grid-template-columns: 120px 1fr;
+      grid-template-columns: 140px 1fr;
       gap: 2.5rem;
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
 
-    .chalk-section.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .section-glyph {
-      font-family: var(--font-math);
-      font-size: 3.5rem;
-      color: var(--chalk-dust);
+    .section-symbol {
+      font-family: var(--font-mono);
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: var(--border-strong);
+      line-height: 1;
       position: sticky;
       top: 100px;
-      line-height: 1;
+    }
+
+    .section-symbol.red {
+      color: var(--red);
     }
 
     .section-content h2 {
-      font-family: var(--font-title);
       font-size: 2.2rem;
-      margin-bottom: 0.3rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
     }
 
-    .section-label {
-      font-family: var(--font-chalk);
-      font-size: 1.5rem;
-      color: var(--chalk-yellow);
-      margin-bottom: 1rem;
+    .section-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--red);
+      margin-bottom: 1.2rem;
     }
 
     .section-desc {
-      color: var(--chalk-dim);
+      color: var(--text-muted);
       font-size: 1.05rem;
       margin-bottom: 2rem;
       max-width: 620px;
     }
 
-    .chalk-grid {
+    .features-list {
+      list-style: none;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1rem;
-      margin-bottom: 2rem;
+      margin-bottom: 2.2rem;
     }
 
-    .chalk-card {
-      background: var(--board-surface);
-      border: 1px dashed var(--chalk-dust);
-      border-radius: 8px;
+    .features-list li {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
       padding: 1.1rem 1.25rem;
-      transition: all 0.25s ease;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
     }
 
-    .chalk-card:hover {
-      border-style: solid;
-      border-color: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
+    .features-list li:hover {
+      border-color: var(--red);
+      background: var(--bg-card-hover);
     }
 
-    .chalk-card strong {
-      display: block;
+    .features-list li span {
+      font-weight: 700;
       font-size: 0.95rem;
-      color: var(--chalk-white);
-      margin-bottom: 0.2rem;
+      color: #fff;
     }
 
-    .chalk-card span {
+    .features-list li small {
+      color: var(--text-muted);
       font-size: 0.82rem;
-      color: var(--chalk-dim);
+      margin-top: 0.2rem;
     }
 
-    .chalk-link {
+    .section-cta {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      font-family: var(--font-chalk);
-      font-size: 1.4rem;
-      color: var(--chalk-yellow);
-      border-bottom: 1px dotted var(--chalk-yellow);
-      padding-bottom: 2px;
-      transition: color 0.2s ease;
-    }
-
-    .chalk-link:hover {
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 700;
       color: #fff;
-      border-bottom-style: solid;
+      border-bottom: 1.5px solid var(--red);
+      padding-bottom: 2px;
     }
 
-    /* --- Formularz / Kontakt --- */
-    .contact-chalk {
+    .section-cta:hover {
+      color: var(--red);
+    }
+
+    /* Blok Zbioru Pustego / Czego nie robię */
+    .empty-block {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed var(--border-strong);
+      padding: 1.5rem 2rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* --- Sekcja Kontaktowa --- */
+    .contact-section {
       padding: 6rem 0 3rem;
       text-align: center;
     }
 
-    .contact-chalk h2 {
-      font-family: var(--font-title);
-      font-size: clamp(2.4rem, 6vw, 3.8rem);
-      margin-bottom: 1rem;
+    .contact-section h2 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
     }
 
     .contact-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 1.2rem;
-      margin-top: 3rem;
+      margin-top: 3.5rem;
       text-align: left;
     }
 
-    .contact-box {
-      background: var(--board-surface);
-      border: 1px solid var(--chalk-dust);
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.3rem;
       border-radius: 8px;
-      padding: 1.4rem;
-      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
     }
 
-    .contact-box:hover {
-      border-color: var(--chalk-yellow);
-      transform: translateY(-3px);
+    .contact-card:hover {
+      border-color: var(--red);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px var(--red-glow);
     }
 
-    .contact-box small {
-      font-family: var(--font-math);
+    .contact-card small {
+      font-family: var(--font-mono);
       font-size: 0.75rem;
-      color: var(--chalk-dim);
+      color: var(--red);
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
 
-    .contact-box strong {
-      display: block;
-      margin-top: 0.3rem;
-      font-size: 1.05rem;
+    .contact-card strong {
+      margin-top: 0.4rem;
+      font-size: 1rem;
+      color: #fff;
     }
 
-    /* --- Footer --- */
+    /* --- Stopka --- */
     footer {
-      border-top: 1px dashed var(--chalk-dust);
+      border-top: 1px solid var(--border);
       padding: 2.5rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 0.85rem;
-      color: var(--chalk-dim);
-      max-width: 960px;
+      color: var(--text-muted);
+      max-width: 980px;
       margin: 0 auto;
-      font-family: var(--font-math);
+      font-family: var(--font-mono);
     }
 
     @media (max-width: 768px) {
-      header {
-        padding: 0 1.2rem;
-      }
-      nav.nav-links {
-        display: none;
-      }
-      .chalk-section {
+      .section-block {
         grid-template-columns: 1fr;
         gap: 1rem;
       }
-      .section-glyph {
+      .section-symbol {
         position: static;
         font-size: 2.2rem;
+      }
+      nav.sections-nav {
+        display: none;
+      }
+      header {
+        padding: 0 1.2rem;
       }
       footer {
         flex-direction: column;
@@ -440,50 +482,48 @@
 </head>
 <body id="top">
 
-  <!-- Nawigacja -->
+  <!-- Pasek nawigacyjny -->
   <header>
-    <a href="#top" class="brand-logo">
-      <span>[S = kB ln Ω]</span> Korepetycje
+    <a href="#top" class="brand">
+      <span class="brand-dot"></span>
+      <span>Twoje Imię i Nazwisko</span>
     </a>
-    <nav class="nav-links">
-      <a href="#wzor">Wzór</a>
-      <a href="#hiszpanski">Hiszpański</a>
-      <a href="#matematyka">Matematyka</a>
-      <a href="#fizyka">Fizyka</a>
-      <a href="#kontakt">Kontakt</a>
+    <nav class="sections-nav">
+      <a href="#wzor">S</a>
+      <a href="#hiszpanski">B</a>
+      <a href="#matematyka">ln</a>
+      <a href="#fizyka">k</a>
+      <a href="#zero">∅</a>
     </nav>
-    <a href="#kontakt" class="chalk-btn">Napisz do mnie</a>
+    <a href="#kontakt" class="btn-contact">Napisz</a>
   </header>
 
   <main>
     <!-- Sekcja Hero -->
     <section class="hero">
-      <p class="hero-tag">Rozwój z chaosu ✍</p>
-      <h1>Zrozumieć reguły.<br>Opanować wiedzę.</h1>
-      <p class="hero-sub">
-        Prowadzę zajęcia z <strong>języka hiszpańskiego (od 0 do poziomu B1)</strong> oraz <strong>matematyki i fizyki</strong> na poziomie szkoły podstawowej. Zamieniamy chaos i szkolny stres w logiczną pewność siebie.
+      <div class="hero-meta">S = kB ln Ω · Edukacja bez chaosu</div>
+      <h1>Twoje<br>Nazwisko</h1>
+      <span class="hero-badge">to ja ↗</span>
+      <p class="hero-desc">
+        Prowadzę zajęcia z <strong>języka hiszpańskiego (od zera do B1)</strong> oraz <strong>matematyki i fizyki dla szkoły podstawowej</strong>. Zamiast chaosu, wkuwania i stresu — <span>rozłóżmy to na czynniki pierwsze</span>.
       </p>
-      <div>
-        <a href="#wzor" class="chalk-link">Zobacz symbolikę wzoru Boltzmanna ↓</a>
-      </div>
+      <a href="#wzor" class="section-cta">Przewiń do formuły ↓</a>
     </section>
 
     <!-- Sekcja Wzoru Boltzmanna -->
-    <section id="wzor" class="boltzmann-hero-box">
-      <div style="text-align: center;">
-        <span class="hero-tag">1. Boltzmann — rozwój z chaosu</span>
-        <div style="margin: 1rem 0;">
-          <div class="chalk-box-equation">
-            S = k<span class="sub">B</span> ln Ω
-          </div>
+    <section id="wzor" class="identity-ribbon">
+      <div class="equation-display-box">
+        <h2 class="equation-title">1. Boltzmann — rozwój z chaosu</h2>
+        <div class="equation-box">
+          S = k<span class="accent">B</span> ln Ω
         </div>
-        <p style="color: var(--chalk-dim); max-width: 600px; margin: 0 auto;">
-          Ten wzór ma kilka bardzo ciekawych elementów, które można symbolicznie wykorzystać w edukacji i rozwoju.
+        <p class="equation-subtext">
+          Ten wzór ma kilka bardzo ciekawych elementów, które można symbolicznie wykorzystać.
         </p>
       </div>
 
-      <!-- Tabela interpretacji ze zdjęcia -->
-      <table class="symbols-table">
+      <!-- Tabela symboli i interpretacji ze zdjęcia -->
+      <table class="boltzmann-table">
         <thead>
           <tr>
             <th>Symbol</th>
@@ -493,59 +533,70 @@
         </thead>
         <tbody>
           <tr>
-            <td class="td-symbol">S</td>
-            <td class="td-science">Entropia</td>
-            <td class="td-meaning">Spokój i równowaga</td>
+            <td class="td-sym">S</td>
+            <td class="td-sci">Entropia</td>
+            <td class="td-my">Spokój i równowaga</td>
           </tr>
           <tr>
-            <td class="td-symbol">k</td>
-            <td class="td-science">Stała Boltzmanna</td>
-            <td class="td-meaning">Wiedza i konsekwencja</td>
+            <td class="td-sym">k</td>
+            <td class="td-sci">Stała Boltzmanna</td>
+            <td class="td-my">Wiedza i konsekwencja</td>
           </tr>
           <tr>
-            <td class="td-symbol">B</td>
-            <td class="td-science">Oznaczenie Boltzmanna</td>
-            <td class="td-meaning">Budowanie własnej przyszłości</td>
+            <td class="td-sym">B</td>
+            <td class="td-sci">Oznaczenie Boltzmanna</td>
+            <td class="td-my">Budowanie własnej przyszłości</td>
           </tr>
           <tr>
-            <td class="td-symbol">ln</td>
-            <td class="td-science">Logarytm naturalny</td>
-            <td class="td-meaning">Logicze myślenie i matematyka</td>
+            <td class="td-sym">ln</td>
+            <td class="td-sci">Logarytm naturalny</td>
+            <td class="td-my">Logiczne myślenie i matematyka</td>
           </tr>
           <tr>
-            <td class="td-symbol">Ω</td>
-            <td class="td-science">Liczba mikrostanów</td>
-            <td class="td-meaning">Nieskończone możliwości rozwoju</td>
+            <td class="td-sym">Ω</td>
+            <td class="td-sci">Liczba mikrostanów</td>
+            <td class="td-my">Nieskończone możliwości rozwoju</td>
           </tr>
         </tbody>
       </table>
     </section>
 
-    <!-- Przedmiot 1: Hiszpański -->
-    <section id="hiszpanski" class="chalk-section">
-      <div class="section-glyph">Ñ</div>
+    <!-- Sekcja 1: Hiszpański -->
+    <section id="hiszpanski" class="section-block">
+      <div class="section-symbol red">B</div>
       <div class="section-content">
-        <p class="section-label">Komunikacja od pierwszych zajęć</p>
-        <h2>Język Hiszpański (0 → B1)</h2>
+        <p class="section-tagline">Budowanie własnej przyszłości · Komunikacja</p>
+        <h2>Język Hiszpański · 0 → B1</h2>
         <p class="section-desc">
-          Zaczynamy od zupełnego zera, aż do swobodnego poziomu B1. Koniec ze żmudnym wkuwaniem słówek — stawiamy na natychmiastowe budowanie zdań, opanowanie czasów i swobodne mówienie bez strachu przed pomyłką.
+          Zajęcia od zupełnego zera do etapu swobodnej rozmowy (B1). Bez klepania regułek na pamięć — skupiamy się na przełamaniu bariery językowej, poprawnej wymowie i zrozumieniu czasów.
         </p>
-        <div class="chalk-grid">
-          <div class="chalk-card">
-            <strong>Start od zera (A1)</strong>
-            <span>Wymowa, proste dialogi, podstawowe zwroty codzienne</span>
-          </div>
-          <div class="chalk-card">
-            <strong>Czasy przeszłe (A2)</strong>
-            <span>Indefinido vs Imperfecto wytłumaczone logicznie</span>
-          </div>
-          <div class="chalk-card">
-            <strong>Płynność i opinie (B1)</strong>
-            <span>Swobodne wypowiedzi, tryb Subjuntivo bez stresu</span>
-          </div>
-          <div class="chalk-card">
-            <strong>Przełamywanie bariery</strong>
-            <span>Rozmowy i akcent na komunikację w praktyce</span>
-          </div>
-        </div>
-        <a href="mailto:twoj@email.com?subject=Hiszpanski" class="chalk-link">Umów lekcję hisz
+        <ul class="features-list">
+          <li>
+            <span>Poziom A1 (Start od zera)</span>
+            <small>Podstawowe zwroty, wymowa, codzienna komunikacja</small>
+          </li>
+          <li>
+            <span>Poziom A2 (Płynność)</span>
+            <small>Czasy przeszłe (Indefinido, Imperfecto) w praktyce</small>
+          </li>
+          <li>
+            <span>Poziom B1 (Samodzielność)</span>
+            <small>Opinie, dyskusje, tryb Subjuntivo bez tajemnic</small>
+          </li>
+          <li>
+            <span>Konwersacje 1:1</span>
+            <small>Mówienie po hiszpańsku już od pierwszych lekcji</small>
+          </li>
+        </ul>
+        <a href="mailto:twoj@email.com?subject=Hiszpanski" class="section-cta">Zacznij od zera →</a>
+      </div>
+    </section>
+
+    <!-- Sekcja 2: Matematyka -->
+    <section id="matematyka" class="section-block">
+      <div class="section-symbol">ln</div>
+      <div class="section-content">
+        <p class="section-tagline">Logiczne myślenie · Szkoła podstawowa</p>
+        <h2>Matematyka · Klasy 4–8 & E8</h2>
+        <p class="section-desc">
+          Matematyka to nie przypadek ani wkuwanie wzorów. Wytłumaczę Ci mechanizmy i logikę stoj
