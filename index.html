@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aleksander Dobrowolski — S = kB ln Ω</title>
 
-  <!-- Google Fonts: Archivo (techniczny bezszeryf), JetBrains Mono (wzory i kod), Caveat (odręczne notatki) -->
+  <!-- Google Fonts: Archivo, JetBrains Mono, Caveat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Caveat:wght@600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
@@ -14,19 +14,21 @@
     :root {
       --bg: #fbfbfb;
       --bg-surface: #ffffff;
-      --bg-subtle: #f3f4f6;
-      --bg-contrast: #111317;
+      --bg-subtle: #f0f3f8;
+      --bg-contrast: #0b0e14;
       
-      --text: #111317;
-      --text-muted: #4b5260;
-      --text-dim: #8b92a0;
+      --text: #0e1118;
+      --text-muted: #49505f;
+      --text-dim: #7f8899;
       
-      --red: #d92323;
-      --red-dim: rgba(217, 35, 35, 0.08);
-      --red-border: rgba(217, 35, 35, 0.25);
+      /* Nowy niebieski akcent */
+      --blue: #0d5ceb;
+      --blue-glow: rgba(13, 92, 235, 0.35);
+      --blue-dim: rgba(13, 92, 235, 0.08);
+      --blue-border: rgba(13, 92, 235, 0.28);
       
-      --border: rgba(17, 19, 23, 0.1);
-      --border-strong: rgba(17, 19, 23, 0.25);
+      --border: rgba(14, 17, 24, 0.1);
+      --border-strong: rgba(14, 17, 24, 0.22);
       
       --font-main: 'Archivo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
@@ -52,57 +54,95 @@
       overflow-x: hidden;
       line-height: 1.7;
       background-image: 
-        linear-gradient(to right, rgba(17, 19, 23, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(17, 19, 23, 0.03) 1px, transparent 1px);
-      background-size: 70px 70px;
+        linear-gradient(to right, rgba(14, 17, 24, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(14, 17, 24, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
       -webkit-font-smoothing: antialiased;
     }
 
     a {
       color: inherit;
       text-decoration: none;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      transition: all 0.2s ease;
     }
 
-    /* --- Górna belka nawigacji --- */
+    /* --- Stały górny HUD --- */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 64px;
-      padding: 0 2.5rem;
+      padding: 0 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(251, 251, 251, 0.92);
+      background: rgba(251, 251, 251, 0.94);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       z-index: 1000;
     }
 
+    /* Nowy, atrakcyjny lewy górny róg */
     .brand-hud {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-      font-family: var(--font-mono);
-      font-size: 0.88rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      color: var(--text);
+      gap: 0.9rem;
     }
 
-    .status-pulse {
+    .brand-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-contrast);
+      color: #fff;
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-pulse {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--red);
-      box-shadow: 0 0 8px rgba(217, 35, 35, 0.5);
+      background: #00ff88;
+      box-shadow: 0 0 10px #00ff88;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-titles strong {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .brand-titles small {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
     }
 
     nav.hud-nav {
       display: flex;
-      gap: 1.8rem;
+      gap: 1.5rem;
       font-family: var(--font-mono);
       font-size: 0.85rem;
     }
@@ -110,11 +150,12 @@
     nav.hud-nav a {
       color: var(--text-muted);
       padding: 0.25rem 0.5rem;
+      font-weight: 600;
     }
 
     nav.hud-nav a:hover {
-      color: var(--red);
-      background: var(--red-dim);
+      color: var(--blue);
+      background: var(--blue-dim);
     }
 
     .hud-cta {
@@ -122,17 +163,19 @@
       font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 0.45rem 1.25rem;
-      border: 1.5px solid var(--red);
+      letter-spacing: 0.05em;
+      padding: 0.5rem 1.3rem;
+      border: 1.5px solid var(--blue);
       color: #fff;
-      background: var(--red);
+      background: var(--blue);
       border-radius: 999px;
+      box-shadow: 0 4px 12px var(--blue-glow);
     }
 
     .hud-cta:hover {
       background: var(--text);
       border-color: var(--text);
+      box-shadow: none;
     }
 
     /* --- Główny kontener o pełnej szerokości --- */
@@ -157,21 +200,21 @@
     .hero-meta {
       font-family: var(--font-mono);
       font-size: 0.82rem;
-      color: var(--red);
+      color: var(--blue);
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.4rem;
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .hero-meta::before {
       content: "";
       width: 22px;
       height: 2px;
-      background: var(--red);
+      background: var(--blue);
     }
 
     .hero-name {
@@ -186,7 +229,7 @@
 
     .hero-name span.surname {
       display: block;
-      color: var(--red);
+      color: var(--blue);
     }
 
     .hero-annotation {
@@ -195,17 +238,16 @@
       gap: 0.6rem;
       font-family: var(--font-hand);
       font-size: 2.1rem;
-      color: var(--red);
+      color: var(--blue);
       transform: rotate(-3deg);
       margin-bottom: 2rem;
     }
 
     .hero-manifesto {
-      font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+      font-size: clamp(1.15rem, 1.8vw, 1.35rem);
       color: var(--text-muted);
-      line-height: 1.65;
+      line-height: 1.7;
       max-width: 820px;
-      font-weight: 400;
     }
 
     .hero-manifesto strong {
@@ -214,23 +256,23 @@
     }
 
     .hero-manifesto em {
-      color: var(--red);
+      color: var(--blue);
       font-style: normal;
-      font-weight: 600;
-      border-bottom: 1.5px solid var(--red);
+      font-weight: 700;
+      border-bottom: 2px solid var(--blue);
     }
 
     .hero-side-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-strong);
       padding: 2.2rem;
-      border-radius: 4px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      border-radius: 6px;
+      box-shadow: 6px 6px 0px rgba(13, 92, 235, 0.1);
       position: relative;
     }
 
     .hero-side-card::before {
-      content: "STATUS // ZAJĘCIA";
+      content: "PARAMETRY // NAUKI";
       position: absolute;
       top: -10px;
       left: 16px;
@@ -238,7 +280,7 @@
       padding: 0 8px;
       font-family: var(--font-mono);
       font-size: 0.72rem;
-      color: var(--red);
+      color: var(--blue);
       font-weight: 700;
       letter-spacing: 0.08em;
     }
@@ -262,28 +304,38 @@
       color: var(--text);
     }
 
-    /* --- Monumentalny Wzór jako Centrum Strony --- */
+    /* --- Monumentalny Wzór ze zdjęciem technicznym w tle --- */
     .formula-monument {
       width: 100%;
       padding: 6rem 2.5rem 7rem;
-      background: #ffffff;
+      position: relative;
+      background-color: #ffffff;
       border-bottom: 1px solid var(--border);
       text-align: center;
+      overflow: hidden;
     }
 
-    .monument-badge {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--red);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 700;
-      padding: 0.35rem 1.4rem;
-      background: var(--red-dim);
-      border: 1px solid var(--red-border);
-      border-radius: 999px;
-      margin-bottom: 2rem;
+    /* Grafika / siatka techniczna w tle */
+    .formula-monument-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.07;
+      background-image: 
+        radial-gradient(circle at center, #0d5ceb 1.5px, transparent 1.5px),
+        linear-gradient(to right, rgba(13, 92, 235, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(13, 92, 235, 0.4) 1px, transparent 1px);
+      background-size: 30px 30px, 120px 120px, 120px 120px;
+      background-position: center;
+      z-index: 1;
+    }
+
+    .monument-content-wrap {
+      position: relative;
+      z-index: 2;
     }
 
     .monument-title {
@@ -294,14 +346,39 @@
       color: var(--text);
     }
 
-    .monument-formula-box {
-      background: var(--bg-surface);
-      border: 2px solid var(--text);
-      padding: 3.5rem 2rem;
-      border-radius: 6px;
-      max-width: 1200px;
+    /* Kontener wycentrowany z grafikami po lewej i prawej */
+    .formula-tri-frame {
+      max-width: 1240px;
       margin: 0 auto 4rem;
-      box-shadow: 8px 8px 0px rgba(217, 35, 35, 0.15);
+      display: grid;
+      grid-template-columns: 240px 1fr 240px;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .formula-side-art {
+      background: var(--bg);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      padding: 1.2rem;
+      height: 190px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .formula-side-art svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .monument-formula-box {
+      background: #ffffff;
+      border: 2px solid var(--text);
+      padding: 3rem 2rem;
+      border-radius: 6px;
+      box-shadow: 8px 8px 0px rgba(13, 92, 235, 0.2);
       position: relative;
     }
 
@@ -315,13 +392,13 @@
       font-family: var(--font-mono);
       font-size: 0.75rem;
       font-weight: 700;
-      color: var(--red);
+      color: var(--blue);
       letter-spacing: 0.1em;
     }
 
     .giant-equation {
       font-family: var(--font-mono);
-      font-size: clamp(3.2rem, 10vw, 7.5rem);
+      font-size: clamp(2.8rem, 6.5vw, 5.8rem);
       font-weight: 800;
       letter-spacing: 0.08em;
       color: var(--text);
@@ -331,7 +408,8 @@
     }
 
     .giant-equation span.accent {
-      color: var(--red);
+      color: var(--blue);
+      text-shadow: 0 0 25px var(--blue-glow);
     }
 
     .giant-equation span.sub {
@@ -352,7 +430,7 @@
     .clarity-card {
       background: var(--bg);
       border: 1px solid var(--border-strong);
-      border-radius: 4px;
+      border-radius: 6px;
       padding: 1.6rem 2.2rem;
       display: grid;
       grid-template-columns: 90px 240px 1fr;
@@ -363,8 +441,8 @@
 
     .clarity-card:hover {
       background: #ffffff;
-      border-color: var(--red);
-      box-shadow: 4px 4px 0px var(--red);
+      border-color: var(--blue);
+      box-shadow: 5px 5px 0px var(--blue);
       transform: translateY(-2px);
     }
 
@@ -372,14 +450,14 @@
       font-family: var(--font-mono);
       font-size: 2.4rem;
       font-weight: 800;
-      color: var(--red);
+      color: var(--blue);
       line-height: 1;
     }
 
     .clarity-card .sci-block {
       display: flex;
       flex-direction: column;
-      border-left: 2px solid var(--red);
+      border-left: 2px solid var(--blue);
       padding-left: 1.2rem;
     }
 
@@ -431,11 +509,11 @@
       font-size: 4.5rem;
       font-weight: 900;
       line-height: 0.9;
-      color: rgba(17, 19, 23, 0.15);
+      color: rgba(14, 17, 24, 0.15);
     }
 
-    .chapter-sym.red {
-      color: var(--red);
+    .chapter-sym.blue {
+      color: var(--blue);
     }
 
     .chapter-num {
@@ -459,7 +537,7 @@
     .chapter-tagline {
       font-family: var(--font-mono);
       font-size: 0.85rem;
-      color: var(--red);
+      color: var(--blue);
       font-weight: 700;
       letter-spacing: 0.05em;
       margin-bottom: 2rem;
@@ -483,7 +561,7 @@
     }
 
     .syllabus-stack {
-      border-left: 2px solid var(--red);
+      border-left: 2px solid var(--blue);
       padding-left: 1.5rem;
       margin-bottom: 2.5rem;
       display: flex;
@@ -512,8 +590,8 @@
       font-family: var(--font-mono);
       font-size: 0.9rem;
       font-weight: 700;
-      color: var(--red);
-      border-bottom: 2px solid var(--red);
+      color: var(--blue);
+      border-bottom: 2px solid var(--blue);
       padding-bottom: 3px;
     }
 
@@ -526,11 +604,11 @@
     .technical-schematic {
       background: var(--bg-surface);
       border: 1px solid var(--border-strong);
-      border-radius: 4px;
+      border-radius: 6px;
       padding: 1.8rem;
       position: sticky;
       top: 100px;
-      box-shadow: 4px 4px 0px rgba(17, 19, 23, 0.05);
+      box-shadow: 5px 5px 0px rgba(13, 92, 235, 0.08);
     }
 
     .schematic-header {
@@ -554,8 +632,8 @@
     .schematic-badge {
       font-family: var(--font-mono);
       font-size: 0.72rem;
-      color: var(--red);
-      border: 1px solid var(--red);
+      color: var(--blue);
+      border: 1px solid var(--blue);
       padding: 0.15rem 0.5rem;
       border-radius: 3px;
       font-weight: 700;
@@ -590,9 +668,9 @@
       background: #ffffff;
       border: 2px solid var(--text);
       padding: 2.5rem;
-      border-radius: 4px;
+      border-radius: 6px;
       margin-top: 2rem;
-      box-shadow: 6px 6px 0px rgba(17, 19, 23, 0.08);
+      box-shadow: 6px 6px 0px rgba(13, 92, 235, 0.15);
     }
 
     .simple-zero-equation {
@@ -606,7 +684,7 @@
     }
 
     .simple-zero-equation span.res {
-      color: var(--red);
+      color: var(--blue);
     }
 
     .zero-points-list {
@@ -625,13 +703,13 @@
       font-family: var(--font-mono);
       font-weight: 700;
       color: #fff;
-      background: var(--red);
+      background: var(--blue);
       width: 32px;
       height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 3px;
+      border-radius: 4px;
       flex-shrink: 0;
     }
 
@@ -649,10 +727,10 @@
       margin: 0;
     }
 
-    /* --- Sekcja Końcowa: Kontakt --- */
+    /* --- Sekcja Końcowa: Kontakt, QR kod i wycena --- */
     .contact-fullwidth {
       width: 100%;
-      padding: 8rem 2.5rem 5rem;
+      padding: 7rem 2.5rem 5rem;
       background: #ffffff;
       border-bottom: 1px solid var(--border);
     }
@@ -669,7 +747,31 @@
       font-weight: 900;
       letter-spacing: -0.04em;
       text-transform: uppercase;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    /* Ważne ostrzeżenie o wycenie i preferencji wiadomości */
+    .contact-notice-box {
+      background: var(--bg-subtle);
+      border-left: 3px solid var(--blue);
+      padding: 1.2rem 1.5rem;
+      margin: 1.8rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .contact-notice-box p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .contact-notice-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-notice-box strong {
       color: var(--text);
     }
 
@@ -683,9 +785,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.8rem 0;
+      padding: 1.5rem 0;
       border-bottom: 1px solid var(--border);
-      font-size: 1.15rem;
+      font-size: 1.1rem;
     }
 
     .channel-row .c-key {
@@ -703,7 +805,51 @@
     }
 
     .channel-row:hover .c-val {
-      color: var(--red);
+      color: var(--blue);
+    }
+
+    /* Moduł Kodu QR */
+    .qr-module {
+      margin-top: 2.5rem;
+      padding: 1.8rem;
+      background: var(--bg);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .qr-box {
+      width: 120px;
+      height: 120px;
+      background: #ffffff;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-box img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .qr-desc h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .qr-desc p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.4;
     }
 
     /* --- Stopka --- */
@@ -719,9 +865,20 @@
       background: var(--bg);
     }
 
+    /* ========================================================
+       PEŁNE DOPASOWANIE POD TELEFONY (MOBILE FIRST BREAKPOINTS)
+       ======================================================== */
     @media (max-width: 1024px) {
       .hero-strip {
         grid-template-columns: 1fr;
+        padding: 4rem 1.5rem;
+      }
+      .formula-tri-frame {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .formula-side-art {
+        display: none; /* ukrywamy zbędne ozdobniki boczne na tabletach */
       }
       .clarity-card {
         grid-template-columns: 80px 1fr;
@@ -733,6 +890,7 @@
       .subject-chapter {
         grid-template-columns: 1fr;
         gap: 2.5rem;
+        padding: 4.5rem 1.5rem;
       }
       .chapter-side {
         position: static;
@@ -742,28 +900,49 @@
       }
       .contact-grid-hud {
         grid-template-columns: 1fr;
+        gap: 3rem;
       }
     }
 
     @media (max-width: 768px) {
       header {
-        padding: 0 1.2rem;
+        padding: 0 1rem;
       }
       nav.hud-nav {
-        display: none;
+        display: none; /* proste i czyste menu na smartfonach */
+      }
+      .hero-strip {
+        padding: 3rem 1.2rem;
+      }
+      .hero-name {
+        font-size: 2.8rem;
+      }
+      .giant-equation {
+        font-size: 2.4rem;
+      }
+      .monument-formula-box {
+        padding: 2rem 1rem;
       }
       .clarity-card {
         grid-template-columns: 1fr;
         gap: 0.8rem;
+        padding: 1.2rem;
       }
       .clarity-card .sci-block {
         border-left: none;
         padding-left: 0;
+        border-top: 1px solid var(--border);
+        padding-top: 0.6rem;
       }
       .channel-row {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.4rem;
+        gap: 0.3rem;
+      }
+      .qr-module {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
       }
       footer {
         flex-direction: column;
@@ -775,27 +954,33 @@
 </head>
 <body id="top">
 
-  <!-- HUD Header -->
+  <!-- HUD Header z odświeżonym lewym rogiem -->
   <header>
     <a href="#top" class="brand-hud">
-      <span class="status-pulse"></span>
-      <span>Aleksander Dobrowolski</span>
+      <div class="brand-badge">
+        <span class="brand-pulse"></span>
+        <span>ONLINE</span>
+      </div>
+      <div class="brand-titles">
+        <strong>Aleksander Dobrowolski</strong>
+        <small>Dydaktyka · S = kB ln Ω</small>
+      </div>
     </a>
     <nav class="hud-nav">
       <a href="#wzor">S = kB ln Ω</a>
-      <a href="#hiszpanski">B · Hiszpański</a>
-      <a href="#matematyka">ln · Matematyka</a>
-      <a href="#fizyka">k · Fizyka</a>
-      <a href="#zero">0 · Zasady</a>
+      <a href="#hiszpanski">Hiszpański</a>
+      <a href="#matematyka">Matematyka</a>
+      <a href="#fizyka">Fizyka</a>
+      <a href="#zero">Zasady</a>
     </nav>
-    <a href="#kontakt" class="hud-cta">Zacznij naukę</a>
+    <a href="#kontakt" class="hud-cta">Napisz wiadomość</a>
   </header>
 
   <main>
     <!-- HERO SECTION -->
     <section class="hero-strip">
       <div>
-        <div class="hero-meta">Dydaktyka · Zrozumienie struktur · Zero chaosu</div>
+        <div class="hero-meta">Nauka 100% online · Bez stresu · Zrozumienie struktur</div>
         
         <h1 class="hero-name">
           Aleksander
@@ -807,11 +992,15 @@
         </div>
 
         <p class="hero-manifesto">
-          Większość porażek edukacyjnych nie wynika ze słabości ucznia, ale z <em>nawarstwionej entropii</em>. Gdy pojęcia zostają rzucone na pamięć bez fundamentu, w głowie powstaje szum. Moje zadanie to <strong>redukcja chaosu</strong>. Uporządkujmy hiszpański (od zera do B1), matematykę i fizykę do poziomu logicznej oczywistości.
+          Większość trudności w szkole nie wynika z braku zdolności, ale z <em>nawarstwionego chaosu</em>. Gdy pojęcia każe się zakuwać bez fundamentu, w głowie powstaje blokada. Moim celem jest <strong>redukcja entropii</strong>. Prowadzę zajęcia z hiszpańskiego (od podstaw do B1) oraz matematyki i fizyki dla szkoły podstawowej — <strong>wyłącznie online</strong>, z użyciem interaktywnej tablicy.
         </p>
       </div>
 
       <div class="hero-side-card">
+        <div class="side-stat-row">
+          <span class="stat-label">TRYB NAUKI</span>
+          <span class="stat-val" style="color: var(--blue);">100% ONLINE</span>
+        </div>
         <div class="side-stat-row">
           <span class="stat-label">MODUŁ JĘZYKOWY</span>
           <span class="stat-val">HISZPAŃSKI (0 → B1)</span>
@@ -821,90 +1010,115 @@
           <span class="stat-val">MATEMATYKA & FIZYKA</span>
         </div>
         <div class="side-stat-row">
-          <span class="stat-label">POZIOM BAZOWY</span>
-          <span class="stat-val">SZKOŁA PODSTAWOWA / E8</span>
-        </div>
-        <div class="side-stat-row">
-          <span class="stat-label">METODOLOGIA</span>
-          <span class="stat-val">S = kB ln Ω</span>
+          <span class="stat-label">ZAKRES</span>
+          <span class="stat-val">SZKOŁA PODSTAWOWA</span>
         </div>
         <div class="side-stat-row" style="border-bottom: none;">
-          <span class="stat-label">STATUS</span>
-          <span class="stat-val" style="color: var(--red);">REKRUTACJA OTWARTA</span>
+          <span class="stat-label">DOSTĘPNOŚĆ</span>
+          <span class="stat-val">ELASTYCZNY GRAFIK</span>
         </div>
       </div>
     </section>
 
-    <!-- MONUMENTALNY WZÓR JAKO GŁÓWNY PUNKT STRONY -->
+    <!-- MONUMENTALNY WZÓR: Wycentrowany, z grafikami po bokach i tłem graficznym -->
     <section id="wzor" class="formula-monument">
-      <span class="monument-badge">Główna oś metodyczna</span>
-      <h2 class="monument-title">Rozwój wyprowadzony z chaosu</h2>
+      <div class="formula-monument-bg"></div>
 
-      <!-- Wielki wzór Boltzmanna -->
-      <div class="monument-formula-box">
-        <div class="giant-equation">
-          <span>S</span>
-          <span>=</span>
-          <span>k</span><span class="accent sub">B</span>
-          <span>ln</span>
-          <span>Ω</span>
-        </div>
-      </div>
+      <div class="monument-content-wrap">
+        <h2 class="monument-title">Rozwój wyprowadzony z chaosu</h2>
 
-      <!-- Czytelne, horyzontalne karty rozbicia wzoru -->
-      <div class="clarity-cards-container">
-        <div class="clarity-card">
-          <div class="sym">S</div>
-          <div class="sci-block">
-            <small>Fizyka statystyczna</small>
-            <strong>Entropia</strong>
+        <!-- Układ: Grafika lewa | Główny wycentrowany wzór | Grafika prawa -->
+        <div class="formula-tri-frame">
+          <!-- Ozdobny schemat wektorowy lewy -->
+          <div class="formula-side-art">
+            <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="80" cy="60" r="45" stroke="rgba(13,92,235,0.25)" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <circle cx="80" cy="60" r="25" stroke="rgba(14,17,24,0.15)" stroke-width="1"/>
+              <circle cx="80" cy="60" r="4" fill="#0d5ceb"/>
+              <line x1="80" y1="60" x2="115" y2="35" stroke="#0d5ceb" stroke-width="1.5"/>
+              <polygon points="118,33 110,35 113,42" fill="#0d5ceb"/>
+              <text x="35" y="112" fill="#7f8899" font-family="JetBrains Mono" font-size="9">STAN: NIEUPORZĄDKOWANY</text>
+            </svg>
           </div>
-          <div class="meaning-block">
-            <strong>Spokój i równowaga.</strong> Likwidujemy lęk przed tablicą, sprawdzianem i nieznanym zadaniem. Zamiast paniki wprowadzamy stabilną pewność siebie.
-          </div>
-        </div>
 
-        <div class="clarity-card">
-          <div class="sym">k</div>
-          <div class="sci-block">
-            <small>Wartość stała</small>
-            <strong>Stała Boltzmanna</strong>
+          <!-- Główna wycentrowana ramka wzoru -->
+          <div class="monument-formula-box">
+            <div class="giant-equation">
+              <span>S</span>
+              <span>=</span>
+              <span>k</span><span class="accent sub">B</span>
+              <span>ln</span>
+              <span>Ω</span>
+            </div>
           </div>
-          <div class="meaning-block">
-            <strong>Wiedza i konsekwencja.</strong> Niezmienny fundament. Regularna, powtarzalna metoda pracy, która krok po kroku daje mierzalny wynik.
-          </div>
-        </div>
 
-        <div class="clarity-card">
-          <div class="sym">B</div>
-          <div class="sci-block">
-            <small>Identyfikator</small>
-            <strong>Oznaczenie Boltzmanna</strong>
-          </div>
-          <div class="meaning-block">
-            <strong>Budowanie własnej przyszłości.</strong> Język hiszpański od totalnego zera do poziomu B1, który otwiera realne perspektywy, podróże i swobodę komunikacji.
+          <!-- Ozdobny schemat wektorowy prawy -->
+          <div class="formula-side-art">
+            <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="20" y1="100" x2="140" y2="100" stroke="rgba(14,17,24,0.2)" stroke-width="1"/>
+              <line x1="20" y1="100" x2="20" y2="20" stroke="rgba(14,17,24,0.2)" stroke-width="1"/>
+              <path d="M20 95 C 50 85, 80 50, 140 30" stroke="#0d5ceb" stroke-width="2"/>
+              <circle cx="140" cy="30" r="3.5" fill="#0d5ceb"/>
+              <text x="35" y="112" fill="#7f8899" font-family="JetBrains Mono" font-size="9">SKOK PEWNOŚCI // ΔS</text>
+            </svg>
           </div>
         </div>
 
-        <div class="clarity-card">
-          <div class="sym">ln</div>
-          <div class="sci-block">
-            <small>Funkcja matematyczna</small>
-            <strong>Logarytm naturalny</strong>
+        <!-- Karty rozbicia wzoru -->
+        <div class="clarity-cards-container">
+          <div class="clarity-card">
+            <div class="sym">S</div>
+            <div class="sci-block">
+              <small>Fizyka statystyczna</small>
+              <strong>Entropia[cite: 1]</strong>
+            </div>
+            <div class="meaning-block">
+              <strong>Spokój i równowaga[cite: 1].</strong> Likwidujemy lęk przed tablicą, sprawdzianem i nowym zadaniem. Zamiast paniki wprowadzamy stabilną pewność siebie[cite: 1].
+            </div>
           </div>
-          <div class="meaning-block">
-            <strong>Logiczne myślenie i matematyka.</strong> Sprowadzanie złożonych, z pozoru przerażających problemów do elementarnych kroków, które po prostu mają sens.
-          </div>
-        </div>
 
-        <div class="clarity-card">
-          <div class="sym">Ω</div>
-          <div class="sci-block">
-            <small>Stan mikroskopowy</small>
-            <strong>Liczba mikrostanów</strong>
+          <div class="clarity-card">
+            <div class="sym">k</div>
+            <div class="sci-block">
+              <small>Wartość stała</small>
+              <strong>Stała Boltzmanna[cite: 1]</strong>
+            </div>
+            <div class="meaning-block">
+              <strong>Wiedza i konsekwencja[cite: 1].</strong> Niezmienny fundament. Regularna metoda pracy online, która krok po kroku daje mierzalny wynik[cite: 1].
+            </div>
           </div>
-          <div class="meaning-block">
-            <strong>Nieskończone możliwości rozwoju.</strong> Fizyka jako zrozumiała mapa praw rządzących światem, a nie zbiór suchych wzorów do wklepania na pamięć.
+
+          <div class="clarity-card">
+            <div class="sym">B</div>
+            <div class="sci-block">
+              <small>Identyfikator</small>
+              <strong>Oznaczenie Boltzmanna[cite: 1]</strong>
+            </div>
+            <div class="meaning-block">
+              <strong>Budowanie własnej przyszłości[cite: 1].</strong> Język hiszpański od totalnego zera do poziomu B1, który otwiera realne perspektywy i swobodę komunikacji[cite: 1].
+            </div>
+          </div>
+
+          <div class="clarity-card">
+            <div class="sym">ln</div>
+            <div class="sci-block">
+              <small>Funkcja matematyczna</small>
+              <strong>Logarytm naturalny[cite: 1]</strong>
+            </div>
+            <div class="meaning-block">
+              <strong>Logiczne myślenie i matematyka[cite: 1].</strong> Sprowadzanie złożonych problemów do prostych, elementarnych kroków, które po prostu mają sens[cite: 1].
+            </div>
+          </div>
+
+          <div class="clarity-card">
+            <div class="sym">Ω</div>
+            <div class="sci-block">
+              <small>Stan mikroskopowy</small>
+              <strong>Liczba mikrostanów[cite: 1]</strong>
+            </div>
+            <div class="meaning-block">
+              <strong>Nieskończone możliwości rozwoju[cite: 1].</strong> Fizyka jako zrozumiała mapa praw rządzących światem, a nie zbiór wzorów do wklepania na pamięć[cite: 1].
+            </div>
           </div>
         </div>
       </div>
@@ -913,64 +1127,64 @@
     <!-- ROZDZIAŁ 1: HISZPAŃSKI (B) -->
     <section id="hiszpanski" class="subject-chapter">
       <div class="chapter-side">
-        <div class="chapter-sym red">B</div>
+        <div class="chapter-sym blue">B</div>
         <div class="chapter-num">ROZDZIAŁ // 01</div>
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Budowanie przyszłości · Komunikacja żywym językiem</span>
+        <span class="chapter-tagline">Budowanie przyszłości · Żywy język w formule online[cite: 1]</span>
         <h2>Język Hiszpański: 0 → B1</h2>
 
         <div class="prose-block">
           <p>
-            Większość szkół traktuje języki obce jak zbiór martwych regułek wstawianych w luki na kserówkach. Efekt? Po latach nauki uczeń potrafi odmienić czasownik na kartce, ale w kawiarni w Madrycie boi się odezwać do kelnera.
+            Większość szkół traktuje języki obce jak zbiór martwych regułek wstawianych w puste luki na kserówkach. Efekt? Uczeń potrafi zdać test z gramatyki, ale boi się odezwać na głos.
           </p>
           <p>
-            Prowadzę Cię <strong>od zupełnego zera</strong> (nawet jeśli nie znasz ani jednego słowa) do <strong>samodzielnego poziomu B1</strong>. To kluczowy etap: znasz czasy przeszłe, potrafisz wytłumaczyć swoje racje, wyrazić wątpliwość w trybie <em>Subjuntivo</em> i nie potrzebujesz tłumacza w telefonie.
+            Prowadzę Cię <strong>od zupełnego zera</strong> (nawet jeśli nie znasz ani jednego słowa) do <strong>samodzielnego poziomu B1</strong>. To etap, w którym znasz czasy przeszłe, potrafisz wytłumaczyć swoje zdanie, zareagować w codziennej sytuacji i nie potrzebujesz internetowego translatora. Wszystko podczas interaktywnych konwersacji online.
           </p>
         </div>
 
         <div class="syllabus-stack">
           <div class="syllabus-unit">
             <h4>Start od zera (Poziom A1)</h4>
-            <p>Prawidłowy aparat mowy, fonetyka, hiszpański rytm, natychmiastowe budowanie pierwszych prostych dialogów.</p>
+            <p>Prawidłowy aparat mowy, fonetyka, hiszpański akcent i natychmiastowe budowanie prostych dialogów.</p>
           </div>
           <div class="syllabus-unit">
             <h4>Przełamanie czasów przeszłych (Poziom A2)</h4>
-            <p>Zamiast wkuwania tabel: logiczna intuicja między <em>Indefinido</em> (fakt zamknięty) a <em>Imperfecto</em> (tło i narracja).</p>
+            <p>Logiczna intuicja między <em>Indefinido</em> a <em>Imperfecto</em> tłumaczona na historiach, nie suchych tabelach.</p>
           </div>
           <div class="syllabus-unit">
             <h4>Płynność i argumentacja (Poziom B1)</h4>
-            <p>Swobodne dyskusje, relacjonowanie wydarzeń, Subjuntivo jako wyrażanie emocji i niepewności.</p>
+            <p>Swobodne wypowiedzi, relacjonowanie wydarzeń, Subjuntivo jako naturalne wyrażanie opinii i emocji.</p>
           </div>
         </div>
 
-        <a href="#kontakt" class="chapter-action">Zacznij naukę hiszpańskiego →</a>
+        <a href="#kontakt" class="chapter-action">Napisz w sprawie hiszpańskiego →</a>
       </div>
 
       <!-- Schemat techniczny: Progresja Językowa -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">DIAGRAM // PROGRESJA LINGWISTYCZNA</span>
-          <span class="schematic-badge">A1 → B1</span>
+          <span class="schematic-badge">0 → B1</span>
         </div>
         <div class="schematic-svg-frame">
           <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="30" y1="190" x2="300" y2="190" stroke="rgba(17,19,23,0.15)" stroke-width="1.5"/>
-            <line x1="30" y1="190" x2="30" y2="20" stroke="rgba(17,19,23,0.15)" stroke-width="1.5"/>
-            <path d="M30 180 C 100 170, 140 130, 190 90 C 230 60, 260 45, 290 40" stroke="#d92323" stroke-width="2.5" fill="none"/>
-            <circle cx="30" cy="180" r="4" fill="#d92323"/>
-            <circle cx="120" cy="150" r="4" fill="#111317"/>
-            <circle cx="190" cy="90" r="4" fill="#111317"/>
-            <circle cx="290" cy="40" r="5" fill="#d92323"/>
-            <text x="35" y="175" fill="#8b92a0" font-family="JetBrains Mono" font-size="10">0: START</text>
-            <text x="125" y="145" fill="#8b92a0" font-family="JetBrains Mono" font-size="10">A1: DIALOGI</text>
-            <text x="170" y="80" fill="#8b92a0" font-family="JetBrains Mono" font-size="10">A2: NARRACJA</text>
-            <text x="210" y="32" fill="#d92323" font-family="JetBrains Mono" font-size="11" font-weight="bold">B1: SWOBODA (CEL)</text>
+            <line x1="30" y1="190" x2="300" y2="190" stroke="rgba(14,17,24,0.15)" stroke-width="1.5"/>
+            <line x1="30" y1="190" x2="30" y2="20" stroke="rgba(14,17,24,0.15)" stroke-width="1.5"/>
+            <path d="M30 180 C 100 170, 140 130, 190 90 C 230 60, 260 45, 290 40" stroke="#0d5ceb" stroke-width="2.5" fill="none"/>
+            <circle cx="30" cy="180" r="4" fill="#0d5ceb"/>
+            <circle cx="120" cy="150" r="4" fill="#0e1118"/>
+            <circle cx="190" cy="90" r="4" fill="#0e1118"/>
+            <circle cx="290" cy="40" r="5" fill="#0d5ceb"/>
+            <text x="35" y="175" fill="#7f8899" font-family="JetBrains Mono" font-size="10">0: START</text>
+            <text x="125" y="145" fill="#7f8899" font-family="JetBrains Mono" font-size="10">A1: PODSTAWY</text>
+            <text x="170" y="80" fill="#7f8899" font-family="JetBrains Mono" font-size="10">A2: NARRACJA</text>
+            <text x="210" y="32" fill="#0d5ceb" font-family="JetBrains Mono" font-size="11" font-weight="bold">B1: SWOBODA (CEL)</text>
           </svg>
         </div>
         <div class="schematic-caption">
-          Wykres przejścia z pasywnego zapamiętywania do autonomicznego generowania mowy.
+          Krzywa dojścia do samodzielności językowej w trybie lekcji online.
         </div>
       </div>
     </section>
@@ -983,34 +1197,34 @@
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Logika i dedukcja · Szkoła Podstawowa & Egzamin E8</span>
-        <h2>Matematyka: Likwidacja brakujących ogniw</h2>
+        <span class="chapter-tagline">Logika i dedukcja · Szkoła Podstawowa (Klasy 4–8)[cite: 1]</span>
+        <h2>Matematyka: Nadrabianie zaległości i bieżący materiał</h2>
 
         <div class="prose-block">
           <p>
-            Matematyka to najściślejszy łańcuch zależności w historii nauki. Nie ma w niej miejsca na luki: jeśli uczeń w czwartej klasie nie zrozumiał idei ułamka zwykłego, w siódmej klasie polegnie na równaniach, a na egzaminie zablokuje się na pierwszym zadaniu tekstowym.
+            Matematyka to nierozerwalny łańcuch zależności. Nie ma w niej miejsca na zaległości: jeśli uczeń w czwartej klasie nie zrozumiał ułamków zwykłych, w siódmej klasie polegnie na równaniach, a zadania z treścią będą budzić paraliż.
           </p>
           <p>
-            Moja praca polega na diagnostyce. Zamiast męczyć ucznia setkami losowych przykładów, cofamy się do momentu, w którym po raz pierwszy pomyślał: <em>„nie rozumiem”</em>. Odbudowujemy fundament, a potem wszystko zaczyna układać się w logiczną całość.
+            Moja praca to precyzyjna diagnostyka na wirtualnej tablicy. Zamiast bezmyślnie rozwiązywać kolejne strony z podręcznika, cofamy się do punktu, w którym powstała wyrwa w zrozumieniu. Odbudowujemy fundament, uczeń odzyskuje wiarę we własne siły, a oceny idą w górę.
           </p>
         </div>
 
         <div class="syllabus-stack">
           <div class="syllabus-unit">
-            <h4>Fundament klas 4–6</h4>
-            <p>Pojęcie ułamków zwykłych i dziesiętnych, liczby ujemne, kolejność działań, intuicja geometryczna (pola i obwody).</p>
+            <h4>Bieżący materiał (Klasy 4–8)</h4>
+            <p>Równoległe tłumaczenie tematów z lekcji: ułamki, procenty, potęgi, pierwiastki i geometria.</p>
           </div>
           <div class="syllabus-unit">
-            <h4>Klasy 7–8 i Przygotowanie do Egzaminu Ósmoklasisty (E8)</h4>
-            <p>Równania liniowe, potęgi, pierwiastki, procenty w zadaniach praktycznych oraz bezbłędny zapis zadań otwartych CKE.</p>
+            <h4>Likwidacja starych zaległości</h4>
+            <p>Spokojny powrót do wcześniejszych klas i naprawa braków bez presji czasu.</p>
           </div>
           <div class="syllabus-unit">
-            <h4>Dekodowanie zadań z treścią</h4>
-            <p>Tłumaczenie wielozdaniowego chaosu z podręcznika na prosty układ matematyczny.</p>
+            <h4>Metoda na zadania tekstowe</h4>
+            <p>Nauka przekładania zawiłego tekstu zadania na prosty, czytelny zapis matematyczny.</p>
           </div>
         </div>
 
-        <a href="#kontakt" class="chapter-action">Umów lekcję matematyki →</a>
+        <a href="#kontakt" class="chapter-action">Napisz w sprawie matematyki →</a>
       </div>
 
       <!-- Schemat techniczny: Geometria & Logarytm -->
@@ -1021,18 +1235,18 @@
         </div>
         <div class="schematic-svg-frame">
           <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="20" y1="170" x2="300" y2="170" stroke="rgba(17,19,23,0.15)" stroke-width="1"/>
-            <line x1="80" y1="20" x2="80" y2="200" stroke="rgba(17,19,23,0.15)" stroke-width="1"/>
-            <path d="M85 200 C 88 150, 105 120, 140 100 C 180 80, 240 70, 300 65" stroke="#d92323" stroke-width="2"/>
-            <polygon points="120,170 230,170 230,90" stroke="#111317" stroke-width="1.5" fill="rgba(17,19,23,0.03)"/>
-            <circle cx="230" cy="170" r="3" fill="#d92323"/>
-            <rect x="218" y="158" width="12" height="12" stroke="rgba(17,19,23,0.4)" fill="none"/>
-            <text x="140" y="185" fill="#8b92a0" font-family="JetBrains Mono" font-size="10">a² + b² = c²</text>
-            <text x="240" y="125" fill="#d92323" font-family="JetBrains Mono" font-size="10">ln(x)</text>
+            <line x1="20" y1="170" x2="300" y2="170" stroke="rgba(14,17,24,0.15)" stroke-width="1"/>
+            <line x1="80" y1="20" x2="80" y2="200" stroke="rgba(14,17,24,0.15)" stroke-width="1"/>
+            <path d="M85 200 C 88 150, 105 120, 140 100 C 180 80, 240 70, 300 65" stroke="#0d5ceb" stroke-width="2"/>
+            <polygon points="120,170 230,170 230,90" stroke="#0e1118" stroke-width="1.5" fill="rgba(14,17,24,0.03)"/>
+            <circle cx="230" cy="170" r="3" fill="#0d5ceb"/>
+            <rect x="218" y="158" width="12" height="12" stroke="rgba(14,17,24,0.4)" fill="none"/>
+            <text x="140" y="185" fill="#7f8899" font-family="JetBrains Mono" font-size="10">a² + b² = c²</text>
+            <text x="240" y="125" fill="#0d5ceb" font-family="JetBrains Mono" font-size="10">ln(x)</text>
           </svg>
         </div>
         <div class="schematic-caption">
-          Przekształcenie złożoności: sprowadzanie relacji geometrycznych i algebraicznych do elementarnych tożsamości.
+          Dekompozycja pojęć: sprowadzanie trudnych zagadnień do prostych schematów graficznych.
         </div>
       </div>
     </section>
@@ -1045,34 +1259,34 @@
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Prawa przyrody · Doświadczenie zamiast pamięciówki</span>
+        <span class="chapter-tagline">Prawa przyrody · Doświadczenie zamiast pamięciówki[cite: 1]</span>
         <h2>Fizyka bez paniki przed wzorami</h2>
 
         <div class="prose-block">
           <p>
-            Fizyka w szkole podstawowej często zaczyna się niefortunnie: uczeń zamiast zachwytu nad prawami mechaniki widzi tablicę pełną liter i dostaje polecenie: „przekształć wzór na czas”.
+            Fizyka w podstawówce często zaczyna się niefortunnie: uczeń zamiast zachwytu nad zjawiskami dostaje kartkę z literkami i poleceniem: „wyznacz czas ze wzoru na prędkość”.
           </p>
           <p>
-            Zmieniamy to podejście o 180 stopni. Najpierw wyobrażamy sobie realną sytuację: rzut piłką, jazdę rowerem, zsuwanie się z górki. Rysujemy wektory sił, a wzory traktujemy jak logiczny opis tego, co i tak obserwujemy na co dzień. Uczę uniwersalnej metody przekształcania wzorów, która działa przy każdym szkolnym równaniu.
+            Na lekcjach online najpierw rysujemy sytuację: ruch samochodu, zsuwanie się sanek, bilans ciepła. Wzory traktujemy jak logiczny skrót tego, co i tak widać na ekranie. Uczę uniwersalnej techniki przekształcania wzorów, dzięki której uczeń przestaje strzelać, czy ma pomnożyć, czy podzielić.
           </p>
         </div>
 
         <div class="syllabus-stack">
           <div class="syllabus-unit">
-            <h4>Kinematyka i Zasady Dynamiki Newtona</h4>
-            <p>Prędkość, przyspieszenie, bezwładność, siła wypadkowa i tarcie w zadaniach praktycznych.</p>
+            <h4>Ruch i Siły (Dynamika)</h4>
+            <p>Prędkość, przyspieszenie, siła wypadkowa, zjawisko tarcia i zasady dynamiki Newtona.</p>
           </div>
           <div class="syllabus-unit">
-            <h4>Energia, Praca, Moc i Ciepło</h4>
-            <p>Zasada zachowania energii mechanicznej, bilans cieplny i zjawiska termodynamiczne bez zakuwania.</p>
+            <h4>Energia, Praca i Ciepło</h4>
+            <p>Zasada zachowania energii oraz zjawiska cieplne wytłumaczone intuicyjnie bez żargonu.</p>
           </div>
           <div class="syllabus-unit">
             <h4>Przekształcanie wzorów i jednostki</h4>
-            <p>Eliminacja typowych błędów przy zamianie jednostek (km/h na m/s, gramów na kilogramy).</p>
+            <p>Niezawodna metoda przekształceń oraz bezbłędna zamiana jednostek (m/s na km/h).</p>
           </div>
         </div>
 
-        <a href="#kontakt" class="chapter-action">Umów lekcję fizyki →</a>
+        <a href="#kontakt" class="chapter-action">Napisz w sprawie fizyki →</a>
       </div>
 
       <!-- Schemat techniczny: Równia pochyła -->
@@ -1083,22 +1297,22 @@
         </div>
         <div class="schematic-svg-frame">
           <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="30,180 270,180 270,80" stroke="rgba(17,19,23,0.3)" stroke-width="1.5" fill="rgba(17,19,23,0.02)"/>
+            <polygon points="30,180 270,180 270,80" stroke="rgba(14,17,24,0.3)" stroke-width="1.5" fill="rgba(14,17,24,0.02)"/>
             <g transform="translate(140, 134) rotate(-22.6)">
-              <rect x="-20" y="-20" width="40" height="40" stroke="#111317" stroke-width="1.5" fill="#ffffff"/>
-              <line x1="0" y1="0" x2="0" y2="45" stroke="#d92323" stroke-width="2"/>
-              <polygon points="0,48 -3,40 3,40" fill="#d92323"/>
-              <line x1="0" y1="0" x2="-45" y2="0" stroke="#d92323" stroke-width="2"/>
-              <polygon points="-48,0 -40,-3 -40,3" fill="#d92323"/>
+              <rect x="-20" y="-20" width="40" height="40" stroke="#0e1118" stroke-width="1.5" fill="#ffffff"/>
+              <line x1="0" y1="0" x2="0" y2="45" stroke="#0d5ceb" stroke-width="2"/>
+              <polygon points="0,48 -3,40 3,40" fill="#0d5ceb"/>
+              <line x1="0" y1="0" x2="-45" y2="0" stroke="#0d5ceb" stroke-width="2"/>
+              <polygon points="-48,0 -40,-3 -40,3" fill="#0d5ceb"/>
             </g>
-            <line x1="140" y1="134" x2="140" y2="195" stroke="#111317" stroke-width="1.5" stroke-dasharray="3 3"/>
-            <polygon points="140,198 137,190 143,190" fill="#111317"/>
-            <text x="145" y="195" fill="#8b92a0" font-family="JetBrains Mono" font-size="10">Fg = m·g</text>
-            <text x="75" y="110" fill="#d92323" font-family="JetBrains Mono" font-size="10">Fz</text>
+            <line x1="140" y1="134" x2="140" y2="195" stroke="#0e1118" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <polygon points="140,198 137,190 143,190" fill="#0e1118"/>
+            <text x="145" y="195" fill="#7f8899" font-family="JetBrains Mono" font-size="10">Fg = m·g</text>
+            <text x="75" y="110" fill="#0d5ceb" font-family="JetBrains Mono" font-size="10">Fz</text>
           </svg>
         </div>
         <div class="schematic-caption">
-          Dekompozycja sił na równi pochyłej: rozbicie wektora ciężkości na składową zsuwającą i nacisku.
+          Dekompozycja wektorowa: rozbicie siły grawitacji na składowe na tablicy online.
         </div>
       </div>
     </section>
@@ -1106,7 +1320,7 @@
     <!-- ROZDZIAŁ 4: CZEGO NIE ROBIĘ (0) -->
     <section id="zero" class="subject-chapter">
       <div class="chapter-side">
-        <div class="chapter-sym red">0</div>
+        <div class="chapter-sym blue">0</div>
         <div class="chapter-num">ROZDZIAŁ // 04</div>
       </div>
 
@@ -1116,7 +1330,7 @@
 
         <div class="prose-block">
           <p>
-            Równie ważne jak to, czego uczę, jest to, co na moich lekcjach <strong>nigdy nie występuje</strong>. Sprowadźmy to do prostego wzoru:
+            Równie ważne jak program jest to, co na moich lekcjach <strong>nigdy nie występuje</strong>:
           </p>
         </div>
 
@@ -1130,7 +1344,7 @@
               <div class="zero-point-icon">01</div>
               <div class="zero-point-text">
                 <strong>Zero zniecierpliwienia</strong>
-                <p>Uczeń ma prawo zapytać o to samo dziesięć razy. Jeśli coś nie jest jasne, to nie jego wina, tylko znak, że muszę zmienić przykład na prostszy.</p>
+                <p>Uczeń ma prawo zapytać o to samo dziesięć razy. Jeśli coś nie jest jasne, to sygnał dla mnie, by zmienić przykład na prostszy i bardziej obrazowy.</p>
               </div>
             </div>
 
@@ -1145,8 +1359,8 @@
             <div class="zero-point">
               <div class="zero-point-icon">03</div>
               <div class="zero-point-text">
-                <strong>Zero chaosu organizacyjnego</strong>
-                <p>Jeden sprawdzony korepetytor od hiszpańskiego, matematyki i fizyki. Spójne podejście, elastyczny grafik i koniec ze stresem dla rodzica.</p>
+                <strong>Jeden sprawdzony nauczyciel online</strong>
+                <p>Hiszpański, matematyka i fizyka w jednym miejscu. Wygoda nauki z domu, elastyczny grafik i brak stresu logistycznego dla rodziców.</p>
               </div>
             </div>
           </div>
@@ -1154,7 +1368,7 @@
       </div>
     </section>
 
-    <!-- KONTAKT -->
+    <!-- KONTAKT, WYCENA, PREFERENCJA WIADOMOŚCI I KOD QR -->
     <section id="kontakt" class="contact-fullwidth">
       <div class="contact-grid-hud">
         <div>
@@ -1162,27 +1376,54 @@
           <h2 class="contact-hero-title">
             Ustalmy<br>termin.
           </h2>
-          <p class="hero-manifesto" style="font-size: 1.15rem;">
-            Napisz do mnie bezpośrednio. Określ, czy ruszamy od zera z hiszpańskim, czy gasimy pożar przed sprawdzianem z matematyki bądź fizyki. Dobierzemy plan działania.
+          
+          <!-- Box z ważnymi informacjami: wycena + preferencja pisania -->
+          <div class="contact-notice-box">
+            <p>
+              💬 <strong>Ważna informacja:</strong> Najlepiej <strong>napisać do mnie wiadomość</strong> (WhatsApp, SMS lub e-mail). Prowadzę zajęcia, więc jest znacznie większa szansa, że szybko odpiszę, niż odbiorę telefon.
+            </p>
+            <p style="margin-top: 0.6rem;">
+              💶 <strong>Wycena:</strong> Koszt zajęć podaję indywidualnie po kontakcie, w zależności od potrzeb, częstotliwości i zakresu materiału.
+            </p>
+          </div>
+
+          <p class="hero-manifesto" style="font-size: 1.05rem;">
+            Napisz krótko, w czym mogę pomóc (język hiszpański od zera, zaległości z matematyki czy fizyka) i w jakich godzinach najwygodniej się spotkać online.
           </p>
+
+          <!-- Moduł Kodu QR do udostępniania strony -->
+          <div class="qr-module">
+            <div class="qr-box">
+              <!-- Automatycznie wygenerowany kod QR z zewnętrznego API dla aktualnej strony -->
+              <img id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://aleksanderdobrowolski.pl" alt="Kod QR do strony">
+            </div>
+            <div class="qr-desc">
+              <h4>Zeskanuj kod QR</h4>
+              <p>Zapisz tę stronę na telefonie lub prześlij kontakt znajomym rodzicom szukającym korepetycji online.</p>
+            </div>
+          </div>
         </div>
 
         <div class="contact-channels">
+          <a href="https://wa.me/48000000000" target="_blank" rel="noopener" class="channel-row">
+            <span class="c-key">WhatsApp (Najszybciej)</span>
+            <span class="c-val">+48 000 000 000 ↗</span>
+          </a>
           <a href="mailto:kontakt@aleksanderdobrowolski.pl" class="channel-row">
             <span class="c-key">E-mail</span>
             <span class="c-val">kontakt@aleksanderdobrowolski.pl ↗</span>
           </a>
-          <a href="tel:+48000000000" class="channel-row">
-            <span class="c-key">Telefon / WhatsApp</span>
+          <a href="sms:+48000000000" class="channel-row">
+            <span class="c-key">SMS</span>
             <span class="c-val">+48 000 000 000 ↗</span>
           </a>
           <div class="channel-row">
             <span class="c-key">Format zajęć</span>
-            <span class="c-val">Online (Wspólny ekran / tablica) lub stacjonarnie</span>
+            <span class="c-val" style="color: var(--blue);">100% ONLINE (Wspólna tablica)</span>
           </div>
           <div class="channel-row">
-            <span class="c-key">Dostępność</span>
-            <span class="c-val" style="color: var(--red);">Poniedziałek – Sobota</span>
+            <span class="c-key">Cennik</span>
+            <span class="c-val">Wycena po kontakcie</span>
           </div>
         </div>
       </div>
@@ -1191,10 +1432,26 @@
 
   <!-- STOPKA -->
   <footer>
-    <div>Aleksander Dobrowolski · S = kB ln Ω</div>
-    <div>WSZYSTKIE PRAWA ZASTRZEŻONE © 2026</div>
-    <div><a href="#top" style="border-bottom: 1px dotted var(--red); color: var(--text);">Wróć na górę ↑</a></div>
+    <div>Aleksander Dobrowolski · S = kB ln Ω[cite: 1]</div>
+    <div>ZAJĘCIA ONLINE · 2026</div>
+    <div><a href="#top" style="border-bottom: 1px dotted var(--blue); color: var(--text);">Wróć na górę ↑</a></div>
   </footer>
 
+  <!-- Skrypt dynamicznego kodu QR bazującego na bieżącym URL -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      try {
+        var currentUrl = window.location.href;
+        if (currentUrl && currentUrl.indexOf('http') === 0) {
+          var qrImg = document.getElementById('qrImage');
+          if (qrImg) {
+            qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(currentUrl);
+          }
+        }
+      } catch (e) {
+        // Fallback w razie uruchomienia w lokalnym podglądzie
+      }
+    });
+  </script>
 </body>
 </html>
