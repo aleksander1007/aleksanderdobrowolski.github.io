@@ -1195,7 +1195,7 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie matematyki →</a>
       </div>
 
-      <!-- MATEMATYKA: STOPNIOWA METAMORFOZA Z CHAOSU DO 2 + 2 = 4 -->
+      <!-- MATEMATYKA: STOPNIOWA METAMORFOZA Z CHAOSU DO 2 + 2 = 4 (BEZ PODPISU) -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">NOTATNIK OBLICZEŃ // LIVE BOARD</span>
@@ -1247,7 +1247,7 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie fizyki →</a>
       </div>
 
-      <!-- FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO -->
+      <!-- FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO (BEZ PODPISU) -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">WYPROWADZENIE // HANDWRITTEN LIVE</span>
@@ -1358,7 +1358,7 @@
         </div>
 
         <div class="contact-channels">
-          <!-- WhatsApp i SMS w jednej rubryce (bez osobnej rubryki Telefon) -->
+          <!-- WhatsApp i SMS w jednej rubryce (bez osobnej pozycji Telefon) -->
           <a href="https://wa.me/48509101676" target="_blank" rel="noopener" class="channel-row">
             <span class="c-key">WhatsApp / SMS</span>
             <span class="c-val">+48 509 101 676 ↗</span>
@@ -1491,7 +1491,7 @@
     }
 
     /* =========================================================================
-       2. MATEMATYKA: STOPNIOWA, PŁYNNA METAMORFOZA CHAOSU W 2 + 2 = 4
+       2. MATEMATYKA: STOPNIOWA METAMORFOZA Z CHAOSU W 2 + 2 = 4
        ========================================================================= */
     function initMathHandwrittenChaos() {
       const canvas = document.getElementById('mathChaosCanvas');
@@ -1577,11 +1577,6 @@
 
       populateChaos();
 
-      // Pętla czasowa:
-      // 0 - 200: czysty, żywy chaos
-      // 200 - 450: stopniowe wygaszanie chaosu element po elemencie i powolne wyłanianie 2+2=4
-      // 450 - 620: czyste, stabilne 2+2=4
-      // 620 - 720: płynny powrót chaosu
       let frame = 0;
       const totalCycle = 720;
 
@@ -1596,27 +1591,24 @@
           chaosFactor = 1;
           simpleFactor = 0;
         } else if (frame > 200 && frame <= 450) {
-          const t = (frame - 200) / 250; // 0 -> 1
+          const t = (frame - 200) / 250;
           chaosFactor = 1 - t;
           simpleFactor = t;
         } else if (frame > 450 && frame <= 620) {
           chaosFactor = 0;
           simpleFactor = 1;
         } else {
-          const t = (frame - 620) / 100; // 0 -> 1 powrót do chaosu
+          const t = (frame - 620) / 100;
           chaosFactor = t;
           simpleFactor = 1 - t;
           if (frame === 621) {
-            populateChaos(); // nowe rozłożenie po cyklu
+            populateChaos();
           }
         }
 
-        // Rysowanie chaotycznych elementów (stopniowo gasnące)
         if (chaosFactor > 0.005) {
           for (let i = 0; i < drawings.length; i++) {
             const d = drawings[i];
-            
-            // Każdy element ma własny próg wygasania, przez co chaos rzednie nierównomiernie i naturalnie
             const itemAlpha = Math.max(0, Math.min(1, (chaosFactor - d.fadeThreshold * 0.4) / 0.6)) * d.baseAlpha;
             if (itemAlpha <= 0.01) continue;
 
@@ -1651,7 +1643,7 @@
               ctx.moveTo(d.x - 30, d.y);
               ctx.lineTo(d.x + 50, d.y);
               ctx.moveTo(d.x, d.y - 35);
-              ctx.lineTo(d.x, d.y + 35);
+              ctx.lineTo(d.x + 35);
               ctx.stroke();
               ctx.beginPath();
               ctx.moveTo(d.x - 25, d.y - 20);
@@ -1674,7 +1666,6 @@
           }
         }
 
-        // Stopniowe wyłanianie się 2 + 2 = 4
         if (simpleFactor > 0.005) {
           ctx.save();
           ctx.globalAlpha = Math.min(1, simpleFactor * 1.1);
@@ -1685,7 +1676,6 @@
           const tx = (w - metrics.width) / 2;
           const ty = h / 2 + 10;
 
-          // Ramka odręczna
           ctx.strokeStyle = "#0d5ceb";
           ctx.lineWidth = 2.5;
           ctx.strokeRect(tx - 24, ty - 58, metrics.width + 48, 76);
@@ -1693,7 +1683,6 @@
           ctx.fillStyle = "#0e1118";
           ctx.fillText(text, tx, ty);
 
-          // Subtelny dopisek
           ctx.font = "13px 'JetBrains Mono', monospace";
           ctx.fillStyle = "#0d5ceb";
           const subText = "REDUKCJA DO ABSOLUTNEJ PODSTAWY";
