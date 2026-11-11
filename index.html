@@ -592,7 +592,7 @@
       align-items: center;
     }
 
-    /* MATEMATYKA: KARTKA W NIEBIESKĄ KRATKĘ Z PRZEJŚCIEM Z CHAOSU DO 2+2=4 */
+    /* MATEMATYKA: KARTKA W KRATKĘ */
     .grid-paper-canvas-wrap {
       width: 100%;
       height: 100%;
@@ -611,7 +611,7 @@
       display: block;
     }
 
-    /* FIZYKA: TABLICA Z ODRĘCZNYM PISANIEM NA ŻYWO */
+    /* FIZYKA: TABLICA Z ODRĘCZNYM PISANIEM */
     .physics-chalkboard-wrap {
       width: 100%;
       height: 100%;
@@ -661,14 +661,6 @@
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
-    }
-
-    .schematic-caption {
-      margin-top: 1.2rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      font-family: var(--font-mono);
     }
 
     /* Rozdział 04: Zasady */
@@ -1162,9 +1154,6 @@
             <text x="210" y="32" fill="#0d5ceb" font-family="JetBrains Mono" font-size="11" font-weight="bold">B1: SWOBODA (CEL)</text>
           </svg>
         </div>
-        <div class="schematic-caption">
-          Krzywa dojścia do samodzielności językowej w trybie lekcji online.
-        </div>
       </div>
     </section>
 
@@ -1206,19 +1195,16 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie matematyki →</a>
       </div>
 
-      <!-- MATEMATYKA: DYNAMICZNY CHAOS REDUKUJĄCY SIĘ DO 2+2=4 -->
+      <!-- MATEMATYKA: STOPNIOWA METAMORFOZA Z CHAOSU DO 2 + 2 = 4 -->
       <div class="technical-schematic">
         <div class="schematic-header">
-          <span class="schematic-title">REDUKCJA CHAOSU // 2 + 2 = 4</span>
+          <span class="schematic-title">NOTATNIK OBLICZEŃ // LIVE BOARD</span>
           <span class="schematic-badge">Klasy 4–8</span>
         </div>
         <div class="schematic-frame-box">
           <div class="grid-paper-canvas-wrap">
             <canvas id="mathChaosCanvas"></canvas>
           </div>
-        </div>
-        <div class="schematic-caption">
-          Proces dydaktyczny w praktyce: początkowy szum pojęciowy stopniowo wygasa, aż na czystej tablicy zostaje elementarna prawda: 2 + 2 = 4.
         </div>
       </div>
     </section>
@@ -1261,7 +1247,7 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie fizyki →</a>
       </div>
 
-      <!-- FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO (JAK PRZY TABLICY) -->
+      <!-- FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">WYPROWADZENIE // HANDWRITTEN LIVE</span>
@@ -1276,9 +1262,6 @@
               <div class="hand-line" id="physHandLine4" style="font-size: 1.3rem; color: #7f8899;"></div>
             </div>
           </div>
-        </div>
-        <div class="schematic-caption">
-          Autentyczna symulacja zapisu nauczycielskiego: stopniowe rozpisywanie wzoru, pauzy na namysł i powrót do uproszczeń.
         </div>
       </div>
     </section>
@@ -1375,21 +1358,14 @@
         </div>
 
         <div class="contact-channels">
+          <!-- WhatsApp i SMS w jednej rubryce (bez osobnej rubryki Telefon) -->
           <a href="https://wa.me/48509101676" target="_blank" rel="noopener" class="channel-row">
-            <span class="c-key">WhatsApp</span>
+            <span class="c-key">WhatsApp / SMS</span>
             <span class="c-val">+48 509 101 676 ↗</span>
           </a>
           <a href="mailto:aleksander.dobrowolski1007@gmail.com" class="channel-row">
             <span class="c-key">E-mail</span>
             <span class="c-val">aleksander.dobrowolski1007@gmail.com ↗</span>
-          </a>
-          <a href="sms:+48509101676" class="channel-row">
-            <span class="c-key">SMS</span>
-            <span class="c-val">+48 509 101 676 ↗</span>
-          </a>
-          <a href="tel:+48509101676" class="channel-row">
-            <span class="c-key">Telefon</span>
-            <span class="c-val">+48 509 101 676 ↗</span>
           </a>
           <div class="channel-row">
             <span class="c-key">Format zajęć</span>
@@ -1414,7 +1390,7 @@
   <!-- SKRYPTY INTERAKTYWNE -->
   <script>
     /* =========================================================================
-       1. CZARNY 3D ATRAKTOR LORENZA (AUTENTYCZNA STRUKTURA CHAOSU)
+       1. CZARNY 3D ATRAKTOR LORENZA
        ========================================================================= */
     function initBlackLorenzAttractor() {
       const canvas = document.getElementById('lorenzChaosCanvas');
@@ -1515,7 +1491,7 @@
     }
 
     /* =========================================================================
-       2. MATEMATYKA: CHAOS WYGASAJĄCY DO JEDNEGO RÓWNANIA: 2 + 2 = 4
+       2. MATEMATYKA: STOPNIOWA, PŁYNNA METAMORFOZA CHAOSU W 2 + 2 = 4
        ========================================================================= */
     function initMathHandwrittenChaos() {
       const canvas = document.getElementById('mathChaosCanvas');
@@ -1540,193 +1516,189 @@
         "V = ⅓ π r² h", "x/y = 3/2", "ab² / (a-b)", "2⅓ x⁻⅔ = 0"
       ];
 
-      let drawings = [];
-      let phase = 'CHAOS_BUILD'; // 'CHAOS_BUILD' -> 'FADE_OUT' -> 'REVEAL_SIMPLE' -> 'HOLD'
-      let timer = 0;
-      let finalEquationAlpha = 0;
+      const drawings = [];
 
       function spawnFormula() {
         const text = formulasPool[Math.floor(Math.random() * formulasPool.length)];
-        drawings.push({
+        return {
           type: 'text',
           text: text,
           x: Math.random() * (w - 140) + 10,
           y: Math.random() * (h - 30) + 25,
           font: (Math.random() > 0.5 ? 'bold ' : '') + (Math.floor(Math.random() * 6) + 14) + "px 'Caveat', cursive",
-          color: Math.random() > 0.7 ? '#0d5ceb' : 'rgba(14, 17, 24, 0.75)',
+          color: Math.random() > 0.7 ? '#0d5ceb' : '#0e1118',
           rot: (Math.random() - 0.5) * 0.15,
-          alpha: 0
-        });
+          baseAlpha: Math.random() * 0.45 + 0.45,
+          fadeThreshold: Math.random()
+        };
       }
 
       function spawnDoodle() {
         const type = Math.random();
         if (type < 0.35) {
-          drawings.push({
+          return {
             type: 'cone',
             x: Math.random() * (w - 80) + 40,
             y: Math.random() * (h - 90) + 30,
-            color: 'rgba(14, 17, 24, 0.65)',
-            alpha: 0
-          });
+            color: '#0e1118',
+            baseAlpha: 0.65,
+            fadeThreshold: Math.random()
+          };
         } else if (type < 0.7) {
-          drawings.push({
+          return {
             type: 'axes',
             x: Math.random() * (w - 100) + 30,
             y: Math.random() * (h - 80) + 40,
-            color: 'rgba(14, 17, 24, 0.6)',
-            alpha: 0
-          });
+            color: '#0e1118',
+            baseAlpha: 0.6,
+            fadeThreshold: Math.random()
+          };
         } else {
-          drawings.push({
+          return {
             type: 'vector',
             x: Math.random() * (w - 60) + 20,
             y: Math.random() * (h - 60) + 30,
             dx: (Math.random() - 0.5) * 80 + 30,
             dy: (Math.random() - 0.5) * 80 - 20,
             color: '#0d5ceb',
-            alpha: 0
-          });
+            baseAlpha: 0.8,
+            fadeThreshold: Math.random()
+          };
         }
       }
 
-      function resetChaos() {
-        drawings = [];
-        finalEquationAlpha = 0;
-        phase = 'CHAOS_BUILD';
-        timer = 0;
-        for (let i = 0; i < 24; i++) {
-          spawnFormula();
-          if (i % 3 === 0) spawnDoodle();
+      function populateChaos() {
+        drawings.length = 0;
+        for (let i = 0; i < 48; i++) {
+          drawings.push(spawnFormula());
+          if (i % 3 === 0) drawings.push(spawnDoodle());
         }
-        drawings.forEach(d => d.alpha = Math.random() * 0.6 + 0.3);
       }
 
-      resetChaos();
+      populateChaos();
+
+      // Pętla czasowa:
+      // 0 - 200: czysty, żywy chaos
+      // 200 - 450: stopniowe wygaszanie chaosu element po elemencie i powolne wyłanianie 2+2=4
+      // 450 - 620: czyste, stabilne 2+2=4
+      // 620 - 720: płynny powrót chaosu
+      let frame = 0;
+      const totalCycle = 720;
 
       function render() {
         ctx.clearRect(0, 0, w, h);
-        timer++;
+        frame = (frame + 1) % totalCycle;
 
-        // Maszyna stanów: budowanie chaosu -> gaszenie -> ujawnienie 2+2=4
-        if (phase === 'CHAOS_BUILD') {
-          if (timer % 15 === 0 && drawings.length < 55) {
-            spawnFormula();
-            if (Math.random() > 0.4) spawnDoodle();
-          }
-          if (timer > 240) { // po około 4 sekundach pełnego chaosu zaczynamy redukcję
-            phase = 'FADE_OUT';
-          }
-        } else if (phase === 'FADE_OUT') {
-          // Chaos znika
-          let allGone = true;
-          drawings.forEach(d => {
-            d.alpha -= 0.025;
-            if (d.alpha > 0.01) allGone = false;
-          });
-          if (allGone) {
-            drawings = [];
-            phase = 'REVEAL_SIMPLE';
-            timer = 0;
-          }
-        } else if (phase === 'REVEAL_SIMPLE') {
-          if (finalEquationAlpha < 1) {
-            finalEquationAlpha += 0.035;
-          } else {
-            phase = 'HOLD';
-            timer = 0;
-          }
-        } else if (phase === 'HOLD') {
-          // Utrzymanie czystego 2+2=4 przez 3 sekundy, po czym restart
-          if (timer > 180) {
-            resetChaos();
+        let chaosFactor = 1;
+        let simpleFactor = 0;
+
+        if (frame <= 200) {
+          chaosFactor = 1;
+          simpleFactor = 0;
+        } else if (frame > 200 && frame <= 450) {
+          const t = (frame - 200) / 250; // 0 -> 1
+          chaosFactor = 1 - t;
+          simpleFactor = t;
+        } else if (frame > 450 && frame <= 620) {
+          chaosFactor = 0;
+          simpleFactor = 1;
+        } else {
+          const t = (frame - 620) / 100; // 0 -> 1 powrót do chaosu
+          chaosFactor = t;
+          simpleFactor = 1 - t;
+          if (frame === 621) {
+            populateChaos(); // nowe rozłożenie po cyklu
           }
         }
 
-        // Rysowanie chaotycznych elementów
-        for (let i = 0; i < drawings.length; i++) {
-          const d = drawings[i];
-          if (d.alpha <= 0) continue;
-          if (phase === 'CHAOS_BUILD' && d.alpha < 0.95) d.alpha += 0.05;
+        // Rysowanie chaotycznych elementów (stopniowo gasnące)
+        if (chaosFactor > 0.005) {
+          for (let i = 0; i < drawings.length; i++) {
+            const d = drawings[i];
+            
+            // Każdy element ma własny próg wygasania, przez co chaos rzednie nierównomiernie i naturalnie
+            const itemAlpha = Math.max(0, Math.min(1, (chaosFactor - d.fadeThreshold * 0.4) / 0.6)) * d.baseAlpha;
+            if (itemAlpha <= 0.01) continue;
 
-          ctx.save();
-          ctx.globalAlpha = Math.max(0, d.alpha);
+            ctx.save();
+            ctx.globalAlpha = itemAlpha;
 
-          if (d.type === 'text') {
-            ctx.translate(d.x, d.y);
-            ctx.rotate(d.rot);
-            ctx.font = d.font;
-            ctx.fillStyle = d.color;
-            ctx.fillText(d.text, 0, 0);
-          } else if (d.type === 'cone') {
-            ctx.strokeStyle = d.color;
-            ctx.lineWidth = 1.2;
-            ctx.beginPath();
-            ctx.ellipse(d.x, d.y, 28, 10, 0, 0, Math.PI * 2);
-            ctx.moveTo(d.x - 28, d.y);
-            ctx.lineTo(d.x, d.y + 55);
-            ctx.lineTo(d.x + 28, d.y);
-            ctx.stroke();
-            ctx.setLineDash([3, 3]);
-            ctx.beginPath();
-            ctx.moveTo(d.x, d.y);
-            ctx.lineTo(d.x, d.y + 55);
-            ctx.stroke();
-            ctx.setLineDash([]);
-          } else if (d.type === 'axes') {
-            ctx.strokeStyle = d.color;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(d.x - 30, d.y);
-            ctx.lineTo(d.x + 50, d.y);
-            ctx.moveTo(d.x, d.y - 35);
-            ctx.lineTo(d.x, d.y + 35);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(d.x - 25, d.y - 20);
-            ctx.quadraticCurveTo(d.x, d.y + 35, d.x + 40, d.y - 25);
-            ctx.stroke();
-          } else if (d.type === 'vector') {
-            ctx.strokeStyle = d.color;
-            ctx.lineWidth = 1.4;
-            ctx.beginPath();
-            ctx.moveTo(d.x, d.y);
-            ctx.lineTo(d.x + d.dx, d.y + d.dy);
-            ctx.stroke();
-            ctx.fillStyle = d.color;
-            ctx.beginPath();
-            ctx.arc(d.x + d.dx, d.y + d.dy, 2.5, 0, Math.PI * 2);
-            ctx.fill();
+            if (d.type === 'text') {
+              ctx.translate(d.x, d.y);
+              ctx.rotate(d.rot);
+              ctx.font = d.font;
+              ctx.fillStyle = d.color;
+              ctx.fillText(d.text, 0, 0);
+            } else if (d.type === 'cone') {
+              ctx.strokeStyle = d.color;
+              ctx.lineWidth = 1.2;
+              ctx.beginPath();
+              ctx.ellipse(d.x, d.y, 28, 10, 0, 0, Math.PI * 2);
+              ctx.moveTo(d.x - 28, d.y);
+              ctx.lineTo(d.x, d.y + 55);
+              ctx.lineTo(d.x + 28, d.y);
+              ctx.stroke();
+              ctx.setLineDash([3, 3]);
+              ctx.beginPath();
+              ctx.moveTo(d.x, d.y);
+              ctx.lineTo(d.x, d.y + 55);
+              ctx.stroke();
+              ctx.setLineDash([]);
+            } else if (d.type === 'axes') {
+              ctx.strokeStyle = d.color;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(d.x - 30, d.y);
+              ctx.lineTo(d.x + 50, d.y);
+              ctx.moveTo(d.x, d.y - 35);
+              ctx.lineTo(d.x, d.y + 35);
+              ctx.stroke();
+              ctx.beginPath();
+              ctx.moveTo(d.x - 25, d.y - 20);
+              ctx.quadraticCurveTo(d.x, d.y + 35, d.x + 40, d.y - 25);
+              ctx.stroke();
+            } else if (d.type === 'vector') {
+              ctx.strokeStyle = d.color;
+              ctx.lineWidth = 1.4;
+              ctx.beginPath();
+              ctx.moveTo(d.x, d.y);
+              ctx.lineTo(d.x + d.dx, d.y + d.dy);
+              ctx.stroke();
+              ctx.fillStyle = d.color;
+              ctx.beginPath();
+              ctx.arc(d.x + d.dx, d.y + d.dy, 2.5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+
+            ctx.restore();
           }
-
-          ctx.restore();
         }
 
-        // Rysowanie ostatecznego, wycentrowanego 2 + 2 = 4
-        if (finalEquationAlpha > 0) {
+        // Stopniowe wyłanianie się 2 + 2 = 4
+        if (simpleFactor > 0.005) {
           ctx.save();
-          ctx.globalAlpha = finalEquationAlpha;
+          ctx.globalAlpha = Math.min(1, simpleFactor * 1.1);
 
           const text = "2 + 2 = 4";
           ctx.font = "bold 58px 'Caveat', cursive";
           const metrics = ctx.measureText(text);
           const tx = (w - metrics.width) / 2;
-          const ty = h / 2 + 15;
+          const ty = h / 2 + 10;
 
-          // Ramka odręczna wokół równania
+          // Ramka odręczna
           ctx.strokeStyle = "#0d5ceb";
           ctx.lineWidth = 2.5;
-          ctx.strokeRect(tx - 25, ty - 60, metrics.width + 50, 80);
+          ctx.strokeRect(tx - 24, ty - 58, metrics.width + 48, 76);
 
           ctx.fillStyle = "#0e1118";
           ctx.fillText(text, tx, ty);
 
-          // Subtelny dopisek u dołu
-          ctx.font = "14px 'JetBrains Mono', monospace";
+          // Subtelny dopisek
+          ctx.font = "13px 'JetBrains Mono', monospace";
           ctx.fillStyle = "#0d5ceb";
           const subText = "REDUKCJA DO ABSOLUTNEJ PODSTAWY";
           const subMetrics = ctx.measureText(subText);
-          ctx.fillText(subText, (w - subMetrics.width) / 2, ty + 50);
+          ctx.fillText(subText, (w - subMetrics.width) / 2, ty + 46);
 
           ctx.restore();
         }
@@ -1738,7 +1710,7 @@
     }
 
     /* =========================================================================
-       3. FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO (HANDWRITING BOT)
+       3. FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO
        ========================================================================= */
     function initNaturalPhysicsHandwriting() {
       const line1 = document.getElementById('physHandLine1');
