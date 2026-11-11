@@ -21,7 +21,6 @@
       --text-muted: #49505f;
       --text-dim: #7f8899;
       
-      /* Nowy niebieski akcent */
       --blue: #0d5ceb;
       --blue-glow: rgba(13, 92, 235, 0.35);
       --blue-dim: rgba(13, 92, 235, 0.08);
@@ -83,49 +82,20 @@
       z-index: 1000;
     }
 
-    /* Nowy, atrakcyjny lewy górny róg */
     .brand-hud {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
-    }
-
-    .brand-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--bg-contrast);
-      color: #fff;
-      padding: 0.35rem 0.75rem;
-      border-radius: 4px;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-    }
-
-    .brand-pulse {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #00ff88;
-      box-shadow: 0 0 10px #00ff88;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+      gap: 0.6rem;
     }
 
     .brand-titles {
       display: flex;
       flex-direction: column;
-      line-height: 1.1;
+      line-height: 1.15;
     }
 
     .brand-titles strong {
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 800;
       color: var(--text);
       letter-spacing: -0.01em;
@@ -133,7 +103,7 @@
 
     .brand-titles small {
       font-family: var(--font-mono);
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       color: var(--blue);
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -315,7 +285,6 @@
       overflow: hidden;
     }
 
-    /* Grafika / siatka techniczna w tle */
     .formula-monument-bg {
       position: absolute;
       top: 0;
@@ -346,7 +315,7 @@
       color: var(--text);
     }
 
-    /* Kontener wycentrowany z grafikami po lewej i prawej */
+    /* Wycentrowana sekcja wzoru z animacjami chaosu po bokach */
     .formula-tri-frame {
       max-width: 1240px;
       margin: 0 auto 4rem;
@@ -356,21 +325,42 @@
       align-items: center;
     }
 
-    .formula-side-art {
-      background: var(--bg);
+    .chaos-canvas-card {
+      background: #fafafa;
       border: 1px solid var(--border-strong);
       border-radius: 6px;
-      padding: 1.2rem;
-      height: 190px;
+      padding: 0.8rem;
+      height: 220px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-between;
+      position: relative;
     }
 
-    .formula-side-art svg {
+    .chaos-canvas-card canvas {
       width: 100%;
-      height: 100%;
+      height: 160px;
+      display: block;
+      border-radius: 4px;
+      background: #ffffff;
+      border: 1px solid rgba(14, 17, 24, 0.06);
+    }
+
+    .chaos-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0.2rem;
+    }
+
+    .chaos-tag span.val {
+      color: var(--blue);
+      font-weight: 700;
     }
 
     .monument-formula-box {
@@ -727,7 +717,7 @@
       margin: 0;
     }
 
-    /* --- Sekcja Końcowa: Kontakt, QR kod i wycena --- */
+    /* --- Sekcja Końcowa --- */
     .contact-fullwidth {
       width: 100%;
       padding: 7rem 2.5rem 5rem;
@@ -751,27 +741,41 @@
       color: var(--text);
     }
 
-    /* Ważne ostrzeżenie o wycenie i preferencji wiadomości */
-    .contact-notice-box {
-      background: var(--bg-subtle);
+    /* Zaktualizowany box informacyjny: naturalny, profesjonalny ton */
+    .contact-brief-panel {
+      background: #fafafa;
+      border: 1px solid var(--border-strong);
       border-left: 3px solid var(--blue);
-      padding: 1.2rem 1.5rem;
+      padding: 1.6rem 1.8rem;
       margin: 1.8rem 0;
-      border-radius: 0 4px 4px 0;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
     }
 
-    .contact-notice-box p {
+    .brief-entry {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .brief-label {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--blue);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brief-text {
       font-size: 0.95rem;
       color: var(--text-muted);
-      margin-bottom: 0.5rem;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
-    .contact-notice-box p:last-child {
-      margin-bottom: 0;
-    }
-
-    .contact-notice-box strong {
+    .brief-text strong {
       color: var(--text);
     }
 
@@ -865,9 +869,7 @@
       background: var(--bg);
     }
 
-    /* ========================================================
-       PEŁNE DOPASOWANIE POD TELEFONY (MOBILE FIRST BREAKPOINTS)
-       ======================================================== */
+    /* RWD */
     @media (max-width: 1024px) {
       .hero-strip {
         grid-template-columns: 1fr;
@@ -877,8 +879,8 @@
         grid-template-columns: 1fr;
         gap: 1.5rem;
       }
-      .formula-side-art {
-        display: none; /* ukrywamy zbędne ozdobniki boczne na tabletach */
+      .chaos-canvas-card {
+        display: none;
       }
       .clarity-card {
         grid-template-columns: 80px 1fr;
@@ -909,7 +911,7 @@
         padding: 0 1rem;
       }
       nav.hud-nav {
-        display: none; /* proste i czyste menu na smartfonach */
+        display: none;
       }
       .hero-strip {
         padding: 3rem 1.2rem;
@@ -954,13 +956,9 @@
 </head>
 <body id="top">
 
-  <!-- HUD Header z odświeżonym lewym rogiem -->
+  <!-- HUD Header (bez napisu online) -->
   <header>
     <a href="#top" class="brand-hud">
-      <div class="brand-badge">
-        <span class="brand-pulse"></span>
-        <span>ONLINE</span>
-      </div>
       <div class="brand-titles">
         <strong>Aleksander Dobrowolski</strong>
         <small>Dydaktyka · S = kB ln Ω</small>
@@ -1020,25 +1018,21 @@
       </div>
     </section>
 
-    <!-- MONUMENTALNY WZÓR: Wycentrowany, z grafikami po bokach i tłem graficznym -->
+    <!-- MONUMENTALNY WZÓR: Wycentrowany, z animowanym chaosem cząstek po bokach -->
     <section id="wzor" class="formula-monument">
       <div class="formula-monument-bg"></div>
 
       <div class="monument-content-wrap">
         <h2 class="monument-title">Rozwój wyprowadzony z chaosu</h2>
 
-        <!-- Układ: Grafika lewa | Główny wycentrowany wzór | Grafika prawa -->
         <div class="formula-tri-frame">
-          <!-- Ozdobny schemat wektorowy lewy -->
-          <div class="formula-side-art">
-            <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="80" cy="60" r="45" stroke="rgba(13,92,235,0.25)" stroke-width="1.5" stroke-dasharray="4 4"/>
-              <circle cx="80" cy="60" r="25" stroke="rgba(14,17,24,0.15)" stroke-width="1"/>
-              <circle cx="80" cy="60" r="4" fill="#0d5ceb"/>
-              <line x1="80" y1="60" x2="115" y2="35" stroke="#0d5ceb" stroke-width="1.5"/>
-              <polygon points="118,33 110,35 113,42" fill="#0d5ceb"/>
-              <text x="35" y="112" fill="#7f8899" font-family="JetBrains Mono" font-size="9">STAN: NIEUPORZĄDKOWANY</text>
-            </svg>
+          <!-- Lewy panel animacji chaosu -->
+          <div class="chaos-canvas-card">
+            <canvas id="chaosCanvasLeft"></canvas>
+            <div class="chaos-tag">
+              <span>Stan cząstek</span>
+              <span class="val">Wysoka entropia (Ω)</span>
+            </div>
           </div>
 
           <!-- Główna wycentrowana ramka wzoru -->
@@ -1052,15 +1046,13 @@
             </div>
           </div>
 
-          <!-- Ozdobny schemat wektorowy prawy -->
-          <div class="formula-side-art">
-            <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="20" y1="100" x2="140" y2="100" stroke="rgba(14,17,24,0.2)" stroke-width="1"/>
-              <line x1="20" y1="100" x2="20" y2="20" stroke="rgba(14,17,24,0.2)" stroke-width="1"/>
-              <path d="M20 95 C 50 85, 80 50, 140 30" stroke="#0d5ceb" stroke-width="2"/>
-              <circle cx="140" cy="30" r="3.5" fill="#0d5ceb"/>
-              <text x="35" y="112" fill="#7f8899" font-family="JetBrains Mono" font-size="9">SKOK PEWNOŚCI // ΔS</text>
-            </svg>
+          <!-- Prawy panel animacji chaosu -->
+          <div class="chaos-canvas-card">
+            <canvas id="chaosCanvasRight"></canvas>
+            <div class="chaos-tag">
+              <span>Rozkład pędu</span>
+              <span class="val">Szum mikroskopowy</span>
+            </div>
           </div>
         </div>
 
@@ -1070,10 +1062,10 @@
             <div class="sym">S</div>
             <div class="sci-block">
               <small>Fizyka statystyczna</small>
-              <strong>Entropia[cite: 1]</strong>
+              <strong>Entropia</strong>
             </div>
             <div class="meaning-block">
-              <strong>Spokój i równowaga[cite: 1].</strong> Likwidujemy lęk przed tablicą, sprawdzianem i nowym zadaniem. Zamiast paniki wprowadzamy stabilną pewność siebie[cite: 1].
+              <strong>Spokój i równowaga.</strong> Likwidujemy lęk przed tablicą, sprawdzianem i nowym zadaniem. Zamiast paniki wprowadzamy stabilną pewność siebie.
             </div>
           </div>
 
@@ -1081,10 +1073,10 @@
             <div class="sym">k</div>
             <div class="sci-block">
               <small>Wartość stała</small>
-              <strong>Stała Boltzmanna[cite: 1]</strong>
+              <strong>Stała Boltzmanna</strong>
             </div>
             <div class="meaning-block">
-              <strong>Wiedza i konsekwencja[cite: 1].</strong> Niezmienny fundament. Regularna metoda pracy online, która krok po kroku daje mierzalny wynik[cite: 1].
+              <strong>Wiedza i konsekwencja.</strong> Niezmienny fundament. Regularna metoda pracy online, która krok po kroku daje mierzalny wynik.
             </div>
           </div>
 
@@ -1092,10 +1084,10 @@
             <div class="sym">B</div>
             <div class="sci-block">
               <small>Identyfikator</small>
-              <strong>Oznaczenie Boltzmanna[cite: 1]</strong>
+              <strong>Oznaczenie Boltzmanna</strong>
             </div>
             <div class="meaning-block">
-              <strong>Budowanie własnej przyszłości[cite: 1].</strong> Język hiszpański od totalnego zera do poziomu B1, który otwiera realne perspektywy i swobodę komunikacji[cite: 1].
+              <strong>Budowanie własnej przyszłości.</strong> Język hiszpański od totalnego zera do poziomu B1, który otwiera realne perspektywy i swobodę komunikacji.
             </div>
           </div>
 
@@ -1103,10 +1095,10 @@
             <div class="sym">ln</div>
             <div class="sci-block">
               <small>Funkcja matematyczna</small>
-              <strong>Logarytm naturalny[cite: 1]</strong>
+              <strong>Logarytm naturalny</strong>
             </div>
             <div class="meaning-block">
-              <strong>Logiczne myślenie i matematyka[cite: 1].</strong> Sprowadzanie złożonych problemów do prostych, elementarnych kroków, które po prostu mają sens[cite: 1].
+              <strong>Logiczne myślenie i matematyka.</strong> Sprowadzanie złożonych problemów do prostych, elementarnych kroków, które po prostu mają sens.
             </div>
           </div>
 
@@ -1114,10 +1106,10 @@
             <div class="sym">Ω</div>
             <div class="sci-block">
               <small>Stan mikroskopowy</small>
-              <strong>Liczba mikrostanów[cite: 1]</strong>
+              <strong>Liczba mikrostanów</strong>
             </div>
             <div class="meaning-block">
-              <strong>Nieskończone możliwości rozwoju[cite: 1].</strong> Fizyka jako zrozumiała mapa praw rządzących światem, a nie zbiór wzorów do wklepania na pamięć[cite: 1].
+              <strong>Nieskończone możliwości rozwoju.</strong> Fizyka jako zrozumiała mapa praw rządzących światem, a nie zbiór wzorów do wklepania na pamięć.
             </div>
           </div>
         </div>
@@ -1132,7 +1124,7 @@
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Budowanie przyszłości · Żywy język w formule online[cite: 1]</span>
+        <span class="chapter-tagline">Budowanie przyszłości · Żywy język w formule online</span>
         <h2>Język Hiszpański: 0 → B1</h2>
 
         <div class="prose-block">
@@ -1197,7 +1189,7 @@
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Logika i dedukcja · Szkoła Podstawowa (Klasy 4–8)[cite: 1]</span>
+        <span class="chapter-tagline">Logika i dedukcja · Szkoła Podstawowa (Klasy 4–8)</span>
         <h2>Matematyka: Nadrabianie zaległości i bieżący materiał</h2>
 
         <div class="prose-block">
@@ -1259,7 +1251,7 @@
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Prawa przyrody · Doświadczenie zamiast pamięciówki[cite: 1]</span>
+        <span class="chapter-tagline">Prawa przyrody · Doświadczenie zamiast pamięciówki</span>
         <h2>Fizyka bez paniki przed wzorami</h2>
 
         <div class="prose-block">
@@ -1368,7 +1360,7 @@
       </div>
     </section>
 
-    <!-- KONTAKT, WYCENA, PREFERENCJA WIADOMOŚCI I KOD QR -->
+    <!-- KONTAKT -->
     <section id="kontakt" class="contact-fullwidth">
       <div class="contact-grid-hud">
         <div>
@@ -1377,36 +1369,41 @@
             Ustalmy<br>termin.
           </h2>
           
-          <!-- Box z ważnymi informacjami: wycena + preferencja pisania -->
-          <div class="contact-notice-box">
-            <p>
-              💬 <strong>Ważna informacja:</strong> Najlepiej <strong>napisać do mnie wiadomość</strong> (WhatsApp, SMS lub e-mail). Prowadzę zajęcia, więc jest znacznie większa szansa, że szybko odpiszę, niż odbiorę telefon.
-            </p>
-            <p style="margin-top: 0.6rem;">
-              💶 <strong>Wycena:</strong> Koszt zajęć podaję indywidualnie po kontakcie, w zależności od potrzeb, częstotliwości i zakresu materiału.
-            </p>
+          <!-- Profesjonalny panel informacyjny -->
+          <div class="contact-brief-panel">
+            <div class="brief-entry">
+              <span class="brief-label">Forma kontaktu</span>
+              <p class="brief-text">
+                Z uwagi na prowadzone w ciągu dnia zajęcia najszybciej odpowiadam na <strong>wiadomości tekstowe (WhatsApp, SMS lub e-mail)</strong>. Telefon nie zawsze mam możliwość odebrać od razu, natomiast na wiadomości odpisuję w najbliższej przerwie.
+              </p>
+            </div>
+            <div class="brief-entry">
+              <span class="brief-label">Wycena współpracy</span>
+              <p class="brief-text">
+                Koszt zajęć kalkuluję indywidualnie po wstępnej rozmowie — zależy on od wybranego przedmiotu, częstotliwości spotkań oraz aktualnego poziomu startowego.
+              </p>
+            </div>
           </div>
 
           <p class="hero-manifesto" style="font-size: 1.05rem;">
-            Napisz krótko, w czym mogę pomóc (język hiszpański od zera, zaległości z matematyki czy fizyka) i w jakich godzinach najwygodniej się spotkać online.
+            Wystarczy krótka wiadomość o wybranym obszarze (hiszpański od podstaw, matematyka czy fizyka) oraz preferowanych dniach na zajęcia online.
           </p>
 
-          <!-- Moduł Kodu QR do udostępniania strony -->
+          <!-- Moduł Kodu QR -->
           <div class="qr-module">
             <div class="qr-box">
-              <!-- Automatycznie wygenerowany kod QR z zewnętrznego API dla aktualnej strony -->
               <img id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://aleksanderdobrowolski.pl" alt="Kod QR do strony">
             </div>
             <div class="qr-desc">
               <h4>Zeskanuj kod QR</h4>
-              <p>Zapisz tę stronę na telefonie lub prześlij kontakt znajomym rodzicom szukającym korepetycji online.</p>
+              <p>Zapisz kontakt bezpośrednio w telefonie lub udostępnij profil osobie szukającej zajęć.</p>
             </div>
           </div>
         </div>
 
         <div class="contact-channels">
           <a href="https://wa.me/48000000000" target="_blank" rel="noopener" class="channel-row">
-            <span class="c-key">WhatsApp (Najszybciej)</span>
+            <span class="c-key">WhatsApp</span>
             <span class="c-val">+48 000 000 000 ↗</span>
           </a>
           <a href="mailto:kontakt@aleksanderdobrowolski.pl" class="channel-row">
@@ -1423,7 +1420,7 @@
           </div>
           <div class="channel-row">
             <span class="c-key">Cennik</span>
-            <span class="c-val">Wycena po kontakcie</span>
+            <span class="c-val">Indywidualnie po kontakcie</span>
           </div>
         </div>
       </div>
@@ -1432,25 +1429,94 @@
 
   <!-- STOPKA -->
   <footer>
-    <div>Aleksander Dobrowolski · S = kB ln Ω[cite: 1]</div>
+    <div>Aleksander Dobrowolski · S = kB ln Ω</div>
     <div>ZAJĘCIA ONLINE · 2026</div>
     <div><a href="#top" style="border-bottom: 1px dotted var(--blue); color: var(--text);">Wróć na górę ↑</a></div>
   </footer>
 
-  <!-- Skrypt dynamicznego kodu QR bazującego na bieżącym URL -->
+  <!-- Skrypt animacji cząstek chaosu Boltzmanna oraz QR URL -->
   <script>
+    function setupChaosCanvas(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      const particleCount = 28;
+      const particles = [];
+
+      function resize() {
+        width = canvas.parentElement.clientWidth;
+        height = 160;
+        canvas.width = width;
+        canvas.height = height;
+      }
+      resize();
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 1.8,
+          vy: (Math.random() - 0.5) * 1.8,
+          radius: Math.random() * 1.6 + 1.2
+        });
+      }
+
+      function render() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Linie chaotycznych mikro-oddziaływań
+        ctx.strokeStyle = 'rgba(13, 92, 235, 0.12)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 42) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Cząstki w ciągłym, chaotycznym zderzeniu
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0 || p.x > width) p.vx *= -1;
+          if (p.y < 0 || p.y > height) p.vy *= -1;
+
+          ctx.fillStyle = i % 4 === 0 ? '#0d5ceb' : '#0e1118';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        requestAnimationFrame(render);
+      }
+
+      render();
+      window.addEventListener('resize', resize);
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
+      setupChaosCanvas('chaosCanvasLeft');
+      setupChaosCanvas('chaosCanvasRight');
+
       try {
-        var currentUrl = window.location.href;
+        const currentUrl = window.location.href;
         if (currentUrl && currentUrl.indexOf('http') === 0) {
-          var qrImg = document.getElementById('qrImage');
+          const qrImg = document.getElementById('qrImage');
           if (qrImg) {
             qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(currentUrl);
           }
         }
-      } catch (e) {
-        // Fallback w razie uruchomienia w lokalnym podglądzie
-      }
+      } catch (e) {}
     });
   </script>
 </body>
