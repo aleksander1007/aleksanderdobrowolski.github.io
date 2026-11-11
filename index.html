@@ -273,7 +273,7 @@
       color: var(--text);
     }
 
-    /* --- SEKTON MONUMENTALNEGO WZORU Z CAŁOEKRANOWYM CHAOSEM W TLE --- */
+    /* --- SEKTON MONUMENTALNEGO WZORU: 3D ATRAKTOR LORENZA W TLE --- */
     .formula-monument {
       width: 100%;
       padding: 6.5rem 2.5rem 7.5rem;
@@ -284,8 +284,8 @@
       overflow: hidden;
     }
 
-    /* Canvas zajmujący 100% tła sekcji */
-    #fullChaosCanvas {
+    /* Pełnowymiarowy silnik 3D Atraktor Lorenza */
+    #lorenzChaosCanvas {
       position: absolute;
       top: 0;
       left: 0;
@@ -293,7 +293,7 @@
       height: 100%;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.85;
+      opacity: 0.55;
     }
 
     .monument-content-wrap {
@@ -310,7 +310,7 @@
     }
 
     .monument-formula-box {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(8px);
       border: 2px solid var(--text);
       padding: 3.5rem 2rem;
@@ -322,7 +322,7 @@
     }
 
     .monument-formula-box::before {
-      content: "FORMUŁA_REDUKCJI_CHAOSU";
+      content: "FORMUŁA_REDUKCJI_CHAOSU // LORENZ_ATTRACTOR_MODEL";
       position: absolute;
       top: -11px;
       left: 24px;
@@ -540,7 +540,7 @@
       border-color: var(--text);
     }
 
-    /* Rysunki Techniczne SVG */
+    /* PANELE ANIMACJI INTERAKTYWNYCH W ROZDZIAŁACH */
     .technical-schematic {
       background: var(--bg-surface);
       border: 1px solid var(--border-strong);
@@ -555,7 +555,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
       border-bottom: 1px solid var(--border);
       padding-bottom: 0.8rem;
     }
@@ -579,20 +579,108 @@
       font-weight: 700;
     }
 
-    .schematic-svg-frame {
+    .schematic-frame-box {
       width: 100%;
-      height: 250px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      height: 270px;
+      position: relative;
       background: #fafafa;
       border: 1px solid var(--border);
-      border-radius: 3px;
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
-    .schematic-svg-frame svg {
+    /* KARTKA W KRATKĘ DLA MATEMATYKI */
+    .grid-paper-canvas {
       width: 100%;
       height: 100%;
+      background-color: #ffffff;
+      background-image: 
+        linear-gradient(rgba(13, 92, 235, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(13, 92, 235, 0.07) 1px, transparent 1px);
+      background-size: 16px 16px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1.5rem;
+      box-sizing: border-box;
+    }
+
+    .math-chalk-line {
+      font-family: var(--font-hand);
+      font-size: 1.55rem;
+      color: #0e1118;
+      line-height: 1.35;
+      transition: all 0.4s ease-in-out;
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .math-chalk-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .math-chalk-line.highlight {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    /* MASZYNA STANU FIZYKI (E=mc^2 ROZPAD I REKONSTRUKCJA) */
+    .physics-engine-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      text-align: center;
+      background: #ffffff;
+    }
+
+    .physics-formula-stage {
+      font-family: var(--font-mono);
+      font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+      font-weight: 800;
+      color: #0e1118;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.35s ease;
+      letter-spacing: 0.04em;
+    }
+
+    .physics-step-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 1rem;
+      font-weight: 700;
+    }
+
+    .physics-progress-bar {
+      width: 80%;
+      height: 3px;
+      background: rgba(14, 17, 24, 0.08);
+      margin-top: 1.2rem;
+      border-radius: 99px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .physics-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--blue);
+      transition: width 0.1s linear;
     }
 
     .schematic-caption {
@@ -959,10 +1047,10 @@
       </div>
     </section>
 
-    <!-- MONUMENTALNY WZÓR: CAŁE TŁO JAKO DYNAMICZNY CHAOS -->
+    <!-- MONUMENTALNY WZÓR: 3D ATRAKTOR LORENZA (CHAOS) W CAŁYM TLE -->
     <section id="wzor" class="formula-monument">
-      <!-- Pełnowymiarowy interaktywny Canvas animowanego chaosu w tle -->
-      <canvas id="fullChaosCanvas"></canvas>
+      <!-- Płótno symulacji 3D Atraktor Lorenza -->
+      <canvas id="lorenzChaosCanvas"></canvas>
 
       <div class="monument-content-wrap">
         <h2 class="monument-title">Rozwój wyprowadzony z chaosu</h2>
@@ -983,10 +1071,10 @@
             <div class="sym">S</div>
             <div class="sci-block">
               <small>Fizyka statystyczna</small>
-              <strong>Entropia</strong>
+              <strong>Entropia[cite: 1]</strong>
             </div>
             <div class="meaning-block">
-              <strong>Spokój i równowaga.</strong> Likwidujemy lęk przed tablicą, sprawdzianem i nowym zadaniem. Zamiast paniki wprowadzamy stabilną pewność siebie.
+              <strong>Spokój i równowaga[cite: 1].</strong> Likwidujemy lęk przed tablicą, sprawdzianem i nowym zadaniem. Zamiast paniki wprowadzamy stabilną pewność siebie[cite: 1].
             </div>
           </div>
 
@@ -994,10 +1082,10 @@
             <div class="sym">k</div>
             <div class="sci-block">
               <small>Wartość stała</small>
-              <strong>Stała Boltzmanna</strong>
+              <strong>Stała Boltzmanna[cite: 1]</strong>
             </div>
             <div class="meaning-block">
-              <strong>Wiedza i konsekwencja.</strong> Niezmienny fundament. Regularna metoda pracy online, która krok po kroku daje mierzalny wynik.
+              <strong>Wiedza i konsekwencja[cite: 1].</strong> Niezmienny fundament. Regularna metoda pracy online, która krok po kroku daje mierzalny wynik[cite: 1].
             </div>
           </div>
 
@@ -1005,10 +1093,10 @@
             <div class="sym">B</div>
             <div class="sci-block">
               <small>Identyfikator</small>
-              <strong>Oznaczenie Boltzmanna</strong>
+              <strong>Oznaczenie Boltzmanna[cite: 1]</strong>
             </div>
             <div class="meaning-block">
-              <strong>Budowanie własnej przyszłości.</strong> Język hiszpański od totalnego zera do poziomu B1, który otwiera realne perspektywy i swobodę komunikacji.
+              <strong>Budowanie własnej przyszłości[cite: 1].</strong> Język hiszpański od totalnego zera do poziomu B1, który otwiera realne perspektywy i swobodę komunikacji[cite: 1].
             </div>
           </div>
 
@@ -1016,10 +1104,10 @@
             <div class="sym">ln</div>
             <div class="sci-block">
               <small>Funkcja matematyczna</small>
-              <strong>Logarytm naturalny</strong>
+              <strong>Logarytm naturalny[cite: 1]</strong>
             </div>
             <div class="meaning-block">
-              <strong>Logiczne myślenie i matematyka.</strong> Sprowadzanie złożonych problemów do prostych, elementarnych kroków, które po prostu mają sens.
+              <strong>Logiczne myślenie i matematyka[cite: 1].</strong> Sprowadzanie złożonych problemów do prostych, elementarnych kroków, które po prostu mają sens[cite: 1].
             </div>
           </div>
 
@@ -1027,10 +1115,10 @@
             <div class="sym">Ω</div>
             <div class="sci-block">
               <small>Stan mikroskopowy</small>
-              <strong>Liczba mikrostanów</strong>
+              <strong>Liczba mikrostanów[cite: 1]</strong>
             </div>
             <div class="meaning-block">
-              <strong>Nieskończone możliwości rozwoju.</strong> Fizyka jako zrozumiała mapa praw rządzących światem, a nie zbiór wzorów do wklepania na pamięć.
+              <strong>Nieskończone możliwości rozwoju[cite: 1].</strong> Fizyka jako zrozumiała mapa praw rządzących światem, a nie zbiór wzorów do wklepania na pamięć[cite: 1].
             </div>
           </div>
         </div>
@@ -1045,7 +1133,7 @@
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Budowanie przyszłości · Żywy język w formule online</span>
+        <span class="chapter-tagline">Budowanie przyszłości · Żywy język w formule online[cite: 1]</span>
         <h2>Język Hiszpański: 0 → B1</h2>
 
         <div class="prose-block">
@@ -1075,14 +1163,13 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie hiszpańskiego →</a>
       </div>
 
-      <!-- Schemat techniczny: Progresja Językowa -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">DIAGRAM // PROGRESJA LINGWISTYCZNA</span>
           <span class="schematic-badge">0 → B1</span>
         </div>
-        <div class="schematic-svg-frame">
-          <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="schematic-frame-box">
+          <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
             <line x1="30" y1="190" x2="300" y2="190" stroke="rgba(14,17,24,0.15)" stroke-width="1.5"/>
             <line x1="30" y1="190" x2="30" y2="20" stroke="rgba(14,17,24,0.15)" stroke-width="1.5"/>
             <path d="M30 180 C 100 170, 140 130, 190 90 C 230 60, 260 45, 290 40" stroke="#0d5ceb" stroke-width="2.5" fill="none"/>
@@ -1110,7 +1197,7 @@
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Logika i dedukcja · Szkoła Podstawowa (Klasy 4–8)</span>
+        <span class="chapter-tagline">Logika i dedukcja · Szkoła Podstawowa (Klasy 4–8)[cite: 1]</span>
         <h2>Matematyka: Nadrabianie zaległości i bieżący materiał</h2>
 
         <div class="prose-block">
@@ -1140,54 +1227,22 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie matematyki →</a>
       </div>
 
-      <!-- NOWY SCHEMAT: MATEMATYKA DLA SZKOŁY PODSTAWOWEJ (Oś liczbowa, ułamki, równanie) -->
+      <!-- ANIMACJA MATEMATYKI: DYNAMICZNA KARTKA W KRATKĘ Z ODRĘCZNYMI WZORAMI -->
       <div class="technical-schematic">
         <div class="schematic-header">
-          <span class="schematic-title">DIAGRAM // STRUKTURA ALGEBRY (SP)</span>
+          <span class="schematic-title">NOTATKI Z TABLICY // LIVE SOLVER</span>
           <span class="schematic-badge">Klasy 4–8</span>
         </div>
-        <div class="schematic-svg-frame">
-          <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Oś liczbowa z ułamkami i liczbami ujemnymi -->
-            <line x1="20" y1="55" x2="300" y2="55" stroke="rgba(14,17,24,0.3)" stroke-width="1.5"/>
-            <polygon points="302,55 292,50 292,60" fill="rgba(14,17,24,0.4)"/>
-            
-            <!-- Punkty na osi -->
-            <line x1="60" y1="48" x2="60" y2="62" stroke="#0e1118" stroke-width="1.5"/>
-            <text x="52" y="76" fill="#7f8899" font-family="JetBrains Mono" font-size="10">-2</text>
-
-            <line x1="120" y1="48" x2="120" y2="62" stroke="#0e1118" stroke-width="1.5"/>
-            <text x="112" y="76" fill="#7f8899" font-family="JetBrains Mono" font-size="10">-1</text>
-
-            <line x1="180" y1="45" x2="180" y2="65" stroke="#0e1118" stroke-width="2"/>
-            <text x="176" y="78" fill="#0e1118" font-family="JetBrains Mono" font-size="11" font-weight="bold">0</text>
-
-            <!-- Ułamek na osi wyróżniony na niebiesko -->
-            <circle cx="215" cy="55" r="4" fill="#0d5ceb"/>
-            <text x="207" y="42" fill="#0d5ceb" font-family="JetBrains Mono" font-size="10" font-weight="bold">½</text>
-
-            <line x1="250" y1="48" x2="250" y2="62" stroke="#0e1118" stroke-width="1.5"/>
-            <text x="246" y="76" fill="#7f8899" font-family="JetBrains Mono" font-size="10">1</text>
-
-            <!-- Krok po kroku: Rozwiązanie prostego równania -->
-            <rect x="25" y="100" width="270" height="95" rx="4" fill="#ffffff" stroke="rgba(14,17,24,0.12)"/>
-            
-            <text x="40" y="125" fill="#0e1118" font-family="JetBrains Mono" font-size="12" font-weight="bold">2x + 4 = 10</text>
-            <text x="190" y="125" fill="#7f8899" font-family="JetBrains Mono" font-size="10">| - 4</text>
-
-            <line x1="40" y1="135" x2="280" y2="135" stroke="rgba(14,17,24,0.06)"/>
-
-            <text x="40" y="155" fill="#0e1118" font-family="JetBrains Mono" font-size="12">2x = 6</text>
-            <text x="190" y="155" fill="#7f8899" font-family="JetBrains Mono" font-size="10">| : 2</text>
-
-            <line x1="40" y1="165" x2="280" y2="165" stroke="rgba(14,17,24,0.06)"/>
-
-            <text x="40" y="185" fill="#0d5ceb" font-family="JetBrains Mono" font-size="13" font-weight="bold">x = 3</text>
-            <text x="190" y="185" fill="#0d5ceb" font-family="JetBrains Mono" font-size="10" font-weight="bold">✓ ROZWIĄZANIE</text>
-          </svg>
+        <div class="schematic-frame-box">
+          <div class="grid-paper-canvas" id="mathGridCanvas">
+            <div class="math-chalk-line" id="mLine1">3x - 5 = 2x + 7</div>
+            <div class="math-chalk-line" id="mLine2">3x - 2x = 7 + 5</div>
+            <div class="math-chalk-line highlight" id="mLine3">x = 12</div>
+            <div class="math-chalk-line" id="mLine4" style="font-size:1.2rem; margin-top:0.3rem;">P = a · h / 2 = 6 · 4 / 2 = 12 cm²</div>
+          </div>
         </div>
         <div class="schematic-caption">
-          Fundamenty: intuicyjna oś liczbowa oraz schemat obustronnych przekształceń równań liniowych.
+          Symulacja zapisu w kratkę: przejrzyste, krokowe rozkładanie równań i geometrii w czasie rzeczywistym[cite: 3].
         </div>
       </div>
     </section>
@@ -1200,7 +1255,7 @@
       </div>
 
       <div class="chapter-narrative">
-        <span class="chapter-tagline">Prawa przyrody · Doświadczenie zamiast pamięciówki</span>
+        <span class="chapter-tagline">Prawa przyrody · Doświadczenie zamiast pamięciówki[cite: 1]</span>
         <h2>Fizyka bez paniki przed wzorami</h2>
 
         <div class="prose-block">
@@ -1230,47 +1285,27 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie fizyki →</a>
       </div>
 
-      <!-- NOWY SCHEMAT: FIZYKA DLA SZKOŁY PODSTAWOWEJ (Kinematyka, wykres s(t) i trójkąt wzoru v = s/t) -->
+      <!-- ANIMACJA FIZYKI: CYKL E=mc^2 ROZBUDOWUJĄCY SIĘ I WRACAJĄCY W PĘTLI -->
       <div class="technical-schematic">
         <div class="schematic-header">
-          <span class="schematic-title">DIAGRAM // KINEMATYKA (SP)</span>
-          <span class="schematic-badge">v = s / t</span>
+          <span class="schematic-title">DEKOMPOZYCJA WZORU // DYNAMIC CYCLE</span>
+          <span class="schematic-badge">E = mc²</span>
         </div>
-        <div class="schematic-svg-frame">
-          <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Wykres drogi od czasu s(t) -->
-            <line x1="30" y1="180" x2="160" y2="180" stroke="rgba(14,17,24,0.3)" stroke-width="1.5"/>
-            <polygon points="162,180 154,176 154,184" fill="rgba(14,17,24,0.4)"/>
-            <line x1="30" y1="180" x2="30" y2="30" stroke="rgba(14,17,24,0.3)" stroke-width="1.5"/>
-            <polygon points="30,28 26,36 34,36" fill="rgba(14,17,24,0.4)"/>
-            
-            <text x="165" y="184" fill="#7f8899" font-family="JetBrains Mono" font-size="10">t [s]</text>
-            <text x="25" y="20" fill="#7f8899" font-family="JetBrains Mono" font-size="10">s [m]</text>
-
-            <!-- Prosta ruchu jednostajnego -->
-            <line x1="30" y1="180" x2="140" y2="50" stroke="#0d5ceb" stroke-width="2.5"/>
-            <circle cx="140" cy="50" r="3.5" fill="#0d5ceb"/>
-            <text x="50" y="85" fill="#0d5ceb" font-family="JetBrains Mono" font-size="9" font-weight="bold">ruch jednostajny</text>
-            <text x="50" y="98" fill="#7f8899" font-family="JetBrains Mono" font-size="8">v = stała</text>
-
-            <!-- Szkolny trójkąt pamięciowy do przekształcania wzoru -->
-            <g transform="translate(180, 45)">
-              <polygon points="60,10 5,110 115,110" stroke="#0e1118" stroke-width="1.5" fill="#ffffff"/>
-              <line x1="27" y1="65" x2="93" y2="65" stroke="#0e1118" stroke-width="1.5"/>
-              <line x1="60" y1="65" x2="60" y2="110" stroke="#0e1118" stroke-width="1.5"/>
-              
-              <text x="55" y="52" fill="#0d5ceb" font-family="JetBrains Mono" font-size="16" font-weight="bold">s</text>
-              <text x="24" y="96" fill="#0e1118" font-family="JetBrains Mono" font-size="14" font-weight="bold">v</text>
-              <text x="44" y="96" fill="#7f8899" font-family="JetBrains Mono" font-size="12">·</text>
-              <text x="76" y="96" fill="#0e1118" font-family="JetBrains Mono" font-size="14" font-weight="bold">t</text>
-              
-              <text x="12" y="130" fill="#7f8899" font-family="JetBrains Mono" font-size="9">s = v · t</text>
-              <text x="70" y="130" fill="#7f8899" font-family="JetBrains Mono" font-size="9">t = s / v</text>
-            </g>
-          </svg>
+        <div class="schematic-frame-box">
+          <div class="physics-engine-wrap">
+            <div class="physics-formula-stage" id="physicsFormulaText">
+              E = mc²
+            </div>
+            <div class="physics-step-label" id="physicsStepLabel">
+              Stan podstawowy energii
+            </div>
+            <div class="physics-progress-bar">
+              <div class="physics-progress-fill" id="physicsProgress"></div>
+            </div>
+          </div>
         </div>
         <div class="schematic-caption">
-          Zrozumienie zjawisk: interpretacja wykresów ruchu oraz metoda trójkąta przekształceń jednostek.
+          Ciągła pętla dekompozycji: rozszerzenie wzoru Einsteina w formę relatywistyczną i jego powrót do bazy.
         </div>
       </div>
     </section>
@@ -1394,20 +1429,21 @@
 
   <!-- STOPKA -->
   <footer>
-    <div>Aleksander Dobrowolski · S = kB ln Ω</div>
+    <div>Aleksander Dobrowolski · S = kB ln Ω[cite: 1]</div>
     <div>ZAJĘCIA ONLINE · 2026</div>
     <div><a href="#top" style="border-bottom: 1px dotted var(--blue); color: var(--text);">Wróć na górę ↑</a></div>
   </footer>
 
-  <!-- Skrypt animacji cząstek chaosu na całym tle sekcji wzoru oraz obsługa QR -->
+  <!-- SKRYPTY INTERAKTYWNE: 3D LORENZ ATTRACTOR + PĘTLA E=mc2 + NOTATNIK MATEMATYCZNY -->
   <script>
-    function initFullChaosBackground() {
-      const canvas = document.getElementById('fullChaosCanvas');
+    /* =========================================================================
+       1. 3D ATRAKTOR LORENZA (TEORIA CHAOSU) NA CAŁYM TLE WZORU
+       ========================================================================= */
+    function initLorenzAttractor() {
+      const canvas = document.getElementById('lorenzChaosCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       let width, height;
-      const particleCount = 70;
-      const particles = [];
 
       function resize() {
         width = canvas.parentElement.clientWidth;
@@ -1416,61 +1452,192 @@
         canvas.height = height;
       }
       resize();
+      window.addEventListener('resize', resize);
 
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 1.4,
-          vy: (Math.random() - 0.5) * 1.4,
-          radius: Math.random() * 1.8 + 1.2
-        });
+      // Parametry układu Lorenza
+      const sigma = 10;
+      const rho = 28;
+      const beta = 8 / 3;
+      const dt = 0.009;
+
+      // Trajektoria wielu punktów startowych
+      const maxPoints = 1400;
+      const points = [];
+      let x = 0.1, y = 0, z = 0;
+
+      for (let i = 0; i < maxPoints; i++) {
+        const dx = sigma * (y - x) * dt;
+        const dy = (x * (rho - z) - y) * dt;
+        const dz = (x * y - beta * z) * dt;
+        x += dx;
+        y += dy;
+        z += dz;
+        points.push({ x, y, z });
       }
+
+      let angleY = 0;
+      let angleX = 0.2;
 
       function render() {
         ctx.clearRect(0, 0, width, height);
 
-        // Chaotyczne linie powiązań mikrostanów w tle
-        ctx.strokeStyle = 'rgba(13, 92, 235, 0.08)';
+        angleY += 0.004; // płynny, powolny obrót w 3D
+
+        const cosY = Math.cos(angleY);
+        const sinY = Math.sin(angleY);
+        const cosX = Math.cos(angleX);
+        const sinX = Math.sin(angleX);
+
+        const scale = Math.min(width, height) / 52;
+        const cx = width / 2;
+        const cy = height / 2 + 30;
+
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(13, 92, 235, 0.45)';
         ctx.lineWidth = 1;
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 85) {
-              ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.stroke();
-            }
+
+        for (let i = 0; i < points.length; i++) {
+          const p = points[i];
+
+          // Obrót Y
+          let x1 = p.x * cosY - p.y * sinY;
+          let y1 = p.x * sinY + p.y * cosY;
+          let z1 = p.z - 25;
+
+          // Obrót X
+          let y2 = y1 * cosX - z1 * sinX;
+          let z2 = y1 * sinX + z1 * cosX;
+
+          // Rzutowanie perspektywiczne
+          const fov = 320;
+          const distance = fov / (fov + z2);
+          const px = cx + x1 * scale * distance;
+          const py = cy + y2 * scale * distance;
+
+          if (i === 0) {
+            ctx.moveTo(px, py);
+          } else {
+            ctx.lineTo(px, py);
+          }
+
+          // Rysowanie drobnych cząstek mikrostanów
+          if (i % 7 === 0) {
+            ctx.fillStyle = i % 14 === 0 ? 'rgba(13, 92, 235, 0.7)' : 'rgba(14, 17, 24, 0.4)';
+            ctx.fillRect(px - 1, py - 1, 2, 2);
           }
         }
+        ctx.stroke();
 
-        // Ruchome cząstki o różnej wielkości i energii
-        for (let i = 0; i < particles.length; i++) {
-          const p = particles[i];
-          p.x += p.vx;
-          p.y += p.vy;
-
-          if (p.x < 0 || p.x > width) p.vx *= -1;
-          if (p.y < 0 || p.y > height) p.vy *= -1;
-
-          ctx.fillStyle = i % 3 === 0 ? 'rgba(13, 92, 235, 0.45)' : 'rgba(14, 17, 24, 0.25)';
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fill();
+        // Ciągła iteracja czoła atraktora dla poczucia żywego ruchu
+        for (let k = 0; k < 2; k++) {
+          const head = points[points.length - 1];
+          const dx = sigma * (head.y - head.x) * dt;
+          const dy = (head.x * (rho - head.z) - head.y) * dt;
+          const dz = (head.x * head.y - beta * head.z) * dt;
+          points.push({ x: head.x + dx, y: head.y + dy, z: head.z + dz });
+          points.shift();
         }
 
         requestAnimationFrame(render);
       }
 
       render();
-      window.addEventListener('resize', resize);
     }
 
+    /* =========================================================================
+       2. CYKLICZNA ROZBUDOWA I POWRÓT WZORU E=mc^2 W FIZYCE
+       ========================================================================= */
+    function initPhysicsEquationCycle() {
+      const formulaEl = document.getElementById('physicsFormulaText');
+      const labelEl = document.getElementById('physicsStepLabel');
+      const progressEl = document.getElementById('physicsProgress');
+
+      const stages = [
+        {
+          formula: 'E = mc²',
+          label: '1/4: Równoważność masy i energii (Baza)',
+          color: '#0e1118'
+        },
+        {
+          formula: 'E = m₀c² / √(1 - v²/c²)',
+          label: '2/4: Wzrost masy relatywistycznej przy prędkości v',
+          color: '#0d5ceb'
+        },
+        {
+          formula: 'E² = (pc)² + (m₀c²)²',
+          label: '3/4: Równanie energii z uwzględnieniem pędu p',
+          color: '#0e1118'
+        },
+        {
+          formula: 'E = h · ν = mc²',
+          label: '4/4: Kwantowy pomost z fotonem (Planck)',
+          color: '#0d5ceb'
+        }
+      ];
+
+      let currentStage = 0;
+      let progress = 0;
+      const stepDuration = 3200; // ms na krok
+      const interval = 40;
+
+      setInterval(() => {
+        progress += (interval / stepDuration) * 100;
+        if (progress >= 100) {
+          progress = 0;
+          currentStage = (currentStage + 1) % stages.length;
+
+          // Animacja przejścia
+          formulaEl.style.opacity = '0';
+          formulaEl.style.transform = 'scale(0.92)';
+
+          setTimeout(() => {
+            formulaEl.innerHTML = stages[currentStage].formula;
+            formulaEl.style.color = stages[currentStage].color;
+            labelEl.innerText = stages[currentStage].label;
+            formulaEl.style.opacity = '1';
+            formulaEl.style.transform = 'scale(1)';
+          }, 200);
+        }
+        progressEl.style.width = progress + '%';
+      }, interval);
+    }
+
+    /* =========================================================================
+       3. ANIMACJA ODRĘCZNYCH OBLICZEŃ W KRATKĘ (MATEMATYKA)
+       ========================================================================= */
+    function initMathHandwriting() {
+      const lines = [
+        document.getElementById('mLine1'),
+        document.getElementById('mLine2'),
+        document.getElementById('mLine3'),
+        document.getElementById('mLine4')
+      ];
+
+      let currentLine = 0;
+
+      function step() {
+        if (currentLine < lines.length) {
+          lines[currentLine].classList.add('visible');
+          currentLine++;
+          setTimeout(step, 1100);
+        } else {
+          // Restart pętli po zakończeniu wypisywania
+          setTimeout(() => {
+            lines.forEach(l => l.classList.remove('visible'));
+            currentLine = 0;
+            setTimeout(step, 600);
+          }, 3500);
+        }
+      }
+
+      setTimeout(step, 800);
+    }
+
+    /* Inicjalizacja komponentów po załadowaniu drzewa DOM */
     document.addEventListener("DOMContentLoaded", function() {
-      initFullChaosBackground();
+      initLorenzAttractor();
+      initPhysicsEquationCycle();
+      initMathHandwriting();
 
       try {
         const currentUrl = window.location.href;
