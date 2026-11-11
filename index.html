@@ -284,7 +284,6 @@
       overflow: hidden;
     }
 
-    /* Płótno z czarną, autentyczną animacją atraktora Lorenza */
     #lorenzChaosCanvas {
       position: absolute;
       top: 0;
@@ -593,7 +592,7 @@
       align-items: center;
     }
 
-    /* MATEMATYKA: KARTKA W NIEBIESKĄ KRATKĘ Z GĘSTYM CHAOSEM ZAPISKÓW */
+    /* MATEMATYKA: KARTKA W NIEBIESKĄ KRATKĘ Z PRZEJŚCIEM Z CHAOSU DO 2+2=4 */
     .grid-paper-canvas-wrap {
       width: 100%;
       height: 100%;
@@ -1207,10 +1206,10 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie matematyki →</a>
       </div>
 
-      <!-- MATEMATYKA: PRAWDZIWY GĘSTY CHAOS NA KRATCE PROSTO ZE ZDJĘCIA -->
+      <!-- MATEMATYKA: DYNAMICZNY CHAOS REDUKUJĄCY SIĘ DO 2+2=4 -->
       <div class="technical-schematic">
         <div class="schematic-header">
-          <span class="schematic-title">NOTATNIK OBLICZEŃ // LIVE BOARD</span>
+          <span class="schematic-title">REDUKCJA CHAOSU // 2 + 2 = 4</span>
           <span class="schematic-badge">Klasy 4–8</span>
         </div>
         <div class="schematic-frame-box">
@@ -1219,7 +1218,7 @@
           </div>
         </div>
         <div class="schematic-caption">
-          Gęsty, ciągły zapis ręczny na siatce zeszytowej: wykresy, ułamki, pierwiastki, bryły i wektory tworzące się bez końca[cite: 3].
+          Proces dydaktyczny w praktyce: początkowy szum pojęciowy stopniowo wygasa, aż na czystej tablicy zostaje elementarna prawda: 2 + 2 = 4.
         </div>
       </div>
     </section>
@@ -1376,17 +1375,21 @@
         </div>
 
         <div class="contact-channels">
-          <a href="https://wa.me/48000000000" target="_blank" rel="noopener" class="channel-row">
+          <a href="https://wa.me/48509101676" target="_blank" rel="noopener" class="channel-row">
             <span class="c-key">WhatsApp</span>
-            <span class="c-val">+48 000 000 000 ↗</span>
+            <span class="c-val">+48 509 101 676 ↗</span>
           </a>
-          <a href="mailto:kontakt@aleksanderdobrowolski.pl" class="channel-row">
+          <a href="mailto:aleksander.dobrowolski1007@gmail.com" class="channel-row">
             <span class="c-key">E-mail</span>
-            <span class="c-val">kontakt@aleksanderdobrowolski.pl ↗</span>
+            <span class="c-val">aleksander.dobrowolski1007@gmail.com ↗</span>
           </a>
-          <a href="sms:+48000000000" class="channel-row">
+          <a href="sms:+48509101676" class="channel-row">
             <span class="c-key">SMS</span>
-            <span class="c-val">+48 000 000 000 ↗</span>
+            <span class="c-val">+48 509 101 676 ↗</span>
+          </a>
+          <a href="tel:+48509101676" class="channel-row">
+            <span class="c-key">Telefon</span>
+            <span class="c-val">+48 509 101 676 ↗</span>
           </a>
           <div class="channel-row">
             <span class="c-key">Format zajęć</span>
@@ -1464,7 +1467,6 @@
         const cx = width / 2;
         const cy = height / 2 + 25;
 
-        // Głęboka, techniczna czerń / grafit zamiast niebieskiego
         ctx.beginPath();
         ctx.strokeStyle = 'rgba(14, 17, 24, 0.45)';
         ctx.lineWidth = 1;
@@ -1490,7 +1492,6 @@
             ctx.lineTo(px, py);
           }
 
-          // Drobne czarne punkty mikrostanów Boltzmanna
           if (i % 6 === 0) {
             ctx.fillStyle = 'rgba(14, 17, 24, 0.65)';
             ctx.fillRect(px - 0.75, py - 0.75, 1.5, 1.5);
@@ -1498,7 +1499,6 @@
         }
         ctx.stroke();
 
-        // Ciągły dynamiczny rozwój trajektorii
         for (let k = 0; k < 2; k++) {
           const head = points[points.length - 1];
           const dx = sigma * (head.y - head.x) * dt;
@@ -1515,7 +1515,7 @@
     }
 
     /* =========================================================================
-       2. MATEMATYKA: DYNAMICZNY CHAOS ODRĘCZNYCH FORMULARZY I ZAPISKÓW W KRATKĘ
+       2. MATEMATYKA: CHAOS WYGASAJĄCY DO JEDNEGO RÓWNANIA: 2 + 2 = 4
        ========================================================================= */
     function initMathHandwrittenChaos() {
       const canvas = document.getElementById('mathChaosCanvas');
@@ -1532,7 +1532,6 @@
       resize();
       window.addEventListener('resize', resize);
 
-      // Elementy i wzory z przesłanego zdjęcia
       const formulasPool = [
         "√b / (√a · √b)", "∫ b-a/2 dx = 1", "m₁v₁ = -m₂v₂", "a = F / m",
         "4(√3 - 1) / 2", "x² - 4x · (x-10)/(x-10)", "y = √3", "cos x",
@@ -1541,55 +1540,48 @@
         "V = ⅓ π r² h", "x/y = 3/2", "ab² / (a-b)", "2⅓ x⁻⅔ = 0"
       ];
 
-      const drawings = [];
-      let frame = 0;
+      let drawings = [];
+      let phase = 'CHAOS_BUILD'; // 'CHAOS_BUILD' -> 'FADE_OUT' -> 'REVEAL_SIMPLE' -> 'HOLD'
+      let timer = 0;
+      let finalEquationAlpha = 0;
 
-      function addFormulaStamp() {
+      function spawnFormula() {
         const text = formulasPool[Math.floor(Math.random() * formulasPool.length)];
         drawings.push({
           type: 'text',
           text: text,
-          x: Math.random() * (w - 120) + 10,
+          x: Math.random() * (w - 140) + 10,
           y: Math.random() * (h - 30) + 25,
           font: (Math.random() > 0.5 ? 'bold ' : '') + (Math.floor(Math.random() * 6) + 14) + "px 'Caveat', cursive",
-          color: Math.random() > 0.7 ? '#0d5ceb' : 'rgba(14, 17, 24, ' + (Math.random() * 0.4 + 0.5) + ')',
+          color: Math.random() > 0.7 ? '#0d5ceb' : 'rgba(14, 17, 24, 0.75)',
           rot: (Math.random() - 0.5) * 0.15,
           alpha: 0
         });
       }
 
-      function addDoodle() {
+      function spawnDoodle() {
         const type = Math.random();
         if (type < 0.35) {
-          // Stożek geometryczny jak ze zdjęcia
-          const cx = Math.random() * (w - 80) + 40;
-          const cy = Math.random() * (h - 90) + 30;
           drawings.push({
             type: 'cone',
-            x: cx,
-            y: cy,
+            x: Math.random() * (w - 80) + 40,
+            y: Math.random() * (h - 90) + 30,
             color: 'rgba(14, 17, 24, 0.65)',
             alpha: 0
           });
         } else if (type < 0.7) {
-          // Parabola / układ współrzędnych ze zdjęcia
-          const ox = Math.random() * (w - 100) + 30;
-          const oy = Math.random() * (h - 80) + 40;
           drawings.push({
             type: 'axes',
-            x: ox,
-            y: oy,
+            x: Math.random() * (w - 100) + 30,
+            y: Math.random() * (h - 80) + 40,
             color: 'rgba(14, 17, 24, 0.6)',
             alpha: 0
           });
         } else {
-          // Wektor ze strzałką
-          const sx = Math.random() * (w - 60) + 20;
-          const sy = Math.random() * (h - 60) + 30;
           drawings.push({
             type: 'vector',
-            x: sx,
-            y: sy,
+            x: Math.random() * (w - 60) + 20,
+            y: Math.random() * (h - 60) + 30,
             dx: (Math.random() - 0.5) * 80 + 30,
             dy: (Math.random() - 0.5) * 80 - 20,
             color: '#0d5ceb',
@@ -1598,30 +1590,67 @@
         }
       }
 
-      // Wstępne zapełnienie kartki chaosem
-      for (let i = 0; i < 28; i++) {
-        addFormulaStamp();
-        if (i % 3 === 0) addDoodle();
+      function resetChaos() {
+        drawings = [];
+        finalEquationAlpha = 0;
+        phase = 'CHAOS_BUILD';
+        timer = 0;
+        for (let i = 0; i < 24; i++) {
+          spawnFormula();
+          if (i % 3 === 0) spawnDoodle();
+        }
+        drawings.forEach(d => d.alpha = Math.random() * 0.6 + 0.3);
       }
-      drawings.forEach(d => d.alpha = Math.random() * 0.5 + 0.4);
+
+      resetChaos();
 
       function render() {
         ctx.clearRect(0, 0, w, h);
-        frame++;
+        timer++;
 
-        // Ciągłe dopisywanie nowych elementów
-        if (frame % 38 === 0) {
-          addFormulaStamp();
-          if (Math.random() > 0.4) addDoodle();
-          if (drawings.length > 55) drawings.shift(); // usuwamy najstarsze, robiąc miejsce nowym
+        // Maszyna stanów: budowanie chaosu -> gaszenie -> ujawnienie 2+2=4
+        if (phase === 'CHAOS_BUILD') {
+          if (timer % 15 === 0 && drawings.length < 55) {
+            spawnFormula();
+            if (Math.random() > 0.4) spawnDoodle();
+          }
+          if (timer > 240) { // po około 4 sekundach pełnego chaosu zaczynamy redukcję
+            phase = 'FADE_OUT';
+          }
+        } else if (phase === 'FADE_OUT') {
+          // Chaos znika
+          let allGone = true;
+          drawings.forEach(d => {
+            d.alpha -= 0.025;
+            if (d.alpha > 0.01) allGone = false;
+          });
+          if (allGone) {
+            drawings = [];
+            phase = 'REVEAL_SIMPLE';
+            timer = 0;
+          }
+        } else if (phase === 'REVEAL_SIMPLE') {
+          if (finalEquationAlpha < 1) {
+            finalEquationAlpha += 0.035;
+          } else {
+            phase = 'HOLD';
+            timer = 0;
+          }
+        } else if (phase === 'HOLD') {
+          // Utrzymanie czystego 2+2=4 przez 3 sekundy, po czym restart
+          if (timer > 180) {
+            resetChaos();
+          }
         }
 
+        // Rysowanie chaotycznych elementów
         for (let i = 0; i < drawings.length; i++) {
           const d = drawings[i];
-          if (d.alpha < 0.95) d.alpha += 0.04;
+          if (d.alpha <= 0) continue;
+          if (phase === 'CHAOS_BUILD' && d.alpha < 0.95) d.alpha += 0.05;
 
           ctx.save();
-          ctx.globalAlpha = d.alpha;
+          ctx.globalAlpha = Math.max(0, d.alpha);
 
           if (d.type === 'text') {
             ctx.translate(d.x, d.y);
@@ -1633,14 +1662,11 @@
             ctx.strokeStyle = d.color;
             ctx.lineWidth = 1.2;
             ctx.beginPath();
-            // Elipsa podstawy stożka
             ctx.ellipse(d.x, d.y, 28, 10, 0, 0, Math.PI * 2);
-            // Krawędzie i wierzchołek
             ctx.moveTo(d.x - 28, d.y);
             ctx.lineTo(d.x, d.y + 55);
             ctx.lineTo(d.x + 28, d.y);
             ctx.stroke();
-            // Przerywana wysokość
             ctx.setLineDash([3, 3]);
             ctx.beginPath();
             ctx.moveTo(d.x, d.y);
@@ -1651,13 +1677,11 @@
             ctx.strokeStyle = d.color;
             ctx.lineWidth = 1;
             ctx.beginPath();
-            // Oś X i Y
             ctx.moveTo(d.x - 30, d.y);
             ctx.lineTo(d.x + 50, d.y);
             ctx.moveTo(d.x, d.y - 35);
             ctx.lineTo(d.x, d.y + 35);
             ctx.stroke();
-            // Krzywa funkcyjna
             ctx.beginPath();
             ctx.moveTo(d.x - 25, d.y - 20);
             ctx.quadraticCurveTo(d.x, d.y + 35, d.x + 40, d.y - 25);
@@ -1674,6 +1698,35 @@
             ctx.arc(d.x + d.dx, d.y + d.dy, 2.5, 0, Math.PI * 2);
             ctx.fill();
           }
+
+          ctx.restore();
+        }
+
+        // Rysowanie ostatecznego, wycentrowanego 2 + 2 = 4
+        if (finalEquationAlpha > 0) {
+          ctx.save();
+          ctx.globalAlpha = finalEquationAlpha;
+
+          const text = "2 + 2 = 4";
+          ctx.font = "bold 58px 'Caveat', cursive";
+          const metrics = ctx.measureText(text);
+          const tx = (w - metrics.width) / 2;
+          const ty = h / 2 + 15;
+
+          // Ramka odręczna wokół równania
+          ctx.strokeStyle = "#0d5ceb";
+          ctx.lineWidth = 2.5;
+          ctx.strokeRect(tx - 25, ty - 60, metrics.width + 50, 80);
+
+          ctx.fillStyle = "#0e1118";
+          ctx.fillText(text, tx, ty);
+
+          // Subtelny dopisek u dołu
+          ctx.font = "14px 'JetBrains Mono', monospace";
+          ctx.fillStyle = "#0d5ceb";
+          const subText = "REDUKCJA DO ABSOLUTNEJ PODSTAWY";
+          const subMetrics = ctx.measureText(subText);
+          ctx.fillText(subText, (w - subMetrics.width) / 2, ty + 50);
 
           ctx.restore();
         }
@@ -1706,7 +1759,6 @@
 
       function typeNextCharacter() {
         if (lineIndex >= scriptStory.length) {
-          // Zakończono pisanie, naturalna pauza na tablicy i czyszczenie
           setTimeout(() => {
             line1.innerHTML = "";
             line2.innerHTML = "";
@@ -1723,15 +1775,11 @@
         const fullText = current.text;
 
         if (charIndex < fullText.length) {
-          const char = fullText.charAt(charIndex);
           current.el.innerHTML = fullText.substring(0, charIndex + 1) + '<span class="hand-cursor"></span>';
           charIndex++;
-
-          // Naturalne mikro-odstępy ludzkiego pisma (losowe tempo)
           const delay = Math.random() * 55 + 40;
           setTimeout(typeNextCharacter, delay);
         } else {
-          // Koniec linijki: usuwamy kursor z poprzedniej, przenosimy do nowej
           current.el.innerHTML = fullText;
           lineIndex++;
           charIndex = 0;
