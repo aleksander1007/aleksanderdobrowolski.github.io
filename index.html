@@ -1195,7 +1195,7 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie matematyki →</a>
       </div>
 
-      <!-- MATEMATYKA: STOPNIOWA METAMORFOZA Z CHAOSU DO 2 + 2 = 4 (BEZ PODPISU) -->
+      <!-- MATEMATYKA: STOPNIOWA METAMORFOZA Z CHAOSU DO 2 + 2 = 4 -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">NOTATNIK OBLICZEŃ // LIVE BOARD</span>
@@ -1247,7 +1247,7 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie fizyki →</a>
       </div>
 
-      <!-- FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO (BEZ PODPISU) -->
+      <!-- FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">WYPROWADZENIE // HANDWRITTEN LIVE</span>
@@ -1259,6 +1259,7 @@
               <div class="hand-line" id="physHandLine1"></div>
               <div class="hand-line" id="physHandLine2"></div>
               <div class="hand-line blue-accent" id="physHandLine3"></div>
+              <div class="hand-line" id="physHandLine4" style="font-size: 1.3rem; color: #7f8899;"></div>
             </div>
           </div>
         </div>
@@ -1329,7 +1330,7 @@
             <div class="brief-entry">
               <span class="brief-label">Forma kontaktu</span>
               <p class="brief-text">
-                Z uwagi na prowadzone w ciągu dnia zajęcia najszybciej odpowiadam na <strong>wiadomości e-mail</strong>. Na maile odpisuję regularnie w najbliższej przerwie między lekcjami.
+                Z uwagi na prowadzone w ciągu dnia zajęcia najszybciej odpowiadam na <strong>wiadomości tekstowe (SMS lub e-mail)</strong>. Na wiadomości odpisuję w najbliższej przerwie między lekcjami.
               </p>
             </div>
             <div class="brief-entry">
@@ -1357,6 +1358,10 @@
         </div>
 
         <div class="contact-channels">
+          <a href="sms:+48509101676" class="channel-row">
+            <span class="c-key">SMS</span>
+            <span class="c-val">+48 509 101 676 ↗</span>
+          </a>
           <a href="mailto:aleksander.dobrowolski1007@gmail.com" class="channel-row">
             <span class="c-key">E-mail</span>
             <span class="c-val">aleksander.dobrowolski1007@gmail.com ↗</span>
@@ -1485,7 +1490,7 @@
     }
 
     /* =========================================================================
-       2. MATEMATYKA: STOPNIOWA METAMORFOZA Z CHAOSU W 2 + 2 = 4 (BEZ PODPISU)
+       2. MATEMATYKA: STOPNIOWA METAMORFOZA Z CHAOSU W 2 + 2 = 4
        ========================================================================= */
     function initMathHandwrittenChaos() {
       const canvas = document.getElementById('mathChaosCanvas');
@@ -1668,7 +1673,7 @@
           ctx.font = "bold 58px 'Caveat', cursive";
           const metrics = ctx.measureText(text);
           const tx = (w - metrics.width) / 2;
-          const ty = h / 2 + 18;
+          const ty = h / 2 + 10;
 
           ctx.strokeStyle = "#0d5ceb";
           ctx.lineWidth = 2.5;
@@ -1676,6 +1681,12 @@
 
           ctx.fillStyle = "#0e1118";
           ctx.fillText(text, tx, ty);
+
+          ctx.font = "13px 'JetBrains Mono', monospace";
+          ctx.fillStyle = "#0d5ceb";
+          const subText = "REDUKCJA DO ABSOLUTNEJ PODSTAWY";
+          const subMetrics = ctx.measureText(subText);
+          ctx.fillText(subText, (w - subMetrics.width) / 2, ty + 46);
 
           ctx.restore();
         }
@@ -1687,18 +1698,20 @@
     }
 
     /* =========================================================================
-       3. FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO (BEZ PODPISU)
+       3. FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO
        ========================================================================= */
     function initNaturalPhysicsHandwriting() {
       const line1 = document.getElementById('physHandLine1');
       const line2 = document.getElementById('physHandLine2');
       const line3 = document.getElementById('physHandLine3');
+      const line4 = document.getElementById('physHandLine4');
       if (!line1) return;
 
       const scriptStory = [
         { el: line1, text: "E = m · c²", pause: 750 },
         { el: line2, text: "m = m₀ / √(1 - v²/c²)", pause: 850 },
-        { el: line3, text: "E² = (p·c)² + (m₀c²)²", pause: 1400 }
+        { el: line3, text: "E² = (p·c)² + (m₀c²)²", pause: 1100 },
+        { el: line4, text: "dla v « c :  E ≈ m₀c² + ½m₀v²", pause: 1400 }
       ];
 
       let lineIndex = 0;
@@ -1710,6 +1723,7 @@
             line1.innerHTML = "";
             line2.innerHTML = "";
             line3.innerHTML = "";
+            line4.innerHTML = "";
             lineIndex = 0;
             charIndex = 0;
             typeNextCharacter();
