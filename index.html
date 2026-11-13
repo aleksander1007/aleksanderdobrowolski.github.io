@@ -592,15 +592,30 @@
       align-items: center;
     }
 
+    .schematic-caption {
+      margin-top: 1.1rem;
+      padding-top: 0.9rem;
+      border-top: 1px dashed var(--border-strong);
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .schematic-caption strong {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
     /* MATEMATYKA: KARTKA W KRATKĘ */
     .grid-paper-canvas-wrap {
       width: 100%;
       height: 100%;
       background-color: #ffffff;
       background-image: 
-        linear-gradient(rgba(13, 92, 235, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(13, 92, 235, 0.12) 1px, transparent 1px);
-      background-size: 15px 15px;
+        linear-gradient(rgba(13, 92, 235, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(13, 92, 235, 0.09) 1px, transparent 1px);
+      background-size: 16px 16px;
       position: relative;
       overflow: hidden;
     }
@@ -1195,7 +1210,7 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie matematyki →</a>
       </div>
 
-      <!-- MATEMATYKA: STOPNIOWA METAMORFOZA Z CHAOSU DO 2 + 2 = 4 (BEZ PODPISU) -->
+      <!-- MATEMATYKA: SCENA Z LUDZIKIEM PRZY TABLICY (10 SEKUND) -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">NOTATNIK OBLICZEŃ // LIVE BOARD</span>
@@ -1206,6 +1221,9 @@
             <canvas id="mathChaosCanvas"></canvas>
           </div>
         </div>
+        <p class="schematic-caption">
+          Znasz to uczucie? Chaos i stres przy tablicy? <strong>Pomogę Ci to zmienić.</strong>
+        </p>
       </div>
     </section>
 
@@ -1247,7 +1265,7 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie fizyki →</a>
       </div>
 
-      <!-- FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO (BEZ PODPISU) -->
+      <!-- FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO -->
       <div class="technical-schematic">
         <div class="schematic-header">
           <span class="schematic-title">WYPROWADZENIE // HANDWRITTEN LIVE</span>
@@ -1259,6 +1277,7 @@
               <div class="hand-line" id="physHandLine1"></div>
               <div class="hand-line" id="physHandLine2"></div>
               <div class="hand-line blue-accent" id="physHandLine3"></div>
+              <div class="hand-line" id="physHandLine4" style="font-size: 1.3rem; color: #7f8899;"></div>
             </div>
           </div>
         </div>
@@ -1329,7 +1348,7 @@
             <div class="brief-entry">
               <span class="brief-label">Forma kontaktu</span>
               <p class="brief-text">
-                Z uwagi na prowadzone w ciągu dnia zajęcia najszybciej odpowiadam na <strong>wiadomości e-mail</strong>. Na maile odpisuję regularnie w najbliższej przerwie między lekcjami.
+                Z uwagi na prowadzone w ciągu dnia zajęcia najszybciej odpowiadam na <strong>wiadomości tekstowe (SMS lub e-mail)</strong>. Na wiadomości odpisuję w najbliższej przerwie między lekcjami.
               </p>
             </div>
             <div class="brief-entry">
@@ -1357,6 +1376,10 @@
         </div>
 
         <div class="contact-channels">
+          <a href="sms:+48509101676" class="channel-row">
+            <span class="c-key">SMS</span>
+            <span class="c-val">+48 509 101 676 ↗</span>
+          </a>
           <a href="mailto:aleksander.dobrowolski1007@gmail.com" class="channel-row">
             <span class="c-key">E-mail</span>
             <span class="c-val">aleksander.dobrowolski1007@gmail.com ↗</span>
@@ -1485,7 +1508,7 @@
     }
 
     /* =========================================================================
-       2. MATEMATYKA: STOPNIOWA METAMORFOZA Z CHAOSU W 2 + 2 = 4 (BEZ PODPISU)
+       2. MATEMATYKA: RYSUNKOWY LUDZIK PRZY TABLICY (10-SEKUNDOWA HISTORIA)
        ========================================================================= */
     function initMathHandwrittenChaos() {
       const canvas = document.getElementById('mathChaosCanvas');
@@ -1494,211 +1517,456 @@
       let w, h;
 
       function resize() {
+        const dpr = window.devicePixelRatio || 1;
         w = canvas.parentElement.clientWidth;
         h = canvas.parentElement.clientHeight;
-        canvas.width = w;
-        canvas.height = h;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
       resize();
       window.addEventListener('resize', resize);
 
       const formulasPool = [
-        "√b / (√a · √b)", "∫ b-a/2 dx = 1", "m₁v₁ = -m₂v₂", "a = F / m",
-        "4(√3 - 1) / 2", "x² - 4x · (x-10)/(x-10)", "y = √3", "cos x",
-        "D = b² - 4ac", "Δ = b² - 4ac", "x₁,₂ = (-b ± √Δ) / 2a", "P = π·r²",
-        "15·10³(1084 - 18)² / t²", "x > 0, x ≠ 14", "sin φ / MS", "a_r = Δv / t",
-        "V = ⅓ π r² h", "x/y = 3/2", "ab² / (a-b)", "2⅓ x⁻⅔ = 0"
+        "√b / (√a · √b)", "∫(x² - 3)dx", "Δ = b² - 4ac", "x₁,₂ = (-b ± √Δ)/2a",
+        "sin²α + cos²α = 1", "lim x→∞", "a² + b² = c²", "f(x) = ax² + bx + c",
+        "V = ⅓πr²H", "log₂(x - 4) = 3", "∑ n²", "2x - 7 = 15",
+        "P = ½a·h", "(a+b)²", "√144 + 3³", "x/y = 3/2", "tg α = sin α / cos α"
       ];
 
-      const drawings = [];
-
-      function spawnFormula() {
-        const text = formulasPool[Math.floor(Math.random() * formulasPool.length)];
-        return {
-          type: 'text',
-          text: text,
-          x: Math.random() * (w - 140) + 10,
-          y: Math.random() * (h - 30) + 25,
-          font: (Math.random() > 0.5 ? 'bold ' : '') + (Math.floor(Math.random() * 6) + 14) + "px 'Caveat', cursive",
-          color: Math.random() > 0.7 ? '#0d5ceb' : '#0e1118',
-          rot: (Math.random() - 0.5) * 0.15,
-          baseAlpha: Math.random() * 0.45 + 0.45,
-          fadeThreshold: Math.random()
-        };
-      }
-
-      function spawnDoodle() {
-        const type = Math.random();
-        if (type < 0.35) {
-          return {
-            type: 'cone',
-            x: Math.random() * (w - 80) + 40,
-            y: Math.random() * (h - 90) + 30,
-            color: '#0e1118',
-            baseAlpha: 0.65,
-            fadeThreshold: Math.random()
-          };
-        } else if (type < 0.7) {
-          return {
-            type: 'axes',
-            x: Math.random() * (w - 100) + 30,
-            y: Math.random() * (h - 80) + 40,
-            color: '#0e1118',
-            baseAlpha: 0.6,
-            fadeThreshold: Math.random()
-          };
-        } else {
-          return {
-            type: 'vector',
-            x: Math.random() * (w - 60) + 20,
-            y: Math.random() * (h - 60) + 30,
-            dx: (Math.random() - 0.5) * 80 + 30,
-            dy: (Math.random() - 0.5) * 80 - 20,
-            color: '#0d5ceb',
-            baseAlpha: 0.8,
-            fadeThreshold: Math.random()
-          };
+      let chaosItems = [];
+      function generateChaos() {
+        chaosItems = [];
+        for (let i = 0; i < 34; i++) {
+          chaosItems.push({
+            text: formulasPool[Math.floor(Math.random() * formulasPool.length)],
+            rx: 0.05 + Math.random() * 0.85,
+            ry: 0.14 + Math.random() * 0.76,
+            rot: (Math.random() - 0.5) * 0.28,
+            size: 13 + Math.floor(Math.random() * 6),
+            blue: Math.random() > 0.75,
+            alpha: 0.45 + Math.random() * 0.45,
+            phase: Math.random() * Math.PI * 2
+          });
         }
       }
+      generateChaos();
 
-      function populateChaos() {
-        drawings.length = 0;
-        for (let i = 0; i < 48; i++) {
-          drawings.push(spawnFormula());
-          if (i % 3 === 0) drawings.push(spawnDoodle());
-        }
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       }
 
-      populateChaos();
+      function drawRoundedRect(x, y, width, height, radius) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+      }
 
-      let frame = 0;
-      const totalCycle = 720;
+      const DURATION = 10000; // 10 sekund na pełną pętlę
+      let startTime = null;
+      let lastCycle = -1;
 
-      function render() {
+      function render(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const totalElapsed = timestamp - startTime;
+        const cycle = Math.floor(totalElapsed / DURATION);
+        if (cycle !== lastCycle) {
+          lastCycle = cycle;
+          generateChaos();
+        }
+        const t = (totalElapsed % DURATION) / DURATION; // 0.0 -> 1.0 (10s)
+
         ctx.clearRect(0, 0, w, h);
-        frame = (frame + 1) % totalCycle;
 
-        let chaosFactor = 1;
-        let simpleFactor = 0;
+        // Pozycje bazowe w przestrzeni sceny
+        const boardX = w * 0.28;
+        const boardY = h * 0.11;
+        const boardW = w * 0.67;
+        const boardH = h * 0.68;
 
-        if (frame <= 200) {
-          chaosFactor = 1;
-          simpleFactor = 0;
-        } else if (frame > 200 && frame <= 450) {
-          const t = (frame - 200) / 250;
-          chaosFactor = 1 - t;
-          simpleFactor = t;
-        } else if (frame > 450 && frame <= 620) {
-          chaosFactor = 0;
-          simpleFactor = 1;
-        } else {
-          const t = (frame - 620) / 100;
-          chaosFactor = t;
-          simpleFactor = 1 - t;
-          if (frame === 621) {
-            populateChaos();
-          }
+        const charBaseX = w * 0.15;
+        const charBaseY = h * 0.87;
+
+        // Etap 1: Kamera (zbliżenie na ludzika w 2.0s - 5.5s)
+        let zoom = 1;
+        if (t >= 0.20 && t < 0.28) {
+          zoom = 1 + 1.45 * easeInOutCubic((t - 0.20) / 0.08);
+        } else if (t >= 0.28 && t < 0.47) {
+          zoom = 2.45;
+        } else if (t >= 0.47 && t < 0.55) {
+          zoom = 2.45 - 1.45 * easeInOutCubic((t - 0.47) / 0.08);
         }
 
-        if (chaosFactor > 0.005) {
-          for (let i = 0; i < drawings.length; i++) {
-            const d = drawings[i];
-            const itemAlpha = Math.max(0, Math.min(1, (chaosFactor - d.fadeThreshold * 0.4) / 0.6)) * d.baseAlpha;
-            if (itemAlpha <= 0.01) continue;
+        // Pozycja ludzika (podchodzi lekko do tablicy podczas pisania)
+        let walkProgress = 0;
+        if (t >= 0.53 && t < 0.59) {
+          walkProgress = easeInOutCubic((t - 0.53) / 0.06);
+        } else if (t >= 0.59 && t < 0.90) {
+          walkProgress = 1;
+        } else if (t >= 0.90) {
+          walkProgress = 1 - easeInOutCubic((t - 0.90) / 0.10);
+        }
 
+        const charX = charBaseX + walkProgress * (boardX - charBaseX - 18);
+        const charY = charBaseY;
+
+        // Punkt ogniskowania kamery (głowa ludzika przy zoomie)
+        const focusX = charX;
+        const focusY = charY - 82;
+
+        ctx.save();
+        // Transformacja kamery (płynne zbliżenie na twarz ludzika)
+        const camWeight = (zoom - 1) / 1.45;
+        const targetCenterX = w * 0.5 * (1 - camWeight) + (w * 0.46) * camWeight;
+        const targetCenterY = h * 0.5 * (1 - camWeight) + (h * 0.52) * camWeight;
+        const sourceCenterX = w * 0.5 * (1 - camWeight) + focusX * camWeight;
+        const sourceCenterY = h * 0.5 * (1 - camWeight) + focusY * camWeight;
+
+        ctx.translate(targetCenterX, targetCenterY);
+        ctx.scale(zoom, zoom);
+        ctx.translate(-sourceCenterX, -sourceCenterY);
+
+        // --- PODŁOGA ---
+        ctx.strokeStyle = "rgba(14, 17, 24, 0.2)";
+        ctx.lineWidth = 1.8;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(w * 0.04, charBaseY);
+        ctx.lineTo(w * 0.96, charBaseY);
+        ctx.stroke();
+
+        // --- TABLICA SZKOLNA ---
+        // Nogi tablicy
+        ctx.strokeStyle = "#0e1118";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(boardX + 16, boardY + boardH);
+        ctx.lineTo(boardX + 8, charBaseY);
+        ctx.moveTo(boardX + boardW - 16, boardY + boardH);
+        ctx.lineTo(boardX + boardW - 8, charBaseY);
+        ctx.stroke();
+
+        // Rama tablicy
+        ctx.fillStyle = "#ffffff";
+        drawRoundedRect(boardX, boardY, boardW, boardH, 6);
+        ctx.fill();
+        ctx.strokeStyle = "#0e1118";
+        ctx.lineWidth = 2.4;
+        ctx.stroke();
+
+        // Półka na kredę / mazak
+        ctx.fillStyle = "#0d5ceb";
+        drawRoundedRect(boardX - 4, boardY + boardH - 3, boardW + 8, 6, 3);
+        ctx.fill();
+
+        // --- ZAWARTOŚĆ TABLICY ---
+        // 1) Chaos wzorów (0.0 - 0.54)
+        let chaosAlpha = 1;
+        if (t >= 0.46 && t < 0.54) {
+          chaosAlpha = 1 - easeInOutCubic((t - 0.46) / 0.08);
+        } else if (t >= 0.54 && t < 0.92) {
+          chaosAlpha = 0;
+        } else if (t >= 0.92) {
+          chaosAlpha = easeInOutCubic((t - 0.92) / 0.08);
+        }
+
+        if (chaosAlpha > 0.01) {
+          ctx.save();
+          drawRoundedRect(boardX + 4, boardY + 4, boardW - 8, boardH - 10, 4);
+          ctx.clip();
+
+          const jitter = t < 0.25 ? Math.sin(t * 95) * 1.4 : 0;
+
+          for (let i = 0; i < chaosItems.length; i++) {
+            const item = chaosItems[i];
             ctx.save();
-            ctx.globalAlpha = itemAlpha;
-
-            if (d.type === 'text') {
-              ctx.translate(d.x, d.y);
-              ctx.rotate(d.rot);
-              ctx.font = d.font;
-              ctx.fillStyle = d.color;
-              ctx.fillText(d.text, 0, 0);
-            } else if (d.type === 'cone') {
-              ctx.strokeStyle = d.color;
-              ctx.lineWidth = 1.2;
-              ctx.beginPath();
-              ctx.ellipse(d.x, d.y, 28, 10, 0, 0, Math.PI * 2);
-              ctx.moveTo(d.x - 28, d.y);
-              ctx.lineTo(d.x, d.y + 55);
-              ctx.lineTo(d.x + 28, d.y);
-              ctx.stroke();
-              ctx.setLineDash([3, 3]);
-              ctx.beginPath();
-              ctx.moveTo(d.x, d.y);
-              ctx.lineTo(d.x, d.y + 55);
-              ctx.stroke();
-              ctx.setLineDash([]);
-            } else if (d.type === 'axes') {
-              ctx.strokeStyle = d.color;
-              ctx.lineWidth = 1;
-              ctx.beginPath();
-              ctx.moveTo(d.x - 30, d.y);
-              ctx.lineTo(d.x + 50, d.y);
-              ctx.moveTo(d.x, d.y - 35);
-              ctx.lineTo(d.x + 35);
-              ctx.stroke();
-              ctx.beginPath();
-              ctx.moveTo(d.x - 25, d.y - 20);
-              ctx.quadraticCurveTo(d.x, d.y + 35, d.x + 40, d.y - 25);
-              ctx.stroke();
-            } else if (d.type === 'vector') {
-              ctx.strokeStyle = d.color;
-              ctx.lineWidth = 1.4;
-              ctx.beginPath();
-              ctx.moveTo(d.x, d.y);
-              ctx.lineTo(d.x + d.dx, d.y + d.dy);
-              ctx.stroke();
-              ctx.fillStyle = d.color;
-              ctx.beginPath();
-              ctx.arc(d.x + d.dx, d.y + d.dy, 2.5, 0, Math.PI * 2);
-              ctx.fill();
-            }
-
+            ctx.globalAlpha = chaosAlpha * item.alpha;
+            const ix = boardX + item.rx * boardW + Math.sin(t * 40 + item.phase) * jitter;
+            const iy = boardY + item.ry * boardH + Math.cos(t * 35 + item.phase) * jitter;
+            ctx.translate(ix, iy);
+            ctx.rotate(item.rot);
+            ctx.font = "bold " + item.size + "px 'Caveat', cursive";
+            ctx.fillStyle = item.blue ? "#0d5ceb" : "#0e1118";
+            ctx.fillText(item.text, 0, 0);
             ctx.restore();
           }
-        }
 
-        if (simpleFactor > 0.005) {
-          ctx.save();
-          ctx.globalAlpha = Math.min(1, simpleFactor * 1.1);
-
-          const text = "2 + 2 = 4";
-          ctx.font = "bold 58px 'Caveat', cursive";
-          const metrics = ctx.measureText(text);
-          const tx = (w - metrics.width) / 2;
-          const ty = h / 2 + 18;
-
-          ctx.strokeStyle = "#0d5ceb";
-          ctx.lineWidth = 2.5;
-          ctx.strokeRect(tx - 24, ty - 58, metrics.width + 48, 76);
-
-          ctx.fillStyle = "#0e1118";
-          ctx.fillText(text, tx, ty);
+          // Dodatkowe chaotyczne bazgroły
+          ctx.strokeStyle = "rgba(14, 17, 24, 0.16)";
+          ctx.lineWidth = 1.2;
+          ctx.globalAlpha = chaosAlpha;
+          ctx.beginPath();
+          ctx.moveTo(boardX + boardW * 0.15, boardY + boardH * 0.25);
+          ctx.bezierCurveTo(boardX + boardW * 0.55, boardY + boardH * 0.05, boardX + boardW * 0.35, boardY + boardH * 0.85, boardX + boardW * 0.85, boardY + boardH * 0.65);
+          ctx.stroke();
 
           ctx.restore();
         }
 
+        // 2) Pisanie czystego rozwiązania: 2 + 2 = 4 (0.56 - 0.92)
+        const solutionText = "2 + 2 = 4";
+        let writeRatio = 0;
+        let solAlpha = 1;
+
+        if (t >= 0.56 && t < 0.78) {
+          writeRatio = (t - 0.56) / 0.22;
+        } else if (t >= 0.78 && t < 0.90) {
+          writeRatio = 1;
+        } else if (t >= 0.90 && t < 0.95) {
+          writeRatio = 1;
+          solAlpha = 1 - (t - 0.90) / 0.05;
+        }
+
+        const visibleChars = Math.floor(writeRatio * solutionText.length + 0.2);
+        let penTargetX = boardX + boardW * 0.35;
+        let penTargetY = boardY + boardH * 0.54;
+
+        if (visibleChars > 0 && solAlpha > 0.01) {
+          ctx.save();
+          ctx.globalAlpha = solAlpha;
+          const fontSize = Math.max(30, Math.min(46, boardW * 0.17));
+          ctx.font = "bold " + fontSize + "px 'Caveat', cursive";
+          const fullMetrics = ctx.measureText(solutionText);
+          const textStartX = boardX + (boardW - fullMetrics.width) / 2;
+          const textStartY = boardY + boardH * 0.55;
+
+          const currentStr = solutionText.substring(0, visibleChars);
+          const curMetrics = ctx.measureText(currentStr);
+
+          // Aktualna pozycja końcówki pisaka na tablicy
+          const handWaveY = visibleChars < solutionText.length ? Math.sin(t * 140) * 4 : 0;
+          penTargetX = textStartX + curMetrics.width;
+          penTargetY = textStartY - fontSize * 0.28 + handWaveY;
+
+          // Zapisany tekst
+          ctx.fillStyle = "#0e1118";
+          ctx.fillText(currentStr, textStartX, textStartY);
+
+          // Gdy całe równanie jest gotowe -> niebieska ramka podkreślająca wynik
+          if (visibleChars === solutionText.length) {
+            const boxProgress = Math.min(1, (t - 0.76) / 0.06);
+            if (boxProgress > 0) {
+              ctx.strokeStyle = "#0d5ceb";
+              ctx.lineWidth = 2.4;
+              ctx.globalAlpha = solAlpha * boxProgress;
+              drawRoundedRect(
+                textStartX - 16,
+                textStartY - fontSize * 0.82,
+                fullMetrics.width + 32,
+                fontSize * 1.12,
+                8
+              );
+              ctx.stroke();
+            }
+          }
+
+          ctx.restore();
+        }
+
+        // --- RYSUNKOWY LUDZIK (PŁYNNY STYL LINE-ART) ---
+        const isBreathing = (t >= 0.26 && t < 0.48);
+        const breathPhase = isBreathing ? Math.sin(((t - 0.26) / 0.22) * Math.PI) : 0; // 0 -> 1 -> 0
+        const bodyLift = -breathPhase * 3.5;
+
+        const hipX = charX;
+        const hipY = charY - 36 + bodyLift;
+        const shoulderX = charX + walkProgress * 3;
+        const shoulderY = charY - 72 + bodyLift - breathPhase * 1.5;
+        const headX = shoulderX + walkProgress * 2;
+        const headY = shoulderY - 19;
+        const headR = 14.5;
+
+        ctx.save();
+        ctx.strokeStyle = "#0e1118";
+        ctx.lineWidth = 2.5;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+
+        // Nogi (lekki krok przy podejściu)
+        const stepOffset = Math.sin(walkProgress * Math.PI) * 5;
+        ctx.beginPath();
+        ctx.moveTo(hipX, hipY);
+        ctx.lineTo(hipX - 8 - stepOffset, charY);
+        ctx.moveTo(hipX, hipY);
+        ctx.lineTo(hipX + 9 + stepOffset, charY);
+        ctx.stroke();
+
+        // Tułów
+        ctx.beginPath();
+        ctx.moveTo(hipX, hipY);
+        ctx.quadraticCurveTo(hipX - 1, (hipY + shoulderY) / 2, shoulderX, shoulderY);
+        ctx.stroke();
+
+        // Głowa
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(headX, headY, headR, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Urocza czupryna / kreska włosów
+        ctx.beginPath();
+        ctx.moveTo(headX - 6, headY - headR + 1);
+        ctx.quadraticCurveTo(headX - 2, headY - headR - 5, headX + 4, headY - headR + 1);
+        ctx.stroke();
+
+        // Wyraz twarzy (Oczy i usta zależne od etapu)
+        const faceOffsetX = 3.5; // patrzy lekko w stronę tablicy
+        ctx.lineWidth = 2;
+
+        if (t < 0.25) {
+          // Etap 1: Zestresowany / przytłoczony chaosem
+          // Szerokie oczy
+          ctx.fillStyle = "#0e1118";
+          ctx.beginPath();
+          ctx.arc(headX + faceOffsetX - 3.5, headY - 2, 1.7, 0, Math.PI * 2);
+          ctx.arc(headX + faceOffsetX + 3.5, headY - 2, 1.7, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Falująca zestresowana buzia
+          ctx.beginPath();
+          ctx.moveTo(headX + faceOffsetX - 3, headY + 5);
+          ctx.quadraticCurveTo(headX + faceOffsetX, headY + 3, headX + faceOffsetX + 3, headY + 5.5);
+          ctx.stroke();
+
+          // Krople potu / stresu obok głowy
+          const sweatY = Math.sin(t * 50) * 2;
+          ctx.strokeStyle = "#0d5ceb";
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(headX - headR - 5, headY - 6 + sweatY);
+          ctx.lineTo(headX - headR - 9, headY - 9 + sweatY);
+          ctx.moveTo(headX - headR - 6, headY + 1 + sweatY);
+          ctx.lineTo(headX - headR - 11, headY + 1 + sweatY);
+          ctx.stroke();
+        } else if (t >= 0.25 && t < 0.49) {
+          // Etap 2: Zamknięte oczy i głęboki, spokojny wdech
+          ctx.strokeStyle = "#0e1118";
+          // Zamknięte spokojne powieki (łuki w dół)
+          ctx.beginPath();
+          ctx.arc(headX + faceOffsetX - 3.5, headY - 2, 2.5, 0.15 * Math.PI, 0.85 * Math.PI);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(headX + faceOffsetX + 3.5, headY - 2, 2.5, 0.15 * Math.PI, 0.85 * Math.PI);
+          ctx.stroke();
+
+          // Usta podczas głębokiego wdechu (małe kółko -> spokojny uśmiech)
+          if (breathPhase > 0.25) {
+            ctx.beginPath();
+            ctx.arc(headX + faceOffsetX, headY + 5, 1.2 + breathPhase * 1.4, 0, Math.PI * 2);
+            ctx.stroke();
+          } else {
+            ctx.beginPath();
+            ctx.arc(headX + faceOffsetX, headY + 4, 3, 0.1 * Math.PI, 0.9 * Math.PI);
+            ctx.stroke();
+          }
+
+          // Delikatne niebieskie fale oddechu i spokoju wokół ludzika
+          if (breathPhase > 0.1) {
+            ctx.save();
+            ctx.strokeStyle = "#0d5ceb";
+            ctx.lineWidth = 1.5;
+            ctx.globalAlpha = breathPhase * 0.55;
+            ctx.beginPath();
+            ctx.arc(headX, headY, headR + 7 + breathPhase * 9, -0.35 * Math.PI, 0.35 * Math.PI);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(headX, headY, headR + 7 + breathPhase * 9, 0.65 * Math.PI, 1.35 * Math.PI);
+            ctx.stroke();
+            ctx.restore();
+          }
+        } else {
+          // Etap 3: Otwarte pewne oczy i uśmiech
+          ctx.fillStyle = "#0e1118";
+          ctx.beginPath();
+          ctx.arc(headX + faceOffsetX - 3.5, headY - 2, 1.7, 0, Math.PI * 2);
+          ctx.arc(headX + faceOffsetX + 3.5, headY - 2, 1.7, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Pewny siebie uśmiech
+          ctx.strokeStyle = "#0e1118";
+          ctx.beginPath();
+          ctx.arc(headX + faceOffsetX, headY + 3.5, 3.8, 0.12 * Math.PI, 0.88 * Math.PI);
+          ctx.stroke();
+        }
+
+        // Ręce ludzika
+        ctx.strokeStyle = "#0e1118";
+        ctx.lineWidth = 2.4;
+
+        // Lewa ręka (swobodna lub uniesiona przy wdechu)
+        ctx.beginPath();
+        ctx.moveTo(shoulderX, shoulderY + 2);
+        if (isBreathing) {
+          ctx.quadraticCurveTo(shoulderX - 10, shoulderY + 14 - breathPhase * 4, shoulderX - 5, shoulderY + 24 - breathPhase * 5);
+        } else {
+          ctx.lineTo(shoulderX - 8, shoulderY + 24);
+        }
+        ctx.stroke();
+
+        // Prawa ręka (pisząca na tablicy w etapie 3)
+        ctx.beginPath();
+        ctx.moveTo(shoulderX, shoulderY + 2);
+        if (t >= 0.55 && t < 0.84) {
+          // Sięga bezpośrednio do pisaka na tablicy
+          const reach = t < 0.58 ? easeInOutCubic((t - 0.55) / 0.03) : 1;
+          const handX = (shoulderX + 9) * (1 - reach) + penTargetX * reach;
+          const handY = (shoulderY + 24) * (1 - reach) + penTargetY * reach;
+          const elbowX = (shoulderX + handX) * 0.5;
+          const elbowY = Math.max(shoulderY + 12, (shoulderY + handY) * 0.5 + 8);
+
+          ctx.quadraticCurveTo(elbowX, elbowY, handX, handY);
+          ctx.stroke();
+
+          // Niebieski mazak w dłoni
+          ctx.strokeStyle = "#0d5ceb";
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(handX - 3, handY + 3);
+          ctx.lineTo(handX + 4, handY - 4);
+          ctx.stroke();
+        } else if (t >= 0.84 && t < 0.93) {
+          // Dumny gest wskazania na gotowy wynik
+          ctx.quadraticCurveTo(shoulderX + 12, shoulderY + 6, shoulderX + 22, shoulderY - 4);
+          ctx.stroke();
+        } else {
+          // Swobodnie opuszczona
+          ctx.lineTo(shoulderX + 9, shoulderY + 24);
+          ctx.stroke();
+        }
+
+        ctx.restore();
+        ctx.restore();
+
         requestAnimationFrame(render);
       }
 
-      render();
+      requestAnimationFrame(render);
     }
 
     /* =========================================================================
-       3. FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO (BEZ PODPISU)
+       3. FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO
        ========================================================================= */
     function initNaturalPhysicsHandwriting() {
       const line1 = document.getElementById('physHandLine1');
       const line2 = document.getElementById('physHandLine2');
       const line3 = document.getElementById('physHandLine3');
+      const line4 = document.getElementById('physHandLine4');
       if (!line1) return;
 
       const scriptStory = [
         { el: line1, text: "E = m · c²", pause: 750 },
         { el: line2, text: "m = m₀ / √(1 - v²/c²)", pause: 850 },
-        { el: line3, text: "E² = (p·c)² + (m₀c²)²", pause: 1400 }
+        { el: line3, text: "E² = (p·c)² + (m₀c²)²", pause: 1100 },
+        { el: line4, text: "dla v « c :  E ≈ m₀c² + ½m₀v²", pause: 1400 }
       ];
 
       let lineIndex = 0;
@@ -1710,6 +1978,7 @@
             line1.innerHTML = "";
             line2.innerHTML = "";
             line3.innerHTML = "";
+            line4.innerHTML = "";
             lineIndex = 0;
             charIndex = 0;
             typeNextCharacter();
