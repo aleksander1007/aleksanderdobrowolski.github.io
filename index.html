@@ -607,7 +607,7 @@
       font-weight: 700;
     }
 
-    /* MATEMATYKA: KARTKA W KRATKĘ */
+    /* KARTKA W KRATKĘ DLA SCEN RYSUNKOWYCH */
     .grid-paper-canvas-wrap {
       width: 100%;
       height: 100%;
@@ -620,62 +620,11 @@
       overflow: hidden;
     }
 
-    #mathChaosCanvas {
+    #mathChaosCanvas,
+    #physicsExamCanvas {
       width: 100%;
       height: 100%;
       display: block;
-    }
-
-    /* FIZYKA: TABLICA Z ODRĘCZNYM PISANIEM */
-    .physics-chalkboard-wrap {
-      width: 100%;
-      height: 100%;
-      background: #ffffff;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 1.5rem 2rem;
-      box-sizing: border-box;
-      font-family: var(--font-hand);
-    }
-
-    .handwritten-stream {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      width: 100%;
-    }
-
-    .hand-line {
-      font-size: 1.6rem;
-      color: #0e1118;
-      line-height: 1.25;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      white-space: nowrap;
-    }
-
-    .hand-line.blue-accent {
-      color: var(--blue);
-      font-weight: 700;
-    }
-
-    .hand-cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1.4rem;
-      background: var(--blue);
-      animation: blink 0.8s infinite;
-      vertical-align: middle;
-      margin-left: 2px;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
     }
 
     /* Rozdział 04: Zasady */
@@ -1213,7 +1162,7 @@
       <!-- MATEMATYKA: SCENA Z LUDZIKIEM PRZY TABLICY (10 SEKUND) -->
       <div class="technical-schematic">
         <div class="schematic-header">
-          <span class="schematic-title">NOTATNIK OBLICZEŃ // LIVE BOARD</span>
+          <span class="schematic-title">SRES PRZY TABLICY ZMIENIONY NA PEWNOŚĆ SIEBIE DZIĘKI WIEDZY Z KOREPETYCJII</span>
           <span class="schematic-badge">Klasy 4–8</span>
         </div>
         <div class="schematic-frame-box">
@@ -1265,20 +1214,15 @@
         <a href="#kontakt" class="chapter-action">Napisz w sprawie fizyki →</a>
       </div>
 
-      <!-- FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO -->
+      <!-- FIZYKA: SCENA ZE SPRAWDZIANEM I WYNIKIEM 100% (14 SEKUND) -->
       <div class="technical-schematic">
         <div class="schematic-header">
-          <span class="schematic-title">WYPROWADZENIE // HANDWRITTEN LIVE</span>
-          <span class="schematic-badge">E = mc²</span>
+          <span class="schematic-title">SPRAWDZIAN // OD STRESU DO 100%</span>
+          <span class="schematic-badge">Klasy 7–8</span>
         </div>
         <div class="schematic-frame-box">
-          <div class="physics-chalkboard-wrap">
-            <div class="handwritten-stream">
-              <div class="hand-line" id="physHandLine1"></div>
-              <div class="hand-line" id="physHandLine2"></div>
-              <div class="hand-line blue-accent" id="physHandLine3"></div>
-              <div class="hand-line" id="physHandLine4" style="font-size: 1.3rem; color: #7f8899;"></div>
-            </div>
+          <div class="grid-paper-canvas-wrap">
+            <canvas id="physicsExamCanvas"></canvas>
           </div>
         </div>
       </div>
@@ -1570,7 +1514,7 @@
         ctx.closePath();
       }
 
-      const DURATION = 10000; // 10 sekund na pełną pętlę
+      const DURATION = 10000;
       let startTime = null;
       let lastCycle = -1;
 
@@ -1582,11 +1526,10 @@
           lastCycle = cycle;
           generateChaos();
         }
-        const t = (totalElapsed % DURATION) / DURATION; // 0.0 -> 1.0 (10s)
+        const t = (totalElapsed % DURATION) / DURATION;
 
         ctx.clearRect(0, 0, w, h);
 
-        // Pozycje bazowe w przestrzeni sceny
         const boardX = w * 0.28;
         const boardY = h * 0.11;
         const boardW = w * 0.67;
@@ -1595,7 +1538,6 @@
         const charBaseX = w * 0.15;
         const charBaseY = h * 0.87;
 
-        // Etap 1: Kamera (zbliżenie na ludzika w 2.0s - 5.5s)
         let zoom = 1;
         if (t >= 0.20 && t < 0.28) {
           zoom = 1 + 1.45 * easeInOutCubic((t - 0.20) / 0.08);
@@ -1605,7 +1547,6 @@
           zoom = 2.45 - 1.45 * easeInOutCubic((t - 0.47) / 0.08);
         }
 
-        // Pozycja ludzika (podchodzi lekko do tablicy podczas pisania)
         let walkProgress = 0;
         if (t >= 0.53 && t < 0.59) {
           walkProgress = easeInOutCubic((t - 0.53) / 0.06);
@@ -1618,12 +1559,10 @@
         const charX = charBaseX + walkProgress * (boardX - charBaseX - 18);
         const charY = charBaseY;
 
-        // Punkt ogniskowania kamery (głowa ludzika przy zoomie)
         const focusX = charX;
         const focusY = charY - 82;
 
         ctx.save();
-        // Transformacja kamery (płynne zbliżenie na twarz ludzika)
         const camWeight = (zoom - 1) / 1.45;
         const targetCenterX = w * 0.5 * (1 - camWeight) + (w * 0.46) * camWeight;
         const targetCenterY = h * 0.5 * (1 - camWeight) + (h * 0.52) * camWeight;
@@ -1634,7 +1573,7 @@
         ctx.scale(zoom, zoom);
         ctx.translate(-sourceCenterX, -sourceCenterY);
 
-        // --- PODŁOGA ---
+        // Podłoga
         ctx.strokeStyle = "rgba(14, 17, 24, 0.2)";
         ctx.lineWidth = 1.8;
         ctx.lineCap = "round";
@@ -1643,8 +1582,7 @@
         ctx.lineTo(w * 0.96, charBaseY);
         ctx.stroke();
 
-        // --- TABLICA SZKOLNA ---
-        // Nogi tablicy
+        // Tablica
         ctx.strokeStyle = "#0e1118";
         ctx.lineWidth = 2.2;
         ctx.beginPath();
@@ -1654,7 +1592,6 @@
         ctx.lineTo(boardX + boardW - 8, charBaseY);
         ctx.stroke();
 
-        // Rama tablicy
         ctx.fillStyle = "#ffffff";
         drawRoundedRect(boardX, boardY, boardW, boardH, 6);
         ctx.fill();
@@ -1662,13 +1599,11 @@
         ctx.lineWidth = 2.4;
         ctx.stroke();
 
-        // Półka na kredę / mazak
         ctx.fillStyle = "#0d5ceb";
         drawRoundedRect(boardX - 4, boardY + boardH - 3, boardW + 8, 6, 3);
         ctx.fill();
 
-        // --- ZAWARTOŚĆ TABLICY ---
-        // 1) Chaos wzorów (0.0 - 0.54)
+        // Chaos wzorów
         let chaosAlpha = 1;
         if (t >= 0.46 && t < 0.54) {
           chaosAlpha = 1 - easeInOutCubic((t - 0.46) / 0.08);
@@ -1699,7 +1634,6 @@
             ctx.restore();
           }
 
-          // Dodatkowe chaotyczne bazgroły
           ctx.strokeStyle = "rgba(14, 17, 24, 0.16)";
           ctx.lineWidth = 1.2;
           ctx.globalAlpha = chaosAlpha;
@@ -1711,7 +1645,7 @@
           ctx.restore();
         }
 
-        // 2) Pisanie czystego rozwiązania: 2 + 2 = 4 (0.56 - 0.92)
+        // Pisanie czystego rozwiązania: 2 + 2 = 4
         const solutionText = "2 + 2 = 4";
         let writeRatio = 0;
         let solAlpha = 1;
@@ -1741,16 +1675,13 @@
           const currentStr = solutionText.substring(0, visibleChars);
           const curMetrics = ctx.measureText(currentStr);
 
-          // Aktualna pozycja końcówki pisaka na tablicy
           const handWaveY = visibleChars < solutionText.length ? Math.sin(t * 140) * 4 : 0;
           penTargetX = textStartX + curMetrics.width;
           penTargetY = textStartY - fontSize * 0.28 + handWaveY;
 
-          // Zapisany tekst
           ctx.fillStyle = "#0e1118";
           ctx.fillText(currentStr, textStartX, textStartY);
 
-          // Gdy całe równanie jest gotowe -> niebieska ramka podkreślająca wynik
           if (visibleChars === solutionText.length) {
             const boxProgress = Math.min(1, (t - 0.76) / 0.06);
             if (boxProgress > 0) {
@@ -1771,9 +1702,9 @@
           ctx.restore();
         }
 
-        // --- RYSUNKOWY LUDZIK (PŁYNNY STYL LINE-ART) ---
+        // Ludzik
         const isBreathing = (t >= 0.26 && t < 0.48);
-        const breathPhase = isBreathing ? Math.sin(((t - 0.26) / 0.22) * Math.PI) : 0; // 0 -> 1 -> 0
+        const breathPhase = isBreathing ? Math.sin(((t - 0.26) / 0.22) * Math.PI) : 0;
         const bodyLift = -breathPhase * 3.5;
 
         const hipX = charX;
@@ -1790,7 +1721,6 @@
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
 
-        // Nogi (lekki krok przy podejściu)
         const stepOffset = Math.sin(walkProgress * Math.PI) * 5;
         ctx.beginPath();
         ctx.moveTo(hipX, hipY);
@@ -1799,45 +1729,37 @@
         ctx.lineTo(hipX + 9 + stepOffset, charY);
         ctx.stroke();
 
-        // Tułów
         ctx.beginPath();
         ctx.moveTo(hipX, hipY);
         ctx.quadraticCurveTo(hipX - 1, (hipY + shoulderY) / 2, shoulderX, shoulderY);
         ctx.stroke();
 
-        // Głowa
         ctx.fillStyle = "#ffffff";
         ctx.beginPath();
         ctx.arc(headX, headY, headR, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
 
-        // Urocza czupryna / kreska włosów
         ctx.beginPath();
         ctx.moveTo(headX - 6, headY - headR + 1);
         ctx.quadraticCurveTo(headX - 2, headY - headR - 5, headX + 4, headY - headR + 1);
         ctx.stroke();
 
-        // Wyraz twarzy (Oczy i usta zależne od etapu)
-        const faceOffsetX = 3.5; // patrzy lekko w stronę tablicy
+        const faceOffsetX = 3.5;
         ctx.lineWidth = 2;
 
         if (t < 0.25) {
-          // Etap 1: Zestresowany / przytłoczony chaosem
-          // Szerokie oczy
           ctx.fillStyle = "#0e1118";
           ctx.beginPath();
           ctx.arc(headX + faceOffsetX - 3.5, headY - 2, 1.7, 0, Math.PI * 2);
           ctx.arc(headX + faceOffsetX + 3.5, headY - 2, 1.7, 0, Math.PI * 2);
           ctx.fill();
 
-          // Falująca zestresowana buzia
           ctx.beginPath();
           ctx.moveTo(headX + faceOffsetX - 3, headY + 5);
           ctx.quadraticCurveTo(headX + faceOffsetX, headY + 3, headX + faceOffsetX + 3, headY + 5.5);
           ctx.stroke();
 
-          // Krople potu / stresu obok głowy
           const sweatY = Math.sin(t * 50) * 2;
           ctx.strokeStyle = "#0d5ceb";
           ctx.lineWidth = 1.6;
@@ -1848,9 +1770,7 @@
           ctx.lineTo(headX - headR - 11, headY + 1 + sweatY);
           ctx.stroke();
         } else if (t >= 0.25 && t < 0.49) {
-          // Etap 2: Zamknięte oczy i głęboki, spokojny wdech
           ctx.strokeStyle = "#0e1118";
-          // Zamknięte spokojne powieki (łuki w dół)
           ctx.beginPath();
           ctx.arc(headX + faceOffsetX - 3.5, headY - 2, 2.5, 0.15 * Math.PI, 0.85 * Math.PI);
           ctx.stroke();
@@ -1858,7 +1778,6 @@
           ctx.arc(headX + faceOffsetX + 3.5, headY - 2, 2.5, 0.15 * Math.PI, 0.85 * Math.PI);
           ctx.stroke();
 
-          // Usta podczas głębokiego wdechu (małe kółko -> spokojny uśmiech)
           if (breathPhase > 0.25) {
             ctx.beginPath();
             ctx.arc(headX + faceOffsetX, headY + 5, 1.2 + breathPhase * 1.4, 0, Math.PI * 2);
@@ -1869,7 +1788,6 @@
             ctx.stroke();
           }
 
-          // Delikatne niebieskie fale oddechu i spokoju wokół ludzika
           if (breathPhase > 0.1) {
             ctx.save();
             ctx.strokeStyle = "#0d5ceb";
@@ -1884,25 +1802,21 @@
             ctx.restore();
           }
         } else {
-          // Etap 3: Otwarte pewne oczy i uśmiech
           ctx.fillStyle = "#0e1118";
           ctx.beginPath();
           ctx.arc(headX + faceOffsetX - 3.5, headY - 2, 1.7, 0, Math.PI * 2);
           ctx.arc(headX + faceOffsetX + 3.5, headY - 2, 1.7, 0, Math.PI * 2);
           ctx.fill();
 
-          // Pewny siebie uśmiech
           ctx.strokeStyle = "#0e1118";
           ctx.beginPath();
           ctx.arc(headX + faceOffsetX, headY + 3.5, 3.8, 0.12 * Math.PI, 0.88 * Math.PI);
           ctx.stroke();
         }
 
-        // Ręce ludzika
         ctx.strokeStyle = "#0e1118";
         ctx.lineWidth = 2.4;
 
-        // Lewa ręka (swobodna lub uniesiona przy wdechu)
         ctx.beginPath();
         ctx.moveTo(shoulderX, shoulderY + 2);
         if (isBreathing) {
@@ -1912,11 +1826,9 @@
         }
         ctx.stroke();
 
-        // Prawa ręka (pisząca na tablicy w etapie 3)
         ctx.beginPath();
         ctx.moveTo(shoulderX, shoulderY + 2);
         if (t >= 0.55 && t < 0.84) {
-          // Sięga bezpośrednio do pisaka na tablicy
           const reach = t < 0.58 ? easeInOutCubic((t - 0.55) / 0.03) : 1;
           const handX = (shoulderX + 9) * (1 - reach) + penTargetX * reach;
           const handY = (shoulderY + 24) * (1 - reach) + penTargetY * reach;
@@ -1926,7 +1838,6 @@
           ctx.quadraticCurveTo(elbowX, elbowY, handX, handY);
           ctx.stroke();
 
-          // Niebieski mazak w dłoni
           ctx.strokeStyle = "#0d5ceb";
           ctx.lineWidth = 3;
           ctx.beginPath();
@@ -1934,11 +1845,9 @@
           ctx.lineTo(handX + 4, handY - 4);
           ctx.stroke();
         } else if (t >= 0.84 && t < 0.93) {
-          // Dumny gest wskazania na gotowy wynik
           ctx.quadraticCurveTo(shoulderX + 12, shoulderY + 6, shoulderX + 22, shoulderY - 4);
           ctx.stroke();
         } else {
-          // Swobodnie opuszczona
           ctx.lineTo(shoulderX + 9, shoulderY + 24);
           ctx.stroke();
         }
@@ -1953,62 +1862,519 @@
     }
 
     /* =========================================================================
-       3. FIZYKA: NATURALNE ODRĘCZNE PISANIE NA ŻYWO
+       3. FIZYKA: SPRAWDZIAN W ŁAWCE -> DWA WDECHY -> 100% (14 SEKUND)
        ========================================================================= */
-    function initNaturalPhysicsHandwriting() {
-      const line1 = document.getElementById('physHandLine1');
-      const line2 = document.getElementById('physHandLine2');
-      const line3 = document.getElementById('physHandLine3');
-      const line4 = document.getElementById('physHandLine4');
-      if (!line1) return;
+    function initPhysicsExamAnimation() {
+      const canvas = document.getElementById('physicsExamCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w, h;
 
-      const scriptStory = [
-        { el: line1, text: "E = m · c²", pause: 750 },
-        { el: line2, text: "m = m₀ / √(1 - v²/c²)", pause: 850 },
-        { el: line3, text: "E² = (p·c)² + (m₀c²)²", pause: 1100 },
-        { el: line4, text: "dla v « c :  E ≈ m₀c² + ½m₀v²", pause: 1400 }
-      ];
+      function resize() {
+        const dpr = window.devicePixelRatio || 1;
+        w = canvas.parentElement.clientWidth;
+        h = canvas.parentElement.clientHeight;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
 
-      let lineIndex = 0;
-      let charIndex = 0;
-
-      function typeNextCharacter() {
-        if (lineIndex >= scriptStory.length) {
-          setTimeout(() => {
-            line1.innerHTML = "";
-            line2.innerHTML = "";
-            line3.innerHTML = "";
-            line4.innerHTML = "";
-            lineIndex = 0;
-            charIndex = 0;
-            typeNextCharacter();
-          }, 3200);
-          return;
-        }
-
-        const current = scriptStory[lineIndex];
-        const fullText = current.text;
-
-        if (charIndex < fullText.length) {
-          current.el.innerHTML = fullText.substring(0, charIndex + 1) + '<span class="hand-cursor"></span>';
-          charIndex++;
-          const delay = Math.random() * 55 + 40;
-          setTimeout(typeNextCharacter, delay);
-        } else {
-          current.el.innerHTML = fullText;
-          lineIndex++;
-          charIndex = 0;
-          setTimeout(typeNextCharacter, current.pause);
-        }
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       }
 
-      typeNextCharacter();
+      function drawRoundedRect(x, y, width, height, radius) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+      }
+
+      const DURATION = 14000; // 14 sekund (mieści się w max 15s)
+      let startTime = null;
+
+      function render(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const t = ((timestamp - startTime) % DURATION) / DURATION; // 0.0 -> 1.0
+
+        ctx.clearRect(0, 0, w, h);
+
+        // Współrzędne bazowe sceny (ławkowy widok z boku/ukośnie)
+        const floorY = h * 0.88;
+        const charX = w * 0.25;
+        const deskX = w * 0.36;
+        const deskY = h * 0.62;
+        const deskW = w * 0.52;
+        const deskH = 9;
+
+        // Kartka leżąca na ławce (perspektywa lekko pochylona)
+        const paperCenterX = deskX + deskW * 0.45;
+        const paperCenterY = deskY - 2;
+
+        // --- OBLICZANIE KAMERY (ZOOM) ---
+        // Faza A (0.00 - 0.16): Ogólny widok, ludzik zestresowany przed sprawdzianem
+        // Faza B (0.16 - 0.35): Zbliżenie na kartkę SPRAWDZIAN z wzorami fizycznymi (kl. 7-8)
+        // Faza C (0.35 - 0.59): Zbliżenie na głowę ludzika + dwa wdechy + dymek myśli
+        // Faza D (0.59 - 0.75): Oddalenie do ławki, ludzik szybko rozwiązuje równania
+        // Faza E (0.75 - 0.83): Przejście "Tydzień później..."
+        // Faza F (0.83 - 1.00): Powrót sprawdzianu z wynikiem 100% i radość ludzika
+
+        let zoom = 1;
+        let focusX = w * 0.5;
+        let focusY = h * 0.5;
+        let targetScreenX = w * 0.5;
+        let targetScreenY = h * 0.5;
+
+        const headBaseX = charX + 4;
+        const headBaseY = deskY - 46;
+
+        if (t < 0.15) {
+          zoom = 1;
+        } else if (t >= 0.15 && t < 0.20) {
+          const p = easeInOutCubic((t - 0.15) / 0.05);
+          zoom = 1 + 1.5 * p;
+          focusX = w * 0.5 * (1 - p) + paperCenterX * p;
+          focusY = h * 0.5 * (1 - p) + (paperCenterY - 12) * p;
+        } else if (t >= 0.20 && t < 0.34) {
+          zoom = 2.5;
+          focusX = paperCenterX;
+          focusY = paperCenterY - 12;
+        } else if (t >= 0.34 && t < 0.40) {
+          // Przejście kamery z kartki na głowę ludzika
+          const p = easeInOutCubic((t - 0.34) / 0.06);
+          zoom = 2.5 - 0.35 * p;
+          focusX = paperCenterX * (1 - p) + (headBaseX + 35) * p;
+          focusY = (paperCenterY - 12) * (1 - p) + (headBaseY - 26) * p;
+        } else if (t >= 0.40 && t < 0.56) {
+          zoom = 2.15;
+          focusX = headBaseX + 35;
+          focusY = headBaseY - 26;
+        } else if (t >= 0.56 && t < 0.61) {
+          const p = easeInOutCubic((t - 0.56) / 0.05);
+          zoom = 2.15 - 1.15 * p;
+          focusX = (headBaseX + 35) * (1 - p) + (w * 0.5) * p;
+          focusY = (headBaseY - 26) * (1 - p) + (h * 0.5) * p;
+        } else {
+          zoom = 1;
+        }
+
+        // Dwa wdechy podczas zbliżenia na głowę (0.40 - 0.55)
+        let breathVal = 0;
+        if (t >= 0.40 && t < 0.475) {
+          breathVal = Math.sin(((t - 0.40) / 0.075) * Math.PI); // 1. wdech
+        } else if (t >= 0.475 && t < 0.55) {
+          breathVal = Math.sin(((t - 0.475) / 0.075) * Math.PI); // 2. wdech
+        }
+
+        const isSolving = (t >= 0.60 && t < 0.75);
+        const isWeekLaterResult = (t >= 0.82);
+
+        ctx.save();
+        ctx.translate(targetScreenX, targetScreenY);
+        ctx.scale(zoom, zoom);
+        ctx.translate(-focusX, -focusY);
+
+        // --- PODŁOGA ---
+        ctx.strokeStyle = "rgba(14, 17, 24, 0.2)";
+        ctx.lineWidth = 1.8;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(w * 0.05, floorY);
+        ctx.lineTo(w * 0.95, floorY);
+        ctx.stroke();
+
+        // --- KRZESŁO ---
+        ctx.strokeStyle = "#0e1118";
+        ctx.lineWidth = 2.2;
+        const chairX = charX - 18;
+        const seatY = floorY - 34;
+        ctx.beginPath();
+        // Oparcie i tylna noga
+        ctx.moveTo(chairX, seatY - 38);
+        ctx.lineTo(chairX, floorY);
+        // Siedzisko i przednia noga
+        ctx.moveTo(chairX, seatY);
+        ctx.lineTo(chairX + 28, seatY);
+        ctx.lineTo(chairX + 28, floorY);
+        ctx.stroke();
+
+        // --- LUDZIK SIEDZĄCY PRZY ŁAWCE ---
+        const torsoLift = -breathVal * 2.5 - (isWeekLaterResult ? Math.abs(Math.sin(t * 28)) * 3 : 0);
+        const hipX = charX - 3;
+        const hipY = seatY - 2;
+        const shoulderX = charX + (isSolving ? 5 : 1);
+        const shoulderY = seatY - 34 + torsoLift;
+        const headX = shoulderX + (isSolving ? 4 : 2);
+        const headY = shoulderY - 17;
+        const headR = 13.5;
+
+        ctx.save();
+        ctx.strokeStyle = "#0e1118";
+        ctx.lineWidth = 2.4;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+
+        // Nogi siedzące (udo -> łydka -> stopa)
+        ctx.beginPath();
+        ctx.moveTo(hipX, hipY);
+        ctx.lineTo(hipX + 22, hipY + 1);
+        ctx.lineTo(hipX + 24, floorY - 1);
+        ctx.lineTo(hipX + 31, floorY - 1);
+        ctx.stroke();
+
+        // Tułów
+        ctx.beginPath();
+        ctx.moveTo(hipX, hipY);
+        ctx.quadraticCurveTo(hipX - 1, (hipY + shoulderY) * 0.5, shoulderX, shoulderY);
+        ctx.stroke();
+
+        // Głowa
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(headX, headY, headR, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Czupryna
+        ctx.beginPath();
+        ctx.moveTo(headX - 5, headY - headR + 1);
+        ctx.quadraticCurveTo(headX - 1, headY - headR - 5, headX + 5, headY - headR + 1);
+        ctx.stroke();
+
+        // Twarz ludzika
+        const faceX = headX + 3;
+        ctx.lineWidth = 1.9;
+
+        if (t < 0.36) {
+          // Zestresowany przed/w trakcie czytania sprawdzianu
+          ctx.fillStyle = "#0e1118";
+          ctx.beginPath();
+          ctx.arc(faceX - 3, headY - 2, 1.6, 0, Math.PI * 2);
+          ctx.arc(faceX + 3.5, headY - 2, 1.6, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Drżąca linia ust
+          ctx.beginPath();
+          ctx.moveTo(faceX - 3, headY + 5);
+          ctx.quadraticCurveTo(faceX, headY + 3, faceX + 3.5, headY + 5.5);
+          ctx.stroke();
+
+          // Niebieskie kropelki stresu
+          const jitterY = Math.sin(t * 55) * 1.8;
+          ctx.strokeStyle = "#0d5ceb";
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(headX - headR - 4, headY - 6 + jitterY);
+          ctx.lineTo(headX - headR - 9, headY - 9 + jitterY);
+          ctx.moveTo(headX - headR - 5, headY + 1 + jitterY);
+          ctx.lineTo(headX - headR - 10, headY + 1 + jitterY);
+          ctx.stroke();
+        } else if (t >= 0.36 && t < 0.57) {
+          // Zbliżenie na głowę: zamknięte oczy i dwa głębokie wdechy
+          ctx.strokeStyle = "#0e1118";
+          ctx.beginPath();
+          ctx.arc(faceX - 3, headY - 2, 2.3, 0.15 * Math.PI, 0.85 * Math.PI);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(faceX + 3.5, headY - 2, 2.3, 0.15 * Math.PI, 0.85 * Math.PI);
+          ctx.stroke();
+
+          // Usta podczas dwóch wdechów
+          if (breathVal > 0.2) {
+            ctx.beginPath();
+            ctx.arc(faceX, headY + 4.8, 1.1 + breathVal * 1.4, 0, Math.PI * 2);
+            ctx.stroke();
+          } else {
+            ctx.beginPath();
+            ctx.arc(faceX, headY + 3.5, 2.8, 0.1 * Math.PI, 0.9 * Math.PI);
+            ctx.stroke();
+          }
+
+          // Fale oddechu wokół głowy
+          if (breathVal > 0.08) {
+            ctx.save();
+            ctx.strokeStyle = "#0d5ceb";
+            ctx.lineWidth = 1.3;
+            ctx.globalAlpha = breathVal * 0.6;
+            ctx.beginPath();
+            ctx.arc(headX, headY, headR + 5 + breathVal * 8, 0.7 * Math.PI, 1.3 * Math.PI);
+            ctx.stroke();
+            ctx.restore();
+          }
+        } else {
+          // Skupiony i uśmiechnięty (rozwiązywanie i wynik 100%)
+          ctx.fillStyle = "#0e1118";
+          ctx.beginPath();
+          ctx.arc(faceX - 3, headY - 2, 1.6, 0, Math.PI * 2);
+          ctx.arc(faceX + 3.5, headY - 2, 1.6, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.strokeStyle = "#0e1118";
+          ctx.beginPath();
+          ctx.arc(faceX, headY + 3.2, isWeekLaterResult ? 4.2 : 3.2, 0.1 * Math.PI, 0.9 * Math.PI);
+          ctx.stroke();
+        }
+
+        // --- ŁAWKA SZKOLNA ---
+        ctx.fillStyle = "#ffffff";
+        drawRoundedRect(deskX, deskY, deskW, deskH, 3);
+        ctx.fill();
+        ctx.strokeStyle = "#0e1118";
+        ctx.lineWidth = 2.2;
+        ctx.stroke();
+
+        // Nogi ławki
+        ctx.beginPath();
+        ctx.moveTo(deskX + 12, deskY + deskH);
+        ctx.lineTo(deskX + 12, floorY);
+        ctx.moveTo(deskX + deskW - 12, deskY + deskH);
+        ctx.lineTo(deskX + deskW - 12, floorY);
+        ctx.stroke();
+
+        // --- KARTKA SPRAWDZIANU NA ŁAWCE ---
+        // W widoku ogólnym kartka leży płasko na ławce, a przy zoomie na kartkę (0.16 - 0.39) unosi się czytelnie
+        let sheetLift = 0;
+        if (t >= 0.16 && t < 0.21) {
+          sheetLift = easeInOutCubic((t - 0.16) / 0.05);
+        } else if (t >= 0.21 && t < 0.35) {
+          sheetLift = 1;
+        } else if (t >= 0.35 && t < 0.40) {
+          sheetLift = 1 - easeInOutCubic((t - 0.35) / 0.05);
+        }
+
+        // Widok z góry/pochylony kartki sprawdzianu
+        const sheetW = 64 + sheetLift * 34;
+        const sheetH = 14 + sheetLift * 62;
+        const sheetX = paperCenterX - sheetW * 0.5;
+        const sheetY = deskY - sheetH + 1 - sheetLift * 4;
+
+        ctx.save();
+        ctx.fillStyle = "#ffffff";
+        ctx.strokeStyle = "#0e1118";
+        ctx.lineWidth = 1.6;
+        drawRoundedRect(sheetX, sheetY, sheetW, sheetH, 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Mała etykieta "SPRAWDZIAN" widoczna nawet z daleka nad kartką
+        if (sheetLift < 0.35 && !isWeekLaterResult) {
+          ctx.save();
+          ctx.font = "bold 9px 'JetBrains Mono', monospace";
+          ctx.fillStyle = "#0d5ceb";
+          ctx.fillText("SPRAWDZIAN", sheetX + 4, sheetY - 4);
+          ctx.restore();
+        }
+
+        // Szczegóły kartki po zbliżeniu (wzory fizyka klasa 7-8)
+        if (sheetLift > 0.15) {
+          ctx.save();
+          ctx.globalAlpha = Math.min(1, (sheetLift - 0.15) / 0.45);
+          ctx.beginPath();
+          drawRoundedRect(sheetX, sheetY, sheetW, sheetH, 2);
+          ctx.clip();
+
+          // Nagłówek SPRAWDZIAN - FIZYKA (KL. 7-8)
+          ctx.fillStyle = "#0d5ceb";
+          ctx.font = "bold 7.5px 'JetBrains Mono', monospace";
+          ctx.fillText("SPRAWDZIAN · FIZYKA", sheetX + 6, sheetY + 11);
+
+          ctx.strokeStyle = "rgba(13, 92, 235, 0.35)";
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          ctx.moveTo(sheetX + 6, sheetY + 14);
+          ctx.lineTo(sheetX + sheetW - 6, sheetY + 14);
+          ctx.stroke();
+
+          // Znane wzory z fizyki kl. 7-8
+          ctx.fillStyle = "#0e1118";
+          ctx.font = "bold 8.5px 'Caveat', cursive";
+          ctx.fillText("1. v = s / t   →  t = ?", sheetX + 6, sheetY + 25);
+          ctx.fillText("2. F = m · a   (F_w = 0)", sheetX + 6, sheetY + 36);
+          ctx.fillText("3. Ep = m·g·h = Ek = ½mv²", sheetX + 6, sheetY + 47);
+          ctx.fillText("4. Q = c · m · ΔT   [J]", sheetX + 6, sheetY + 58);
+          ctx.fillText("5. p = F / S   ;   ρ = m / V", sheetX + 6, sheetY + 69);
+
+          ctx.restore();
+        }
+
+        // Rozwiązane linijki na kartce (po fazie rozwiązywania)
+        if (t >= 0.62 && !isWeekLaterResult) {
+          const solveProg = Math.min(1, (t - 0.62) / 0.13);
+          ctx.strokeStyle = "#0d5ceb";
+          ctx.lineWidth = 1.4;
+          ctx.beginPath();
+          ctx.moveTo(sheetX + 8, sheetY + 4);
+          ctx.lineTo(sheetX + 8 + (sheetW - 16) * solveProg, sheetY + 4);
+          if (solveProg > 0.5) {
+            ctx.moveTo(sheetX + 8, sheetY + 8);
+            ctx.lineTo(sheetX + 8 + (sheetW - 22) * ((solveProg - 0.5) * 2), sheetY + 8);
+          }
+          ctx.stroke();
+        }
+
+        // --- WYNIK 100% PO TYGODNIU (0.82 - 1.00) ---
+        if (isWeekLaterResult) {
+          const resProg = Math.min(1, (t - 0.82) / 0.06);
+          const cardW = 104;
+          const cardH = 66;
+          const cardX = paperCenterX - cardW * 0.45;
+          const cardY = deskY - cardH - 12 + (1 - resProg) * 14;
+
+          ctx.save();
+          ctx.globalAlpha = resProg;
+          ctx.fillStyle = "#ffffff";
+          ctx.strokeStyle = "#0d5ceb";
+          ctx.lineWidth = 2.2;
+          drawRoundedRect(cardX, cardY, cardW, cardH, 5);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.font = "bold 9px 'JetBrains Mono', monospace";
+          ctx.fillStyle = "#49505f";
+          ctx.fillText("SPRAWDZIAN · WYNIK", cardX + 9, cardY + 15);
+
+          ctx.font = "bold 30px 'Caveat', cursive";
+          ctx.fillStyle = "#0d5ceb";
+          ctx.fillText("100%  ✓", cardX + 16, cardY + 47);
+
+          // Małe iskierki radości
+          ctx.strokeStyle = "#0d5ceb";
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(cardX + cardW + 6, cardY + 10);
+          ctx.lineTo(cardX + cardW + 13, cardY + 6);
+          ctx.moveTo(cardX + cardW + 7, cardY + 20);
+          ctx.lineTo(cardX + cardW + 15, cardY + 20);
+          ctx.stroke();
+          ctx.restore();
+        }
+        ctx.restore();
+
+        // --- RĘCE LUDZIKA ---
+        ctx.strokeStyle = "#0e1118";
+        ctx.lineWidth = 2.3;
+        ctx.beginPath();
+        ctx.moveTo(shoulderX, shoulderY + 3);
+
+        if (isSolving) {
+          // Szybki ruch pisania długopisem po kartce sprawdzianu
+          const penX = paperCenterX - 10 + Math.sin(t * 150) * 14;
+          const penY = deskY - 3 + Math.cos(t * 190) * 2;
+          ctx.quadraticCurveTo(shoulderX + 18, shoulderY + 18, penX, penY);
+          ctx.stroke();
+
+          // Niebieski długopis w dłoni
+          ctx.strokeStyle = "#0d5ceb";
+          ctx.lineWidth = 2.6;
+          ctx.beginPath();
+          ctx.moveTo(penX, penY);
+          ctx.lineTo(penX + 6, penY - 8);
+          ctx.stroke();
+        } else if (isWeekLaterResult) {
+          // Ręce uniesione w geście radości!
+          const wave = Math.sin(t * 35) * 4;
+          ctx.quadraticCurveTo(shoulderX + 12, shoulderY - 6, shoulderX + 20, shoulderY - 18 + wave);
+          ctx.stroke();
+        } else {
+          // Ręce oparte na ławce
+          ctx.quadraticCurveTo(shoulderX + 14, shoulderY + 18, deskX + 16, deskY - 1);
+          ctx.stroke();
+        }
+
+        // --- DYMEK MYŚLI PRZY ZBLIŻENIU NA GŁOWĘ (0.41 - 0.56) ---
+        if (t >= 0.41 && t < 0.56) {
+          const thoughtFadeIn = Math.min(1, (t - 0.41) / 0.03);
+          const thoughtFadeOut = t > 0.53 ? Math.max(0, 1 - (t - 0.53) / 0.03) : 1;
+          const alpha = thoughtFadeIn * thoughtFadeOut;
+
+          ctx.save();
+          ctx.globalAlpha = alpha;
+
+          // Kółeczka prowadzące od głowy do chmurki myśli
+          ctx.fillStyle = "#ffffff";
+          ctx.strokeStyle = "#0d5ceb";
+          ctx.lineWidth = 1.2;
+
+          ctx.beginPath();
+          ctx.arc(headX + 12, headY - 15, 2.2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(headX + 18, headY - 22, 3.4, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+
+          // Chmurka / ramka myśli
+          const bx = headX + 14;
+          const by = headY - 62;
+          const bw = 118;
+          const bh = 35;
+
+          ctx.fillStyle = "#ffffff";
+          ctx.strokeStyle = "#0d5ceb";
+          ctx.lineWidth = 1.4;
+          drawRoundedRect(bx, by, bw, bh, 8);
+          ctx.fill();
+          ctx.stroke();
+
+          // Tekst myśli
+          ctx.fillStyle = "#0e1118";
+          ctx.font = "bold 9.2px 'Caveat', cursive";
+          ctx.fillText("„Tak jak pan Aleksander uczył,", bx + 6, by + 13);
+          ctx.fillStyle = "#0d5ceb";
+          ctx.fillText("dwa wdechy i do przodu!”", bx + 11, by + 26);
+
+          ctx.restore();
+        }
+
+        ctx.restore(); // Koniec transformacji kamery
+
+        // --- PLANSZA PRZEJŚCIOWA: "Tydzień później..." (0.75 - 0.83) ---
+        if (t >= 0.75 && t < 0.83) {
+          const fadeIn = Math.min(1, (t - 0.75) / 0.02);
+          const fadeOut = t > 0.80 ? Math.max(0, 1 - (t - 0.80) / 0.03) : 1;
+          const overlayAlpha = fadeIn * fadeOut;
+
+          ctx.save();
+          ctx.fillStyle = "rgba(255, 255, 255, " + (0.96 * overlayAlpha) + ")";
+          ctx.fillRect(0, 0, w, h);
+
+          ctx.globalAlpha = overlayAlpha;
+          ctx.fillStyle = "#0e1118";
+          ctx.font = "bold 34px 'Caveat', cursive";
+          const label = "Tydzień później...";
+          const metrics = ctx.measureText(label);
+          ctx.fillText(label, (w - metrics.width) * 0.5, h * 0.5 + 8);
+
+          ctx.strokeStyle = "#0d5ceb";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo((w - metrics.width) * 0.5, h * 0.5 + 16);
+          ctx.lineTo((w + metrics.width) * 0.5, h * 0.5 + 16);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        requestAnimationFrame(render);
+      }
+
+      requestAnimationFrame(render);
     }
 
     document.addEventListener("DOMContentLoaded", function() {
       initBlackLorenzAttractor();
       initMathHandwrittenChaos();
-      initNaturalPhysicsHandwriting();
+      initPhysicsExamAnimation();
 
       try {
         const currentUrl = window.location.href;
