@@ -624,7 +624,7 @@
 
     @keyframes mathCamAnim {
       0%, 18% { transform: scale(1) translate(0px, 0px); }
-      26%, 46% { transform: scale(2.15) translate(32px, -8px); }
+      26%, 46% { transform: scale(2.05) translate(32px, -6px); }
       54%, 100% { transform: scale(1) translate(0px, 0px); }
     }
 
@@ -721,21 +721,22 @@
 
     /* =========================================================================
        ANIMACJA 2 (FIZYKA): WEKTOROWE SVG SPRAWDZIANU -> 100% (14s)
+       (ZOPTYMALIZOWANE KADROWANIE POD EKRANY TELEFONÓW)
        ========================================================================= */
     #phys-camera {
-      transform-origin: 180px 150px;
+      transform-origin: 180px 145px;
       animation: physCamAnim 14s ease-in-out infinite;
     }
 
     @keyframes physCamAnim {
       0%, 14% { transform: scale(1) translate(0px, 0px); }
-      20%, 33% { transform: scale(1.9) translate(-32px, 14px); }
-      39%, 56% { transform: scale(2.05) translate(68px, 18px); }
+      20%, 33% { transform: scale(1.75) translate(-34px, 14px); }
+      39%, 56% { transform: scale(1.55) translate(32px, 24px); }
       62%, 100% { transform: scale(1) translate(0px, 0px); }
     }
 
     #phys-sheet-zoomed {
-      transform-origin: 215px 175px;
+      transform-origin: 221px 124px;
       animation: physSheetPopup 14s ease-in-out infinite;
     }
 
@@ -1096,6 +1097,12 @@
       .monument-formula-box {
         padding: 2rem 1rem;
       }
+      .technical-schematic {
+        padding: 1.2rem;
+      }
+      .schematic-frame-box {
+        height: 250px;
+      }
       .clarity-card {
         grid-template-columns: 1fr;
         gap: 0.8rem;
@@ -1310,7 +1317,7 @@
           <span class="schematic-badge">0 → B1</span>
         </div>
         <div class="schematic-frame-box">
-          <svg viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <svg viewBox="0 0 320 220" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
             <line x1="30" y1="190" x2="300" y2="190" stroke="rgba(14,17,24,0.15)" stroke-width="1.5"/>
             <line x1="30" y1="190" x2="30" y2="20" stroke="rgba(14,17,24,0.15)" stroke-width="1.5"/>
             <path d="M30 180 C 100 170, 140 130, 190 90 C 230 60, 260 45, 290 40" stroke="#0d5ceb" stroke-width="2.5" fill="none"/>
@@ -1372,7 +1379,7 @@
           <span class="schematic-badge">Klasy 4–8</span>
         </div>
         <div class="schematic-frame-box">
-          <svg class="svg-stage" viewBox="0 0 360 290" xmlns="http://www.w3.org/2000/svg">
+          <svg class="svg-stage" viewBox="0 0 360 290" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
             <g id="math-camera">
               <!-- Podłoga -->
               <line x1="20" y1="252" x2="340" y2="252" stroke="rgba(14,17,24,0.22)" stroke-width="2" stroke-linecap="round"/>
@@ -1503,7 +1510,7 @@
           <span class="schematic-badge">Klasy 7–8</span>
         </div>
         <div class="schematic-frame-box">
-          <svg class="svg-stage" viewBox="0 0 360 290" xmlns="http://www.w3.org/2000/svg">
+          <svg class="svg-stage" viewBox="0 0 360 290" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
             <g id="phys-camera">
               <!-- Podłoga -->
               <line x1="20" y1="254" x2="340" y2="254" stroke="rgba(14,17,24,0.22)" stroke-width="2" stroke-linecap="round"/>
@@ -1560,13 +1567,13 @@
                 </g>
               </g>
 
-              <!-- Dymek myśli podczas wdechów -->
+              <!-- Dymek myśli podczas wdechów (wyśrodkowany, aby był w pełni czytelny na każdym telefonie) -->
               <g id="phys-thought-bubble">
-                <circle cx="110" cy="130" r="2.5" fill="#ffffff" stroke="#0d5ceb" stroke-width="1.3"/>
-                <circle cx="117" cy="122" r="3.8" fill="#ffffff" stroke="#0d5ceb" stroke-width="1.3"/>
-                <rect x="114" y="76" width="136" height="40" rx="8" fill="#ffffff" stroke="#0d5ceb" stroke-width="1.5"/>
-                <text x="122" y="92" font-family="'Caveat', cursive" font-size="11.5" font-weight="700" fill="#0e1118">„Tak jak pan Aleksander uczył,</text>
-                <text x="127" y="107" font-family="'Caveat', cursive" font-size="11.5" font-weight="700" fill="#0d5ceb">dwa wdechy i do przodu!”</text>
+                <circle cx="108" cy="129" r="2.5" fill="#ffffff" stroke="#0d5ceb" stroke-width="1.3"/>
+                <circle cx="115" cy="120" r="3.6" fill="#ffffff" stroke="#0d5ceb" stroke-width="1.3"/>
+                <rect x="68" y="68" width="176" height="44" rx="8" fill="#ffffff" stroke="#0d5ceb" stroke-width="1.6"/>
+                <text x="156" y="86" text-anchor="middle" font-family="'Caveat', cursive" font-size="13.5" font-weight="700" fill="#0e1118">„Tak jak pan Aleksander uczył,</text>
+                <text x="156" y="103" text-anchor="middle" font-family="'Caveat', cursive" font-size="13.5" font-weight="700" fill="#0d5ceb">dwa wdechy i do przodu!”</text>
               </g>
 
               <!-- Zbliżenie na arkusz SPRAWDZIANU z wzorami fizyki kl. 7-8 -->
@@ -1785,7 +1792,7 @@
           requestAnimationFrame(render);
 
           if (document.hidden || width === 0 || height === 0) return;
-          if (now - lastTime < 30) return; // Stabilne ~33 FPS
+          if (now - lastTime < 30) return;
           lastTime = now;
 
           ctx.clearRect(0, 0, width, height);
